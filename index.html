@@ -59,7 +59,7 @@
 
         .logo-container img { height: 30px; }
 
-        .nav-links { display: flex; gap: 12px; }
+        .nav-links { display: flex; gap: 15px; }
 
         .nav-links a {
             color: var(--text-main);
@@ -86,7 +86,7 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* SEARCH BOX ABOVE MAP */
+        /* SEARCH BOX */
         .search-container {
             width: 90%;
             max-width: 600px;
@@ -138,8 +138,7 @@
             grid-template-columns: repeat(2, 1fr);
             gap: 15px;
             margin-bottom: 30px;
-        }
-.data-card {
+        }.data-card {
             background: var(--card-bg);
             padding: 25px 15px;
             border-radius: 12px;
@@ -150,6 +149,14 @@
         .data-card h2 { font-size: 1.5rem; margin-bottom: 5px; color: #000; }
         .data-card p { color: var(--text-dim); font-size: 0.65rem; font-weight: 700; text-transform: uppercase; }
 
+        /* BUTTON GROUP */
+        .action-group {
+            display: none; /* Hidden until analysis */
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
         .btn-download {
             background: var(--gradient);
             color: #000;
@@ -158,11 +165,26 @@
             border-radius: 50px;
             font-weight: 800;
             cursor: pointer;
-            display: none;
             width: 100%;
-            max-width: 300px;
+            max-width: 350px;
             box-shadow: 0 8px 20px rgba(255, 140, 0, 0.2);
         }
+
+        .btn-referral {
+            background: #000;
+            color: #fff;
+            text-decoration: none;
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            width: 100%;
+            max-width: 350px;
+            text-transform: uppercase;
+            transition: transform 0.2s;
+        }
+
+        .btn-referral:hover { transform: translateY(-3px); }
 
         /* FOOTER */
         footer {
@@ -178,51 +200,16 @@
             margin-bottom: 40px;
         }
 
-        .footer-links h4 {
-            font-size: 0.9rem;
-            margin-bottom: 15px;
-            color: #000;
-        }
+        .footer-links h4 { font-size: 0.9rem; margin-bottom: 15px; color: #000; }
+        .footer-links a { display: block; color: var(--text-dim); text-decoration: none; margin-bottom: 10px; font-size: 0.85rem; }
 
-        .footer-links a {
-            display: block;
-            color: var(--text-dim);
-            text-decoration: none;
-            margin-bottom: 10px;
-            font-size: 0.85rem;
-        }
-
-        /* PAYMENT SECTION - SMALLER LOGOS */
-        .payment-container {
-            border-top: 1px solid #eee;
-            padding-top: 30px;
-            text-align: center;
-        }
-
-        .payment-methods {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .payment-methods img {
-            height: 28px; /* Small refined size */
-            width: auto;
-            object-fit: contain;
-        }
-
-        .copyright {
-            margin-top: 30px;
-            font-size: 0.75rem;
-            text-align: center;
-            color: #999;
-        }
+        .payment-container { border-top: 1px solid #eee; padding-top: 30px; text-align: center; }
+        .payment-methods { display: flex; gap: 15px; justify-content: center; align-items: center; flex-wrap: wrap; }
+        .payment-methods img { height: 25px; width: auto; object-fit: contain; }
 
         @media (min-width: 768px) {
             .results-grid { grid-template-columns: repeat(4, 1fr); }
-            .nav-links { gap: 25px; }
+            .action-group { flex-direction: row; justify-content: center; }
         }
     </style>
 </head>
@@ -230,14 +217,15 @@
 <body>
 
 <nav>
-    <a href="#" class="logo-container">
+    <a href="index.html" class="logo-container">
         <img src="logo.png" alt="Sunlytics">
         SUNLYTICS
     </a>
     <div class="nav-links">
         <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
+        <a href="referrals.html">Network</a>
         <a href="price.html">Pricing</a>
+        <a href="contact.html">Contact</a>
     </div>
 </nav>
 
@@ -261,11 +249,15 @@
         <div class="data-card"><h2 id="val-score">--</h2><p>Solar Score</p></div>
     </div>
 
-    <button class="btn-download" id="btn-dl" onclick="generatePDF()">
-        DOWNLOAD REPORT (.PDF)
-    </button>
+    <div class="action-group" id="action-area">
+        <button class="btn-download" onclick="generatePDF()">
+            DOWNLOAD REPORT (.PDF)
+        </button>
+        <a href="referrals.html" class="btn-referral">
+            Find Certified Installers →
+        </a>
+    </div>
 </div>
-
 <footer>
     <div class="footer-grid">
         <div class="footer-links">
@@ -274,14 +266,13 @@
             <a href="about.html">How it works</a>
             <a href="contact.html">Support</a>
         </div>
-
         <div class="footer-links">
             <h4>LEGAL</h4>
             <a href="privacy.html">Privacy Policy</a>
             <a href="legal.html">Legal Notice</a>
             <a href="terms.html">Terms of Service</a>
         </div>
-<div class="footer-links">
+        <div class="footer-links">
             <h4 style="font-weight: 800;">SUNLYTICS</h4>
             <p style="font-size: 0.8rem; color: var(--text-dim);">Industrial solar intelligence and data-driven sustainability for Latvian factories.</p>
         </div>
@@ -289,11 +280,11 @@
 
     <div class="payment-container">
         <div class="payment-methods">
-            <img src="p1.png" alt="Payment Method">
-            <img src="p2.png" alt="Payment Method">
-            <img src="p3.png" alt="Payment Method">
-            <img src="p4.png" alt="Payment Method">
-            <img src="p5.png" alt="Payment Method">
+            <img src="p1.png" alt="Visa">
+            <img src="p2.png" alt="MasterCard">
+            <img src="p3.png" alt="Maestro">
+            <img src="p4.png" alt="Paypal">
+            <img src="p5.png" alt="Local">
         </div>
     </div>
 
@@ -308,7 +299,6 @@
 let map, marker, currentAddress = "";
 
 function initMap() {
-    // Silver White Style
     const style = [
         { elementType: "geometry", stylers: [{ color: "#f5f5f5" }] },
         { elementType: "labels.icon", stylers: [{ visibility: "off" }] },
@@ -328,16 +318,9 @@ function initMap() {
     searchBox.addListener("places_changed", () => {
         const places = searchBox.getPlaces();
         if (!places.length) return;
-
         currentAddress = places[0].formatted_address;
-
         if (marker) marker.setMap(null);
-
-        marker = new google.maps.Marker({
-            map,
-            position: places[0].geometry.location
-        });
-
+        marker = new google.maps.Marker({ map, position: places[0].geometry.location });
         const bounds = new google.maps.LatLngBounds();
         if (places[0].geometry.viewport) bounds.union(places[0].geometry.viewport);
         else bounds.extend(places[0].geometry.location);
@@ -346,32 +329,28 @@ function initMap() {
 }
 
 function startAnalysis() {
-    // Data from official report template
     document.getElementById('val-payback').innerText = "5.1 Years";
     document.getElementById('val-profit').innerText = "€159,000";
     document.getElementById('val-area').innerText = "8,200 m²";
     document.getElementById('val-score').innerText = "88%";
 
-    document.getElementById('btn-dl').style.display = "inline-block";
+    // Show both buttons
+    document.getElementById('action-area').style.display = "flex";
 }
 
 function generatePDF() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
-
     doc.setFontSize(22);
     doc.text("SUNLYTICS SOLAR ANALYSIS", 20, 30);
-
     doc.setFontSize(12);
     doc.text("Analyzed Site: " + (currentAddress || "Riga Industrial Zone"), 20, 45);
     doc.line(20, 50, 190, 50);
-
     doc.text("EXECUTIVE METRICS", 20, 65);
     doc.text("Payback Period: 5.1 Years", 30, 75);
     doc.text("Usable Area: 8,200 sq. meters", 30, 85);
     doc.text("Estimated Profit (25 yr): €159,000", 30, 95);
     doc.text("Solar Score: 88% - Excellent", 30, 105);
-
     doc.save("Sunlytics_Solar_Report.pdf");
 }
 </script>
