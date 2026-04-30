@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sunlytics Pro | Solar Intelligence Suite</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sunlytics Pro | Free Industrial Map</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
@@ -15,157 +15,126 @@
     <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
 
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #020617; }
-        #map { height: 100%; width: 100%; cursor: crosshair; filter: grayscale(0.1) contrast(1.1); }
-        
-        .glass-panel { 
-            background: rgba(10, 10, 10, 0.85); 
-            backdrop-filter: blur(20px); 
-            border: 1px solid rgba(255,255,255,0.08); 
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; margin: 0; }
+        #map { height: 100vh; width: 100vw; z-index: 1; }
+        .side-panel { transition: transform 0.3s ease; z-index: 2000; }
+        @media (max-width: 768px) {
+            .side-panel { transform: translateX(-100%); width: 85%; position: fixed; height: 100%; }
+            .side-panel.active { transform: translateX(0); }
         }
-
-        .logo-container img { 
-            max-width: 90px; 
-            height: auto; 
-            filter: drop-shadow(0 0 15px rgba(249, 115, 22, 0.4));
-        }
-
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
-        
-        .leaflet-draw-toolbar a { 
-            background-color: #0f172a !important; 
-            border-bottom: 1px solid #334155 !important; 
-            color: white !important; 
-        }
+        .search-bar { z-index: 1500; background: white; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        .result-card { padding: 20px; border-radius: 24px; margin-bottom: 12px; border: 1px solid rgba(0,0,0,0.05); }
     </style>
 </head>
-<body class="text-slate-200 h-screen overflow-hidden">
+<body class="overflow-hidden">
 
-    <div class="flex h-full">
-        <aside class="w-[420px] bg-[#020617] border-r border-slate-800 flex flex-col p-8 z-50 shadow-2xl relative">
-            
-            <div class="mb-10 text-center flex flex-col items-center">
-                <div class="logo-container mb-1">
-                    <img src="logo.png" alt="Sunlytics Logo" class="block">
+    <div class="search-bar absolute top-4 left-4 right-4 md:left-[440px] md:right-8 p-3 rounded-2xl flex gap-3 items-center">
+        <button id="menuBtn" class="md:hidden p-2 bg-slate-100 rounded-lg">
+            <svg class="w-6 h-6 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        </button>
+        <input type="text" id="locInput" placeholder="Search Company name or City in Latvia..." class="flex-1 bg-transparent border-none outline-none text-sm font-semibold text-slate-700">
+        <button id="searchBtn" class="bg-orange-500 text-white px-5 py-2 rounded-xl text-xs font-bold uppercase tracking-wider">Find Site</button>
+    </div>
+
+    <div class="flex h-screen">
+        <aside id="sidebar" class="side-panel w-[400px] bg-white border-r border-slate-200 flex flex-col p-6 shadow-xl">
+            <div class="mb-8 flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <img src="logo.png" alt="Logo" class="w-8 h-8">
+                    <h1 class="text-xl font-black italic tracking-tighter text-slate-900">SUNLYTICS</h1>
                 </div>
-                <h1 class="text-3xl font-black tracking-tighter text-white italic uppercase p-0 m-0 leading-none">
-                    SUNLYTICS
-                </h1>
-                <p class="text-[9px] text-slate-500 uppercase tracking-[0.5em] font-bold mt-3">
-                    Industrial Grid | Intelligence Suite
-                </p>
+                <button id="closeBtn" class="md:hidden text-slate-400 text-2xl">✕</button>
             </div>
 
-            <div class="flex-1 overflow-y-auto custom-scrollbar space-y-5">
-                <div class="glass-panel p-6 rounded-[2.5rem]">
-                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-2">Measured Roof Area</p>
-                    <div class="flex items-baseline gap-2">
-                        <span id="areaDisplay" class="text-5xl font-light text-white font-mono tracking-tighter">0</span>
-                        <span class="text-orange-500 font-bold">m²</span>
+            <div class="flex-1 space-y-4 overflow-y-auto pr-2">
+                <div class="bg-slate-900 p-6 rounded-3xl text-white">
+                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Roof Area</p>
+                    <div class="flex items-baseline gap-1">
+                        <span id="areaDisplay" class="text-4xl font-bold">0</span>
+                        <span class="text-orange-500 font-bold text-sm">m²</span>
                     </div>
                 </div>
 
-                <div class="space-y-4" id="resultsContainer">
-                    <div class="p-10 text-center border-2 border-dashed border-slate-800 rounded-[2.5rem]">
-                        <p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest leading-relaxed">
-                            Use the polygon tool to<br>define site boundaries
-                        </p>
+                <div id="resultsContent" class="space-y-3">
+                    <div id="savingsCard" class="result-card bg-orange-50 hidden">
+                        <p class="text-[9px] font-bold text-orange-600 uppercase tracking-widest mb-1">Estimated Savings</p>
+                        <p id="savingsVal" class="text-2xl font-black text-slate-900">€0</p>
+ </div>
+                    <div id="placeholder" class="p-8 text-center border-2 border-dashed border-slate-200 rounded-3xl">
+                        <p class="text-[11px] text-slate-400 font-medium italic">Draw a polygon over the industrial roof to start</p>
                     </div>
                 </div>
             </div>
 
-            <div class="mt-8 pt-6 border-t border-slate-800">
-                <div class="flex justify-between items-center mb-6 px-2">
-                    <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest italic">Diagnostic Engine</span>
-<span class="flex items-center gap-2 text-[9px] text-emerald-500 font-bold uppercase tracking-widest">
-                        <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span> Systems Active
-                    </span>
-                </div>
-                <button onclick="window.print()" class="w-full py-5 bg-white text-black rounded-3xl font-black text-[11px] hover:bg-orange-600 hover:text-white transition-all active:scale-95 shadow-2xl uppercase tracking-[0.2em]">
-                    Export Feasibility Report
-                </button>
-            </div>
+            <button onclick="window.print()" class="mt-6 w-full py-4 bg-slate-900 text-white rounded-2xl font-bold text-xs uppercase tracking-widest hover:bg-orange-600 shadow-lg transition">Download Report</button>
         </aside>
 
-        <main class="flex-1 relative bg-black">
+        <main class="flex-1 relative">
             <div id="map"></div>
-            
-            <div class="absolute top-8 right-8 z-[1000]">
-                <div class="bg-black/60 backdrop-blur-md border border-white/10 px-6 py-4 rounded-3xl shadow-2xl">
-                    <p class="text-[10px] font-bold text-white tracking-[0.3em] uppercase mb-1">Target Site: Riga, Latvia</p>
-                    <div class="flex items-center gap-2">
-                        <div class="w-2 h-2 bg-orange-500 rounded-full"></div>
-                        <p class="text-[9px] text-slate-400 uppercase tracking-widest font-semibold">Yield: 1,050 kWh/kWp</p>
-                    </div>
-                </div>
-            </div>
         </main>
     </div>
 
     <script>
-        // Initialize Map
-        const map = L.map('map', { zoomControl: false }).setView([56.9462, 24.1163], 17);
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(map);
+        // 1. Initializing Map (White Mode)
+        var map = L.map('map', { zoomControl: false }).setView([56.9462, 24.1163], 13);
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png').addTo(map);
 
-        // Drawing Controls
-        const drawnItems = new L.FeatureGroup();
+        // 2. Drawing Tools
+        var drawnItems = new L.FeatureGroup();
         map.addLayer(drawnItems);
-        const drawControl = new L.Control.Draw({
+        var drawControl = new L.Control.Draw({
+            position: 'topright',
             draw: {
-                polygon: { allowIntersection: false, shapeOptions: { color: '#f97316', fillOpacity: 0.4, weight: 3 } },
-                rectangle: { shapeOptions: { color: '#f97316', fillOpacity: 0.4, weight: 3 } },
-                circle: false, circlemarker: false, marker: false, polyline: false
-            },
-            edit: { featureGroup: drawnItems }
+                polygon: { shapeOptions: { color: '#f97316', weight: 2 } },
+                rectangle: { shapeOptions: { color: '#f97316', weight: 2 } },
+                circle: false, marker: false, polyline: false, circlemarker: false
+            }
         });
         map.addControl(drawControl);
 
-        // Latvia Market Data
-        const MARKET_DATA = {
-            energyRate: 0.24,
-            yieldFactor: 1050,
-            efficiency: 0.85,
-            capexPerKW: 890
+        // 3. Smart Search using Photon (No API Key Required)
+        document.getElementById('searchBtn').onclick = function() {
+            var query = document.getElementById('locInput').value;
+            if(!query) return;
+
+            // Photon API: Better at understanding landmarks and companies
+            var url = 'https://photon.komoot.io/api/?q=' + encodeURIComponent(query) + '&lat=56.9&lon=24.1&limit=1';
+
+            fetch(url)
+                .then(function(res) { return res.json(); })
+                .then(function(data) {
+                    if(data.features.length > 0) {
+                        var coords = data.features[0].geometry.coordinates;
+                        map.setView([coords[1], coords[0]], 18); // Center and Zoom
+                    } else {
+                        alert("Site not found. Try street name or city.");
+                    }
+                });
         };
 
+        // 4. Feasibility Calculations
         map.on(L.Draw.Event.CREATED, function (e) {
-            drawnItems.clearLayers(); 
-            const layer = e.layer;
+            drawnItems.clearLayers();
+            var layer = e.layer;
             drawnItems.addLayer(layer);
-            const geojson = layer.toGeoJSON();
-            const area = turf.area(geojson);
-            runAnalysis(area);
+            var area = turf.area(layer.toGeoJSON());
+            
+            // Logic
+            document.getElementById('areaDisplay').innerText = Math.round(area).toLocaleString();
+            var savings = Math.round((area / 6.8) * 1050 * 0.85 * 0.24);
+            document.getElementById('savingsVal').innerText = '€' + savings.toLocaleString();
+            
+            // Show result
+            document.getElementById('placeholder').style.display = 'none';
+            document.getElementById('savingsCard').classList.remove('hidden');
+            
+            if(window.innerWidth < 768) document.getElementById('sidebar').classList.add('active');
         });
 
-        function runAnalysis(area) {
-            document.getElementById('areaDisplay').innerText = Math.round(area).toLocaleString();
-            const capacity = (area / 6.8).toFixed(1); 
-            const production = capacity * MARKET_DATA.yieldFactor * MARKET_DATA.efficiency;
-            const savings = production * MARKET_DATA.energyRate; //
-            const investment = capacity * MARKET_DATA.capexPerKW;
-            const payback = (investment / savings).toFixed(1); //
-            updateUIPanel(savings, capacity, payback);
-        }
-
-        function updateUIPanel(savings, capacity, payback) {
-            const container = document.getElementById('resultsContainer');
-            // Using backticks for the template literal string
-            const html = `
-                <div class="glass-panel p-7 rounded-[2.5rem] border-l-[6px] border-orange-500">
-                    <p class="text-[9px] font-bold text-orange-500 uppercase tracking-[0.2em] mb-2">Annual Savings Impact</p>
-                    <p class="text-4xl font-black text-white">€${Math.round(savings).toLocaleString()}</p>
-                </div>
-<div class="glass-panel p-7 rounded-[2.5rem] border-l-[6px] border-blue-500">
-                    <p class="text-[9px] font-bold text-blue-400 uppercase tracking-[0.2em] mb-2">Technical Capacity</p>
-                    <p class="text-3xl font-black text-white">${capacity} <span class="text-sm font-medium text-slate-500 uppercase">kWp</span></p>
-                </div>
-                <div class="glass-panel p-7 rounded-[2.5rem] border-l-[6px] border-emerald-500">
-                    <p class="text-[9px] font-bold text-emerald-400 uppercase tracking-[0.2em] mb-2">Investment Payback</p>
-                    <p class="text-3xl font-black text-white">${payback} <span class="text-sm font-medium text-slate-500 uppercase">Years</span></p>
-                </div>`;
-            container.innerHTML = html;
-        }
+        // 5. Sidebar Toggle
+        var sidebar = document.getElementById('sidebar');
+        document.getElementById('menuBtn').onclick = function() { sidebar.classList.add('active'); };
+        document.getElementById('closeBtn').onclick = function() { sidebar.classList.remove('active'); };
     </script>
 </body>
 </html>
