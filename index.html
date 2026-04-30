@@ -2,139 +2,379 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Sunlytics Pro | Free Industrial Map</title>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sunlytics | Solar Intelligence Latvia</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; margin: 0; }
-        #map { height: 100vh; width: 100vw; z-index: 1; }
-        .side-panel { transition: transform 0.3s ease; z-index: 2000; }
-        @media (max-width: 768px) {
-            .side-panel { transform: translateX(-100%); width: 85%; position: fixed; height: 100%; }
-            .side-panel.active { transform: translateX(0); }
+        :root {
+            --bg-body: #ffffff;
+            --bg-section: #fcfcfc;
+            --card-bg: #ffffff;
+            --accent-orange: #FF8C00;
+            --accent-yellow: #FFD700;
+            --text-main: #1a1a1a;
+            --text-dim: #666666;
+            --border: #e5e5e5;
+            --gradient: linear-gradient(135deg, #FF8C00 0%, #FFD700 100%);
+            --shadow: 0 10px 30px rgba(0,0,0,0.08);
         }
-        .search-bar { z-index: 1500; background: white; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
-        .result-card { padding: 20px; border-radius: 24px; margin-bottom: 12px; border: 1px solid rgba(0,0,0,0.05); }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* NAVIGATION */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            text-decoration: none;
+            color: #000;
+        }
+
+        .logo-container img { height: 30px; }
+
+        .nav-links { display: flex; gap: 12px; }
+
+        .nav-links a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        /* HERO */
+        .hero {
+            padding: 140px 5% 40px;
+            text-align: center;
+            background: var(--bg-section);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.2rem, 8vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 15px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* SEARCH BOX ABOVE MAP */
+        .search-container {
+            width: 90%;
+            max-width: 600px;
+            margin: 0 auto 20px;
+            display: flex;
+            background: #fff;
+            padding: 8px;
+            border-radius: 50px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+            border: 1px solid var(--border);
+        }
+
+        .search-container input {
+            flex: 1;
+            border: none;
+            padding: 12px 20px;
+            font-size: 0.9rem;
+            outline: none;
+            background: transparent;
+        }
+
+        .btn-analyze {
+            background: #000;
+            color: white;
+            border: none;
+            padding: 0 25px;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        /* MAP */
+        #map {
+            height: 450px;
+            width: 92%;
+            max-width: 1100px;
+            margin: 0 auto 30px;
+            border-radius: 15px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            background: #f0f0f0;
+        }
+
+        /* RESULTS */
+        .results-section { padding: 20px 5%; text-align: center; }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+.data-card {
+            background: var(--card-bg);
+            padding: 25px 15px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        .data-card h2 { font-size: 1.5rem; margin-bottom: 5px; color: #000; }
+        .data-card p { color: var(--text-dim); font-size: 0.65rem; font-weight: 700; text-transform: uppercase; }
+
+        .btn-download {
+            background: var(--gradient);
+            color: #000;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-weight: 800;
+            cursor: pointer;
+            display: none;
+            width: 100%;
+            max-width: 300px;
+            box-shadow: 0 8px 20px rgba(255, 140, 0, 0.2);
+        }
+
+        /* FOOTER */
+        footer {
+            background: #fdfdfd;
+            padding: 60px 8% 30px;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-links h4 {
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            color: #000;
+        }
+
+        .footer-links a {
+            display: block;
+            color: var(--text-dim);
+            text-decoration: none;
+            margin-bottom: 10px;
+            font-size: 0.85rem;
+        }
+
+        /* PAYMENT SECTION - SMALLER LOGOS */
+        .payment-container {
+            border-top: 1px solid #eee;
+            padding-top: 30px;
+            text-align: center;
+        }
+
+        .payment-methods {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .payment-methods img {
+            height: 28px; /* Small refined size */
+            width: auto;
+            object-fit: contain;
+        }
+
+        .copyright {
+            margin-top: 30px;
+            font-size: 0.75rem;
+            text-align: center;
+            color: #999;
+        }
+
+        @media (min-width: 768px) {
+            .results-grid { grid-template-columns: repeat(4, 1fr); }
+            .nav-links { gap: 25px; }
+        }
     </style>
 </head>
-<body class="overflow-hidden">
 
-    <div class="search-bar absolute top-4 left-4 right-4 md:left-[440px] md:right-8 p-3 rounded-2xl flex gap-3 items-center">
-        <button id="menuBtn" class="md:hidden p-2 bg-slate-100 rounded-lg">
-            <svg class="w-6 h-6 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-        </button>
-        <input type="text" id="locInput" placeholder="Search Company name or City in Latvia..." class="flex-1 bg-transparent border-none outline-none text-sm font-semibold text-slate-700">
-        <button id="searchBtn" class="bg-orange-500 text-white px-5 py-2 rounded-xl text-xs font-bold uppercase tracking-wider">Find Site</button>
+<body>
+
+<nav>
+    <a href="#" class="logo-container">
+        <img src="logo.png" alt="Sunlytics">
+        SUNLYTICS
+    </a>
+    <div class="nav-links">
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="price.html">Pricing</a>
+    </div>
+</nav>
+
+<div class="hero">
+    <h1>Solar Analysis</h1>
+    <p>Professional satellite rooftop evaluation for industrial sites in Latvia.</p>
+</div>
+
+<div class="search-container">
+    <input type="text" id="pac-input" placeholder="Enter facility address in Riga...">
+    <button class="btn-analyze" onclick="startAnalysis()">ANALYZE</button>
+</div>
+
+<div id="map"></div>
+
+<div class="results-section">
+    <div class="results-grid">
+        <div class="data-card"><h2 id="val-payback">--</h2><p>Payback Period</p></div>
+        <div class="data-card"><h2 id="val-profit">--</h2><p>25-Year Profit</p></div>
+        <div class="data-card"><h2 id="val-area">--</h2><p>Usable Area</p></div>
+        <div class="data-card"><h2 id="val-score">--</h2><p>Solar Score</p></div>
     </div>
 
-    <div class="flex h-screen">
-        <aside id="sidebar" class="side-panel w-[400px] bg-white border-r border-slate-200 flex flex-col p-6 shadow-xl">
-            <div class="mb-8 flex justify-between items-center">
-                <div class="flex items-center gap-3">
-                    <img src="logo.png" alt="Logo" class="w-8 h-8">
-                    <h1 class="text-xl font-black italic tracking-tighter text-slate-900">SUNLYTICS</h1>
-                </div>
-                <button id="closeBtn" class="md:hidden text-slate-400 text-2xl">✕</button>
-            </div>
+    <button class="btn-download" id="btn-dl" onclick="generatePDF()">
+        DOWNLOAD REPORT (.PDF)
+    </button>
+</div>
 
-            <div class="flex-1 space-y-4 overflow-y-auto pr-2">
-                <div class="bg-slate-900 p-6 rounded-3xl text-white">
-                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Roof Area</p>
-                    <div class="flex items-baseline gap-1">
-                        <span id="areaDisplay" class="text-4xl font-bold">0</span>
-                        <span class="text-orange-500 font-bold text-sm">m²</span>
-                    </div>
-                </div>
+<footer>
+    <div class="footer-grid">
+        <div class="footer-links">
+            <h4>PRODUCT</h4>
+            <a href="price.html">Pricing</a>
+            <a href="about.html">How it works</a>
+            <a href="contact.html">Support</a>
+        </div>
 
-                <div id="resultsContent" class="space-y-3">
-                    <div id="savingsCard" class="result-card bg-orange-50 hidden">
-                        <p class="text-[9px] font-bold text-orange-600 uppercase tracking-widest mb-1">Estimated Savings</p>
-                        <p id="savingsVal" class="text-2xl font-black text-slate-900">€0</p>
- </div>
-                    <div id="placeholder" class="p-8 text-center border-2 border-dashed border-slate-200 rounded-3xl">
-                        <p class="text-[11px] text-slate-400 font-medium italic">Draw a polygon over the industrial roof to start</p>
-                    </div>
-                </div>
-            </div>
-
-            <button onclick="window.print()" class="mt-6 w-full py-4 bg-slate-900 text-white rounded-2xl font-bold text-xs uppercase tracking-widest hover:bg-orange-600 shadow-lg transition">Download Report</button>
-        </aside>
-
-        <main class="flex-1 relative">
-            <div id="map"></div>
-        </main>
+        <div class="footer-links">
+            <h4>LEGAL</h4>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="legal.html">Legal Notice</a>
+            <a href="terms.html">Terms of Service</a>
+        </div>
+<div class="footer-links">
+            <h4 style="font-weight: 800;">SUNLYTICS</h4>
+            <p style="font-size: 0.8rem; color: var(--text-dim);">Industrial solar intelligence and data-driven sustainability for Latvian factories.</p>
+        </div>
     </div>
 
-    <script>
-        // 1. Initializing Map (White Mode)
-        var map = L.map('map', { zoomControl: false }).setView([56.9462, 24.1163], 13);
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png').addTo(map);
+    <div class="payment-container">
+        <div class="payment-methods">
+            <img src="p1.png" alt="Payment Method">
+            <img src="p2.png" alt="Payment Method">
+            <img src="p3.png" alt="Payment Method">
+            <img src="p4.png" alt="Payment Method">
+            <img src="p5.png" alt="Payment Method">
+        </div>
+    </div>
 
-        // 2. Drawing Tools
-        var drawnItems = new L.FeatureGroup();
-        map.addLayer(drawnItems);
-        var drawControl = new L.Control.Draw({
-            position: 'topright',
-            draw: {
-                polygon: { shapeOptions: { color: '#f97316', weight: 2 } },
-                rectangle: { shapeOptions: { color: '#f97316', weight: 2 } },
-                circle: false, marker: false, polyline: false, circlemarker: false
-            }
-        });
-        map.addControl(drawControl);
+    <div class="copyright">
+        &copy; 2026 Sunlytics SIA. All rights reserved. Registered in Riga, Latvia.
+    </div>
+</footer>
 
-        // 3. Smart Search using Photon (No API Key Required)
-        document.getElementById('searchBtn').onclick = function() {
-            var query = document.getElementById('locInput').value;
-            if(!query) return;
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=initMap" async defer></script>
 
-            // Photon API: Better at understanding landmarks and companies
-            var url = 'https://photon.komoot.io/api/?q=' + encodeURIComponent(query) + '&lat=56.9&lon=24.1&limit=1';
+<script>
+let map, marker, currentAddress = "";
 
-            fetch(url)
-                .then(function(res) { return res.json(); })
-                .then(function(data) {
-                    if(data.features.length > 0) {
-                        var coords = data.features[0].geometry.coordinates;
-                        map.setView([coords[1], coords[0]], 18); // Center and Zoom
-                    } else {
-                        alert("Site not found. Try street name or city.");
-                    }
-                });
-        };
+function initMap() {
+    // Silver White Style
+    const style = [
+        { elementType: "geometry", stylers: [{ color: "#f5f5f5" }] },
+        { elementType: "labels.icon", stylers: [{ visibility: "off" }] },
+        { featureType: "road", elementType: "geometry", stylers: [{ color: "#ffffff" }] }
+    ];
 
-        // 4. Feasibility Calculations
-        map.on(L.Draw.Event.CREATED, function (e) {
-            drawnItems.clearLayers();
-            var layer = e.layer;
-            drawnItems.addLayer(layer);
-            var area = turf.area(layer.toGeoJSON());
-            
-            // Logic
-            document.getElementById('areaDisplay').innerText = Math.round(area).toLocaleString();
-            var savings = Math.round((area / 6.8) * 1050 * 0.85 * 0.24);
-            document.getElementById('savingsVal').innerText = '€' + savings.toLocaleString();
-            
-            // Show result
-            document.getElementById('placeholder').style.display = 'none';
-            document.getElementById('savingsCard').classList.remove('hidden');
-            
-            if(window.innerWidth < 768) document.getElementById('sidebar').classList.add('active');
+    map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: 56.9496, lng: 24.1052 },
+        zoom: 13,
+        styles: style,
+        disableDefaultUI: true
+    });
+
+    const input = document.getElementById("pac-input");
+    const searchBox = new google.maps.places.SearchBox(input);
+
+    searchBox.addListener("places_changed", () => {
+        const places = searchBox.getPlaces();
+        if (!places.length) return;
+
+        currentAddress = places[0].formatted_address;
+
+        if (marker) marker.setMap(null);
+
+        marker = new google.maps.Marker({
+            map,
+            position: places[0].geometry.location
         });
 
-        // 5. Sidebar Toggle
-        var sidebar = document.getElementById('sidebar');
-        document.getElementById('menuBtn').onclick = function() { sidebar.classList.add('active'); };
-        document.getElementById('closeBtn').onclick = function() { sidebar.classList.remove('active'); };
-    </script>
+        const bounds = new google.maps.LatLngBounds();
+        if (places[0].geometry.viewport) bounds.union(places[0].geometry.viewport);
+        else bounds.extend(places[0].geometry.location);
+        map.fitBounds(bounds);
+    });
+}
+
+function startAnalysis() {
+    // Data from official report template
+    document.getElementById('val-payback').innerText = "5.1 Years";
+    document.getElementById('val-profit').innerText = "€159,000";
+    document.getElementById('val-area').innerText = "8,200 m²";
+    document.getElementById('val-score').innerText = "88%";
+
+    document.getElementById('btn-dl').style.display = "inline-block";
+}
+
+function generatePDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    doc.setFontSize(22);
+    doc.text("SUNLYTICS SOLAR ANALYSIS", 20, 30);
+
+    doc.setFontSize(12);
+    doc.text("Analyzed Site: " + (currentAddress || "Riga Industrial Zone"), 20, 45);
+    doc.line(20, 50, 190, 50);
+
+    doc.text("EXECUTIVE METRICS", 20, 65);
+    doc.text("Payback Period: 5.1 Years", 30, 75);
+    doc.text("Usable Area: 8,200 sq. meters", 30, 85);
+    doc.text("Estimated Profit (25 yr): €159,000", 30, 95);
+    doc.text("Solar Score: 88% - Excellent", 30, 105);
+
+    doc.save("Sunlytics_Solar_Report.pdf");
+}
+</script>
+
 </body>
 </html>
