@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing | Sunlytics Solar Intelligence</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-body: #ffffff;
+            --bg-section: #fcfcfc;
+            --accent-orange: #FF8C00; 
+            --accent-yellow: #FFD700;
+            --text-main: #1a1a1a;
+            --text-dim: #666666;
+            --border: #e5e5e5;
+            --gradient: linear-gradient(135deg, #FF8C00 0%, #FFD700 100%);
+            --shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.7;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            text-decoration: none;
+            color: #000;
+        }
+
+        .logo-container img { height: 30px; }
+
+        .nav-links { display: flex; gap: 15px; }
+
+        .nav-links a { 
+            color: var(--text-main); 
+            text-decoration: none; 
+            font-size: 0.75rem; 
+            font-weight: 700; 
+            text-transform: uppercase;
+        }
+
+        /* --- HEADER --- */
+        header {
+            padding: 160px 8% 60px;
+            background: var(--bg-section);
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: clamp(2.2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: var(--gradient);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        header p { color: var(--text-dim); max-width: 600px; margin: 0 auto; }
+
+        /* --- PRICING GRID --- */
+        .pricing-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 60px 8%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .price-card {
+            background: #fff;
+            padding: 50px 40px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .price-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+        }
+
+        .featured {
+            border: 2px solid var(--accent-orange);
+            transform: scale(1.05);
+        }
+
+        .featured:hover { transform: translateY(-10px) scale(1.05); }
+
+        .badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gradient);
+            color: #fff;
+            padding: 5px 20px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+ .price-card h3 { font-size: 1.2rem; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+        .price-card .cost { font-size: 3rem; font-weight: 800; margin-bottom: 25px; }
+        .price-card .cost span { font-size: 1rem; color: var(--text-dim); font-weight: 400; }
+
+        .features-list { list-style: none; margin-bottom: 35px; text-align: left; }
+        .features-list li { margin-bottom: 12px; font-size: 0.9rem; color: var(--text-dim); display: flex; align-items: center; gap: 10px; }
+        .features-list li::before { content: '✓'; color: var(--accent-orange); font-weight: 800; }
+
+        .btn {
+            display: block;
+            padding: 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            transition: 0.3s;
+        }
+
+        .btn-outline { border: 1px solid #000; color: #000; }
+        .btn-outline:hover { background: #000; color: #fff; }
+
+        .btn-solid { background: #000; color: #fff; }
+        .btn-solid:hover { opacity: 0.8; }
+
+        /* --- FOOTER --- */
+        footer {
+            background: #fdfdfd;
+            padding: 60px 8% 30px;
+            border-top: 1px solid var(--border);
+            margin-top: 80px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-links h4 { font-size: 0.9rem; margin-bottom: 15px; color: #000; }
+        .footer-links a { display: block; color: var(--text-dim); text-decoration: none; margin-bottom: 10px; font-size: 0.85rem; }
+
+        .payment-methods {
+            display: flex; gap: 15px; justify-content: center; padding-top: 30px; border-top: 1px solid #eee;
+        }
+        .payment-methods img { height: 22px; width: auto; object-fit: contain; }
+
+        @media (max-width: 768px) {
+            .featured { transform: scale(1); }
+            .featured:hover { transform: translateY(-10px); }
+            header { padding: 140px 5% 40px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo-container">
+            <img src="logo.png" alt="Sunlytics">
+            SUNLYTICS
+        </a>
+        <div class="nav-links">
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+            <a href="price.html">Pricing</a>
+        </div>
+    </nav>
+
+    <header>
+        <h1>Scalable Solar Intelligence</h1>
+        <p>Choose the diagnostic depth that fits your industrial portfolio. From instant scans to CFO-ready financial architecture.</p>
+    </header>
+
+    <div class="pricing-container">
+        <div class="price-card">
+            <h3>Diagnostic</h3>
+            <div class="cost">€0<span>/search</span></div>
+            <ul class="features-list">
+                <li>Instant Rooftop Scanning</li>
+                <li>Preliminary kWp Estimate</li>
+                <li>Standard Solar Yield Map</li>
+                <li>Latvia & Finland Coverage</li>
+            </ul>
+            <a href="index.html" class="btn btn-outline">Start Free Scan</a>
+        </div>
+
+        <div class="price-card featured">
+            <div class="badge">Most Popular</div>
+            <h3>Professional</h3>
+            <div class="cost">€150<span>/report</span></div>
+            <ul class="features-list">
+                <li>Full PDF Technical Archive</li>
+                <li>CFO-Ready ROI Metrics</li>
+                <li>3D Shadow Modeling</li>
+                <li>Verified Installer Network</li>
+            </ul>
+            <a href="contact.html" class="btn btn-solid">Purchase Report</a>
+        </div>
+
+        <div class="price-card">
+<h3>Enterprise</h3>
+            <div class="cost">Custom</div>
+            <ul class="features-list">
+                <li>Multi-Site Portfolios</li>
+                <li>Structural Integrity Checks</li>
+                <li>Grid Capacity Analysis</li>
+                <li>Dedicated Account Manager</li>
+            </ul>
+            <a href="contact.html" class="btn btn-outline">Contact Sales</a>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-links">
+                <h4>PRODUCT</h4>
+                <a href="price.html">Pricing</a>
+                <a href="about.html">How it works</a>
+                <a href="contact.html">Support</a>
+            </div>
+            <div class="footer-links">
+                <h4>LEGAL</h4>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="legal.html">Legal Notice</a>
+                <a href="terms.html">Terms of Service</a>
+            </div>
+            <div class="footer-links">
+                <h4 style="font-weight: 800;">SUNLYTICS</h4>
+                <p style="font-size: 0.8rem; color: var(--text-dim);">The Intelligence Behind the Array.</p>
+            </div>
+        </div>
+
+        <div class="payment-methods">
+            <img src="p1.png" alt="Visa">
+            <img src="p2.png" alt="MasterCard">
+            <img src="p3.png" alt="Maestro">
+            <img src="p4.png" alt="Paypal">
+            <img src="p5.png" alt="Local">
+        </div>
+        </div>
+    </footer>
+
+</body>
+</html>

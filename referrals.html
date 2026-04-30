@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network | Sunlytics Solar Partners</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-body: #ffffff;
+            --bg-section: #fcfcfc;
+            --accent-orange: #FF8C00; 
+            --text-main: #1a1a1a;
+            --text-dim: #666666;
+            --border: #e5e5e5;
+            --gradient: linear-gradient(135deg, #FF8C00 0%, #FFD700 100%);
+            --shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.7;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            text-decoration: none;
+            color: #000;
+        }
+
+        .logo-container img { height: 30px; }
+
+        .nav-links { display: flex; gap: 15px; }
+
+        .nav-links a { 
+            color: var(--text-main); 
+            text-decoration: none; 
+            font-size: 0.75rem; 
+            font-weight: 700; 
+            text-transform: uppercase;
+        }
+
+        /* --- HEADER --- */
+        header {
+            padding: 160px 8% 60px;
+            background: var(--bg-section);
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: clamp(2.2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: var(--gradient);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        header p { color: var(--text-dim); max-width: 700px; margin: 0 auto; }
+
+        /* --- PARTNER NETWORK GRID --- */
+        .network-section {
+            padding: 60px 8%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .filter-bar {
+            margin-bottom: 40px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 20px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            background: #fff;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .filter-btn.active {
+            background: #000;
+            color: #fff;
+            border-color: #000;
+        }
+
+        .partner-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .partner-card {
+            background: #fff;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            padding: 30px;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .partner-card:hover {
+            box-shadow: var(--shadow);
+            transform: translateY(-5px);
+        }
+
+        .partner-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+.partner-logo {
+            width: 50px;
+            height: 50px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.2rem;
+        }
+
+        .partner-info h3 { font-size: 1.1rem; font-weight: 800; }
+        .partner-info p { font-size: 0.8rem; color: var(--text-dim); }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #f5f5f5;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin-top: 10px;
+            text-transform: uppercase;
+        }
+
+        .partner-desc {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            margin: 20px 0;
+            min-height: 60px;
+        }
+
+        .connect-btn {
+            display: block;
+            text-align: center;
+            padding: 12px;
+            background: #000;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .verified-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: #28a745;
+            font-size: 0.7rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: #fdfdfd;
+            padding: 60px 8% 30px;
+            border-top: 1px solid var(--border);
+            margin-top: 80px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-links h4 { font-size: 0.9rem; margin-bottom: 15px; color: #000; }
+        .footer-links a { display: block; color: var(--text-dim); text-decoration: none; margin-bottom: 10px; font-size: 0.85rem; }
+
+        .payment-methods {
+            display: flex; gap: 15px; justify-content: center; padding-top: 30px; border-top: 1px solid #eee;
+        }
+        .payment-methods img { height: 22px; width: auto; object-fit: contain; }
+
+        .copyright { margin-top: 30px; font-size: 0.75rem; text-align: center; color: #999; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo-container">
+            <img src="logo.png" alt="Sunlytics">
+            SUNLYTICS
+        </a>
+        <div class="nav-links">
+            <a href="about.html">About</a>
+            <a href="referrals.html">Network</a>
+            <a href="price.html">Pricing</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </nav>
+
+    <header>
+        <h1>Vetted Installation Network</h1>
+        <p>We connect our clients with certified solar providers across Northern Europe. Every partner in our network is audited for industrial-scale technical compliance.</p>
+    </header>
+
+    <section class="network-section">
+        <div class="filter-bar">
+            <button class="filter-btn active">All Partners</button>
+            <button class="filter-btn">Latvia</button>
+            <button class="filter-btn">Finland</button>
+            <button class="filter-btn">Industrial Specialists</button>
+        </div>
+
+        <div class="partner-grid">
+            <div class="partner-card">
+                <div class="verified-badge">● SUNLYTICS VETTED</div>
+                <div class="partner-header">
+                    <div class="partner-logo" style="color: #0044cc;">B</div>
+                    <div class="partner-info">
+                        <h3>Baltic Solar Systems</h3>
+ <p>Riga, Latvia</p>
+                    </div>
+                </div>
+                <span class="tag">Roof Specialists</span>
+                <p class="partner-desc">Leading installer for manufacturing plants in the Baltics with a focus on high-durability mounting systems.</p>
+                <a href="contact.html" class="connect-btn">Request Quote</a>
+            </div>
+
+            <div class="partner-card">
+                <div class="verified-badge">● SUNLYTICS VETTED</div>
+                <div class="partner-header">
+                    <div class="partner-logo" style="color: #e6b800;">N</div>
+                    <div class="partner-info">
+                        <h3>Nordic Grid Solutions</h3>
+                        <p>Helsinki, Finland</p>
+                    </div>
+                </div>
+                <span class="tag">Utility Scale</span>
+                <p class="partner-desc">Specializing in multi-site industrial portfolios and high-voltage grid integration across Southern Finland.</p>
+                <a href="contact.html" class="connect-btn">Request Quote</a>
+            </div>
+
+            <div class="partner-card">
+                <div class="verified-badge">● SUNLYTICS VETTED</div>
+                <div class="partner-header">
+                    <div class="partner-logo" style="color: #ff4d4d;">E</div>
+                    <div class="partner-info">
+                        <h3>EcoVolt Industrial</h3>
+                        <p>Tallinn / Pan-Baltic</p>
+                    </div>
+                </div>
+                <span class="tag">EPC Provider</span>
+                <p class="partner-desc">Full Engineering, Procurement, and Construction (EPC) services for logistics hubs and cold storage facilities.</p>
+                <a href="contact.html" class="connect-btn">Request Quote</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-links">
+                <h4>NETWORK</h4>
+                <a href="referrals.html">Become a Partner</a>
+                <a href="contact.html">Auditing Process</a>
+                <a href="referrals.html">Directory</a>
+            </div>
+            <div class="footer-links">
+                <h4>PRODUCT</h4>
+                <a href="price.html">Pricing</a>
+                <a href="about.html">Mission</a>
+                <a href="contact.html">Support</a>
+            </div>
+            <div class="footer-links">
+                <h4 style="font-weight: 800;">SUNLYTICS</h4>
+                <p style="font-size: 0.8rem; color: var(--text-dim);">Curated Ecosystem Access for the 90-day Transition.</p>
+            </div>
+        </div>
+
+        <div class="payment-methods">
+            <img src="p1.png" alt="Visa">
+            <img src="p2.png" alt="MasterCard">
+            <img src="p3.png" alt="Maestro">
+            <img src="p4.png" alt="Paypal">
+            <img src="p5.png" alt="Local">
+        </div>
+
+        <div class="copyright">
+            &copy; 2026 Sunlytics SIA. All rights reserved. Registered in Riga, Latvia.
+        </div>
+    </footer>
+
+</body>
+</html>

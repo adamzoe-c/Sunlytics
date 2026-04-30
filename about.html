@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | Sunlytics Solar Intelligence</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-body: #ffffff;
+            --bg-section: #fcfcfc;
+            --accent-orange: #FF8C00; 
+            --accent-yellow: #FFD700;
+            --text-main: #1a1a1a;
+            --text-dim: #666666;
+            --border: #e5e5e5;
+            --gradient: linear-gradient(135deg, #FF8C00 0%, #FFD700 100%);
+            --shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            text-decoration: none;
+            color: #000;
+        }
+
+        .logo-container img { height: 30px; }
+
+        .nav-links { display: flex; gap: 15px; }
+
+        .nav-links a { 
+            color: var(--text-main); 
+            text-decoration: none; 
+            font-size: 0.75rem; 
+            font-weight: 700; 
+            text-transform: uppercase;
+        }
+
+        /* --- HEADER & GRADIENT FIX --- */
+        header {
+            padding: 160px 8% 60px;
+            background: var(--bg-section);
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: clamp(2.2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: var(--gradient);
+            /* Standard property for compatibility */
+            background-clip: text;
+            /* Vendor prefix for Chrome/Safari */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        header p {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            color: var(--text-dim);
+            font-weight: 300;
+        }
+
+        /* --- GRID LAYOUT --- */
+        section { padding: 60px 8%; }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 50px;
+            align-items: center;
+        }
+
+        h2 { font-size: 1.8rem; margin-bottom: 20px; font-weight: 800; color: #000; }
+        
+        .accent-bar {
+            width: 50px;
+            height: 4px;
+            background: var(--gradient);
+            margin-bottom: 20px;
+            border-radius: 2px;
+        }
+
+        /* --- SATELLITE IMAGE --- */
+        .img-box {
+            width: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .img-box img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+        }
+
+        /* --- PILLAR SECTION (CLEANED) --- */
+        .pillar-container {
+            background: var(--bg-section);
+            padding: 80px 8%;
+        }
+
+        .pillar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+ .pillar-card {
+            background: #ffffff;
+            padding: 40px 30px;
+            border-radius: 15px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .pillar-card:hover { transform: translateY(-8px); }
+
+        .pillar-card h4 {
+            color: #000;
+            font-size: 1.1rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pillar-card h4::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--accent-orange);
+            border-radius: 50%;
+        }
+
+        .pillar-card p { font-size: 0.9rem; color: var(--text-dim); }
+
+        /* --- FOOTER --- */
+        footer {
+            background: #fdfdfd;
+            padding: 60px 8% 30px;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-links h4 { font-size: 0.9rem; margin-bottom: 15px; color: #000; }
+        .footer-links a { display: block; color: var(--text-dim); text-decoration: none; margin-bottom: 10px; font-size: 0.85rem; }
+
+        .payment-methods {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            padding-top: 30px;
+            border-top: 1px solid #eee;
+        }
+
+        .payment-methods img { height: 22px; width: auto; object-fit: contain; }
+
+        .copyright { margin-top: 30px; font-size: 0.75rem; text-align: center; color: #999; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo-container">
+            <img src="logo.png" alt="Sunlytics">
+            SUNLYTICS
+        </a>
+        <div class="nav-links">
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+            <a href="price.html">Pricing</a>
+        </div>
+    </nav>
+
+    <header>
+        <h1>Digital Architecture for the <br>Energy Transition</h1>
+        <p>Sunlytics is a specialized digital consultancy focused on architecting the future of industrial solar energy in the Baltic and Nordic regions.</p>
+    </header>
+
+    <section>
+        <div class="grid-2">
+            <div>
+                <div class="accent-bar"></div>
+                <h2>Mission & Vision</h2>
+                <p style="margin-bottom: 20px;"><strong>Mission:</strong> To accelerate the adoption of renewable energy by providing industrial leaders with high-precision digital tools.</p>
+                <p><strong>Vision:</strong> To become the primary digital gateway for industrial solar intelligence in Northern Europe.</p>
+            </div>
+            <div class="img-box">
+                <img src="satellite.jpg" alt="Satellite Analysis">
+            </div>
+        </div>
+    </section>
+
+    <section class="pillar-container">
+        <div style="text-align: center; margin-bottom: 40px;">
+            <div class="accent-bar" style="margin: 0 auto 20px;"></div>
+            <h2>Core Business Pillars</h2>
+        </div>
+        <div class="pillar-grid">
+            <div class="pillar-card">
+                <h4>Precision Engineering</h4>
+                <p>Advanced geospatial libraries and custom algorithms providing rooftop analysis that accounts for Northern European climate variables.</p>
+            </div>
+            <div class="pillar-card">
+                <h4>Visual Transparency</h4>
+                <p>Our Solar Exposure Heatmaps allow CEOs to see their future energy yield before any physical construction begins.</p>
+ </div>
+            <div class="pillar-card">
+                <h4>Scalable Independence</h4>
+                <p>By leveraging robust open-source technologies, we offer agile and cost-effective solutions that outpace traditional consultancy models.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-links">
+                <h4>PRODUCT</h4>
+                <a href="price.html">Pricing</a>
+                <a href="about.html">How it works</a>
+                <a href="contact.html">Support</a>
+            </div>
+            <div class="footer-links">
+                <h4>LEGAL</h4>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="legal.html">Legal Notice</a>
+                <a href="terms.html">Terms of Service</a>
+            </div>
+            <div class="footer-links">
+                <h4 style="font-weight: 800;">SUNLYTICS</h4>
+                <p style="font-size: 0.8rem; color: var(--text-dim);">The Intelligence Behind the Array.</p>
+            </div>
+        </div>
+
+        <div class="payment-methods">
+            <img src="p1.png" alt="Payment">
+            <img src="p2.png" alt="Payment">
+            <img src="p3.png" alt="Payment">
+            <img src="p4.png" alt="Payment">
+            <img src="p5.png" alt="Payment">
+        </div>
+
+        <div class="copyright">
+            &copy; 2026 Sunlytics SIA. All rights reserved. Registered in Riga, Latvia.
+        </div>
+    </footer>
+
+</body>
+</html>

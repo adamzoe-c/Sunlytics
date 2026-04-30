@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | Sunlytics Solar Intelligence</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-body: #ffffff;
+            --bg-section: #fcfcfc;
+            --accent-orange: #FF8C00; 
+            --text-main: #1a1a1a;
+            --text-dim: #666666;
+            --border: #e5e5e5;
+            --gradient: linear-gradient(135deg, #FF8C00 0%, #FFD700 100%);
+            --shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.7;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            text-decoration: none;
+            color: #000;
+        }
+
+        .logo-container img { height: 30px; }
+
+        .nav-links { display: flex; gap: 15px; }
+
+        .nav-links a { 
+            color: var(--text-main); 
+            text-decoration: none; 
+            font-size: 0.75rem; 
+            font-weight: 700; 
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT HEADER --- */
+        header {
+            padding: 160px 8% 60px;
+            background: var(--bg-section);
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: clamp(2.2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: var(--gradient);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* --- CONTACT GRID --- */
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 60px;
+            padding: 60px 8%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .contact-info h2 { font-weight: 800; margin-bottom: 20px; }
+        
+        .info-card {
+            background: #fff;
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+
+        .info-card h4 { font-size: 0.8rem; color: var(--accent-orange); text-transform: uppercase; margin-bottom: 5px; }
+        .info-card p { font-size: 1rem; font-weight: 600; }
+
+        /* --- FORM STYLING --- */
+        .contact-form {
+            background: #fff;
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        .form-group { margin-bottom: 20px; }
+        
+        label { display: block; font-size: 0.8rem; font-weight: 700; margin-bottom: 8px; color: var(--text-dim); }
+        
+        input, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent-orange);
+        }
+ .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: #000;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: opacity 0.3s;
+        }
+
+        .submit-btn:hover { opacity: 0.85; }
+
+        /* --- FOOTER --- */
+        footer {
+            background: #fdfdfd;
+            padding: 60px 8% 30px;
+            border-top: 1px solid var(--border);
+            margin-top: 80px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-links h4 { font-size: 0.9rem; margin-bottom: 15px; color: #000; }
+        .footer-links a { display: block; color: var(--text-dim); text-decoration: none; margin-bottom: 10px; font-size: 0.85rem; }
+
+        .payment-methods {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            padding-top: 30px;
+            border-top: 1px solid #eee;
+        }
+
+        .payment-methods img { height: 22px; width: auto; object-fit: contain; }
+
+        .copyright { margin-top: 30px; font-size: 0.75rem; text-align: center; color: #999; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo-container">
+            <img src="logo.png" alt="Sunlytics">
+            SUNLYTICS
+        </a>
+        <div class="nav-links">
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+            <a href="price.html">Pricing</a>
+        </div>
+    </nav>
+
+    <header>
+        <h1>Connect with Our Experts</h1>
+        <p>Ready to architect your industrial energy transition? Let's discuss your facility's solar potential.</p>
+    </header>
+
+    <div class="contact-container">
+        <div class="contact-info">
+            <h2>Get in Touch</h2>
+            <p style="color: var(--text-dim); margin-bottom: 30px;">
+                Whether you are a facility manager in Riga or a CFO in Helsinki, our team is ready to provide the data you need.
+            </p>
+
+            <div class="info-card">
+                <h4>Primary Region</h4>
+                <p>Latvia & Finland (Nordic-Baltic Hub)</p>
+            </div>
+
+            <div class="info-card">
+                <h4>Digital Consultancy</h4>
+                <p>Based in Egypt</p>
+            </div>
+
+            <div class="info-card">
+                <h4>Direct Email</h4>
+                <p>hello@sunlytics.com</p>
+            </div>
+        </div>
+
+        <div class="contact-form">
+            <form action="#">
+                <div class="form-group">
+                    <label>FULL NAME</label>
+                    <input type="text" placeholder="e.g. Janis Berzins" required>
+                </div>
+                <div class="form-group">
+                    <label>BUSINESS EMAIL</label>
+                    <input type="email" placeholder="name@company.lv" required>
+                </div>
+                <div class="form-group">
+                    <label>FACILITY CAPACITY (kWp)</label>
+                    <input type="text" placeholder="e.g. 250 kWp">
+                </div>
+                <div class="form-group">
+                    <label>MESSAGE</label>
+                    <textarea rows="4" placeholder="How can we help with your energy transition?"></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Send Inquiry</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-links">
+                <h4>PRODUCT</h4>
+ <a href="price.html">Pricing</a>
+                <a href="about.html">How it works</a>
+                <a href="contact.html">Support</a>
+            </div>
+            <div class="footer-links">
+                <h4>LEGAL</h4>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="legal.html">Legal Notice</a>
+                <a href="terms.html">Terms of Service</a>
+            </div>
+            <div class="footer-links">
+                <h4 style="font-weight: 800;">SUNLYTICS</h4>
+                <p style="font-size: 0.8rem; color: var(--text-dim);">The Intelligence Behind the Array.</p>
+            </div>
+        </div>
+
+        <div class="payment-methods">
+            <img src="p1.png" alt="Visa">
+            <img src="p2.png" alt="MasterCard">
+            <img src="p3.png" alt="Maestro">
+            <img src="p4.png" alt="Paypal">
+            <img src="p5.png" alt="Local">
+        </div>
+
+        <div class="copyright">
+            &copy; 2026 Sunlytics SIA. All rights reserved. Registered in Riga, Latvia.
+        </div>
+    </footer>
+
+</body>
+</html>
