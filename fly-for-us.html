@@ -673,12 +673,12 @@
         <span class="logo-text">SUNLYTICS</span>
     </a>
     <ul class="nav-links" id="navLinks">
-        <li><a href="index.html#how-it-works">How it Works</a></li>
-        <li><a href="index.html#pricing">Pricing</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="index.html#weather">Drone Status</a></li>
-        <li><a href="fly-for-us.html" class="active">Fly for Us</a></li>
-        <li><a href="index.html#calculator" class="nav-cta">Free Analysis</a></li>
+        <li><a href="index.html#how-it-works"><span data-i18n="nav_how">How it Works</span></a></li>
+        <li><a href="index.html#pricing"><span data-i18n="nav_pricing">Pricing</span></a></li>
+        <li><a href="about.html"><span data-i18n="nav_about">About</span></a></li>
+        <li><a href="index.html#weather"><span data-i18n="nav_drone">Drone Status</span></a></li>
+        <li><a href="fly-for-us.html" class="active"><span data-i18n="nav_fly">Fly for Us</span></a></li>
+        <li><a href="index.html#calculator" class="nav-cta"><span data-i18n="nav_cta">Free Analysis</span></a></li>
     </ul>
     <div class="nav-right">
         <div class="lang-switcher">
@@ -1046,16 +1046,16 @@
         <div class="footer-links">
             <h4>Product</h4>
             <ul>
-                <li><a href="index.html#how-it-works">How it Works</a></li>
-                <li><a href="index.html#pricing">Pricing</a></li>
-                <li><a href="index.html#calculator">Free Analysis</a></li>
-                <li><a href="index.html#weather">Drone Status</a></li>
+                <li><a href="index.html#how-it-works"><span data-i18n="nav_how">How it Works</span></a></li>
+                <li><a href="index.html#pricing"><span data-i18n="nav_pricing">Pricing</span></a></li>
+                <li><a href="index.html#calculator"><span data-i18n="nav_cta">Free Analysis</span></a></li>
+                <li><a href="index.html#weather"><span data-i18n="nav_drone">Drone Status</span></a></li>
             </ul>
         </div>
-                <div class="footer-links">
+        <div class="footer-links">
             <h4>Contact</h4>
             <ul>
-                <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="contact.html"><span data-i18n="nav_contact">Contact Us</span></a></li>
                 <li><a href="mailto:info@sunlytics.lv">info@sunlytics.lv</a></li>
                 <li><a href="#">sunlytics.lv</a></li>
                 <li><a href="#">Riga, Latvia</a></li>
@@ -1070,19 +1070,22 @@
 
 
 
+<script src="lang.js"></script>
 <script>
     function toggleMenu() {
         document.getElementById('navLinks').classList.toggle('open');
     }
-    function setLang(lang) {
-        document.getElementById('langEN').classList.toggle('active', lang === 'en');
-        document.getElementById('langLV').classList.toggle('active', lang === 'lv');
-        localStorage.setItem('sunlytics-lang', lang);
+
+    function toggleFaq(btn) {
+        const item = btn.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+        // Close all open items
+        document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+        // Open the clicked one if it wasn't already open
+        if (!isOpen) item.classList.add('open');
     }
-    (function() {
-        const saved = localStorage.getItem('sunlytics-lang');
-        if (saved && saved !== 'en') setLang(saved);
-    })();
+
+    document.addEventListener('DOMContentLoaded', initLang);
 </script>
 </body>
 </html>
