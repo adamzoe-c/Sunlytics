@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Mission Images — Sunlytics Pilot Dashboard</title>
+    <style>
+        :root {
+            --orange: #f7971e;
+            --orange-dark: #ff4e00;
+            --navy: #1a1a1a;
+            --white: #ffffff;
+            --off-white: #f5f5f5;
+            --gray: #6b7280;
+            --border: #e8e8e8;
+            --green: #22c55e;
+            --green-dark: #16a34a;
+            --green-bg: #e8f5e9;
+            --red: #dc2626;
+            --red-bg: #ffebee;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--off-white);
+            color: var(--navy);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* ── NAVBAR ── */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 5%;
+            background: rgba(255,255,255,0.97);
+            box-shadow: 0 1px 20px rgba(0,0,0,0.07);
+            position: sticky;
+            top: 0;
+            z-index: 200;
+        }
+        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .logo img { width: 36px; height: 36px; object-fit: contain; }
+        .logo-text { font-size: 20px; font-weight: 800; background: linear-gradient(135deg, var(--orange), var(--orange-dark)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 1px; }
+        .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--navy); font-weight: 500; font-size: 15px; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--orange); }
+        .nav-cta { background: linear-gradient(135deg, var(--orange), var(--orange-dark)); color: white !important; padding: 11px 26px; border-radius: 50px; font-weight: 600 !important; }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+        .hamburger span { display: block; width: 24px; height: 2px; background: var(--navy); border-radius: 2px; }
+
+        /* ── PAGE HERO ── */
+        .page-hero {
+            background: white;
+            border-bottom: 1px solid var(--border);
+            padding: 48px 5% 40px;
+        }
+        .page-hero-inner {
+            max-width: 860px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+        .page-hero-text .tag {
+            display: inline-block;
+            background: #fff3e0;
+            color: #c45000;
+            padding: 5px 14px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+        .page-hero-text h1 {
+            font-size: clamp(22px, 3vw, 34px);
+            font-weight: 800;
+            color: var(--navy);
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+        .page-hero-text h1 span {
+            background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .page-hero-text p { color: var(--gray); font-size: 15px; line-height: 1.6; }
+
+        .pilot-badge {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--off-white);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 14px 20px;
+            flex-shrink: 0;
+        }
+        .pilot-badge-icon {
+            width: 40px; height: 40px;
+            background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            color: white;
+        }
+        .pilot-badge-text .name { font-size: 14px; font-weight: 700; color: var(--navy); }
+        .pilot-badge-text .role { font-size: 12px; color: var(--gray); }
+
+        /* ── PROGRESS BAR ── */
+        .progress-bar-wrap {
+            background: white;
+            border-bottom: 1px solid var(--border);
+            padding: 0 5%;
+        }
+        .progress-bar-inner {
+            max-width: 860px;
+            margin: 0 auto;
+            display: flex;
+            align-items: stretch;
+        }
+        .progress-step {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 0;
+            border-bottom: 3px solid transparent;
+            color: var(--gray);
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s;
+            cursor: default;
+        }
+        .progress-step.active {
+            color: var(--orange-dark);
+            border-bottom-color: var(--orange);
+        }
+        .progress-step.done {
+            color: var(--green-dark);
+            border-bottom-color: var(--green);
+        }
+        .step-dot {
+            width: 24px; height: 24px;
+            border-radius: 50%;
+            background: #e8e8e8;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--gray);
+            flex-shrink: 0;
+            transition: all 0.2s;
+        }
+        .progress-step.active .step-dot {
+            background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+            color: white;
+        }
+        .progress-step.done .step-dot {
+            background: var(--green-dark);
+            color: white;
+        }
+
+        /* ── MAIN LAYOUT ── */
+        .main {
+            max-width: 860px;
+            margin: 36px auto;
+            padding: 0 5%;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* ── CARDS ── */
+        .card {
+            background: white;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            padding: 32px 36px;
+        }
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+        .card-icon {
+            width: 44px; height: 44px;
+            border-radius: 14px;
+            background: #fff3e0;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--orange-dark);
+            flex-shrink: 0;
+        }
+        .card-title { font-size: 18px; font-weight: 800; color: var(--navy); }
+        .card-subtitle { font-size: 13px; color: var(--gray); margin-top: 2px; }
+
+        /* ── MISSION ID SECTION ── */
+        .mission-id-row {
+            display: flex;
+            gap: 12px;
+            align-items: flex-end;
+        }
+        .form-group { flex: 1; }
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 7px;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 15px;
+            outline: none;
+            font-family: inherit;
+            background: white;
+            color: var(--navy);
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus, .form-group select:focus { border-color: var(--orange); }
+        .form-group input.valid { border-color: var(--green); background: #f0fdf4; }
+        .form-group input.error { border-color: var(--red); }
+
+        .verify-btn {
+            padding: 14px 24px;
+            background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            white-space: nowrap;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 16px rgba(247,151,30,0.3);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .verify-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(247,151,30,0.4); }
+
+        .mission-info-box {
+            display: none;
+            margin-top: 20px;
+            background: var(--off-white);
+            border-radius: 14px;
+            padding: 20px 24px;
+            border: 1px solid var(--border);
+        }
+        .mission-info-box.visible { display: block; }
+        .mission-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 16px;
+        }
+        .mission-info-item .label { font-size: 11px; font-weight: 700; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+        .mission-info-item .value { font-size: 14px; font-weight: 700; color: var(--navy); }
+        .mission-info-item .value.orange {
+            background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #fef3c7;
+            color: #92400e;
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .status-pill.active { background: var(--green-bg); color: var(--green-dark); }
+
+        /* ── UPLOAD ZONE ── */
+        .upload-zone {
+            border: 2px dashed var(--border);
+            border-radius: 16px;
+            padding: 48px 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.25s;
+            background: #fafafa;
+            position: relative;
+        }
+        .upload-zone:hover, .upload-zone.drag-over {
+            border-color: var(--orange);
+            background: #fff8f0;
+        }
+        .upload-zone input[type="file"] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+        .upload-icon {
+            width: 56px; height: 56px;
+            background: #fff3e0;
+            border-radius: 16px;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 16px;
+            color: var(--orange-dark);
+        }
+        .upload-zone h3 { font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+        .upload-zone p { font-size: 13px; color: var(--gray); line-height: 1.6; }
+        .upload-zone .file-types {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+        .file-type-tag {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 3px 10px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--gray);
+            letter-spacing: 0.5px;
+        }
+
+        /* ── FILE PREVIEW GRID ── */
+        .file-preview-wrap {
+            display: none;
+            margin-top: 20px;
+        }
+        .file-preview-wrap.visible { display: block; }
+        .file-count-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+        }
+        .file-count-bar .count { font-size: 14px; font-weight: 700; color: var(--navy); }
+        .file-count-bar .clear-btn {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 5px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--gray);
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .file-count-bar .clear-btn:hover { border-color: var(--red); color: var(--red); }
+
+        .file-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            gap: 10px;
+        }
+        .file-thumb {
+            aspect-ratio: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            background: var(--off-white);
+            border: 1px solid var(--border);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .file-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .file-thumb .remove-file {
+            position: absolute;
+            top: 4px; right: 4px;
+            width: 20px; height: 20px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+            border: none;
+        }
+        .file-thumb:hover .remove-file { display: flex; }
+        .file-thumb .file-icon { color: var(--gray); }
+        .file-thumb .file-name {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            background: rgba(0,0,0,0.55);
+            color: white;
+            font-size: 9px;
+            padding: 3px 5px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        .more-files-tile {
+            aspect-ratio: 1;
+            border-radius: 10px;
+            background: var(--off-white);
+            border: 1px dashed var(--border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--gray);
+            gap: 4px;
+        }
+
+        /* ── QUALITY CHECKLIST ── */
+        .checklist { display: flex; flex-direction: column; gap: 12px; }
+        .check-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: white;
+            cursor: pointer;
+            transition: border-color 0.2s, background 0.2s;
+            user-select: none;
+        }
+        .check-item.checked { border-color: var(--green); background: #f0fdf4; }
+        .check-box {
+            width: 22px; height: 22px;
+            border-radius: 6px;
+            border: 2px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            margin-top: 1px;
+            transition: all 0.2s;
+            color: transparent;
+        }
+        .check-item.checked .check-box {
+            background: var(--green-dark);
+            border-color: var(--green-dark);
+            color: white;
+        }
+        .check-text h4 { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 3px; }
+        .check-text p { font-size: 13px; color: var(--gray); line-height: 1.5; }
+
+        /* ── NOTES ── */
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 15px;
+            outline: none;
+            font-family: inherit;
+            background: white;
+            color: var(--navy);
+            transition: border-color 0.3s;
+            resize: vertical;
+            min-height: 100px;
+        }
+        .form-group textarea:focus { border-color: var(--orange); }
+
+        /* ── SUBMIT BAR ── */
+        .submit-bar {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 24px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .submit-bar-info { flex: 1; min-width: 200px; }
+        .submit-bar-info .reward {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+        .submit-bar-info .reward-label { font-size: 13px; color: var(--gray); }
+        .submit-btn {
+            background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+            color: white;
+            border: none;
+            padding: 16px 36px;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            box-shadow: 0 6px 24px rgba(247,151,30,0.35);
+            transition: transform 0.25s, box-shadow 0.25s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(247,151,30,0.45); }
+        .submit-btn:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .validation-hints {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 14px;
+        }
+        .hint-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+            background: var(--off-white);
+            color: var(--gray);
+            border: 1px solid var(--border);
+        }
+        .hint-pill.ok { background: var(--green-bg); color: var(--green-dark); border-color: #a7f3c0; }
+        .hint-pill.fail { background: var(--red-bg); color: var(--red); border-color: #fca5a5; }
+
+        /* ── SUCCESS STATE ── */
+        .success-overlay {
+            display: none;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 60px 36px;
+            text-align: center;
+        }
+        .success-overlay.visible { display: block; }
+        .success-circle {
+            width: 80px; height: 80px;
+            background: var(--green-bg);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 24px;
+            color: var(--green-dark);
+        }
+        .success-overlay h2 { font-size: 28px; font-weight: 800; color: var(--navy); margin-bottom: 10px; }
+        .success-overlay p { color: var(--gray); font-size: 15px; line-height: 1.7; max-width: 440px; margin: 0 auto 32px; }
+        .success-meta {
+            display: inline-flex;
+            gap: 32px;
+            background: var(--off-white);
+            border-radius: 16px;
+            padding: 20px 32px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .success-meta-item .label { font-size: 11px; color: var(--gray); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+        .success-meta-item .value { font-size: 18px; font-weight: 800; color: var(--navy); }
+        .success-meta-item .value.green { color: var(--green-dark); }
+        .success-actions { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+        .btn-secondary {
+            background: white;
+            border: 2px solid var(--border);
+            color: var(--navy);
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: border-color 0.2s;
+        }
+        .btn-secondary:hover { border-color: var(--orange); color: var(--orange-dark); }
+
+        /* ── UPLOAD PROGRESS ── */
+        .upload-progress-wrap {
+            display: none;
+            margin-top: 20px;
+        }
+        .upload-progress-wrap.visible { display: block; }
+        .upload-progress-bar-bg {
+            height: 8px;
+            background: var(--off-white);
+            border-radius: 50px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        .upload-progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+            border-radius: 50px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        .upload-progress-label { font-size: 13px; color: var(--gray); text-align: center; }
+
+        /* ── FOOTER ── */
+        footer { background: white; border-top: 1px solid var(--border); color: #1a1a1a; padding: 48px 5% 28px; margin-top: 40px; }
+        .footer-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 36px; margin-bottom: 36px; }
+        .footer-brand p { color: #6b7280; font-size: 14px; margin-top: 10px; max-width: 220px; line-height: 1.6; }
+        .footer-links h4 { font-size: 11px; font-weight: 700; color: #1a1a1a; margin-bottom: 14px; text-transform: uppercase; letter-spacing: 1.5px; }
+        .footer-links ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+        .footer-links ul a { color: #6b7280; text-decoration: none; font-size: 14px; transition: color 0.2s; }
+        .footer-links ul a:hover { color: var(--orange); }
+        .footer-bottom { border-top: 1px solid rgba(30,30,30,0.1); padding-top: 20px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+        .footer-bottom p { color: rgba(30,30,30,0.45); font-size: 13px; }
+        .footer-bottom a { color: var(--orange); text-decoration: none; }
+
+        /* ── MOBILE ── */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+            .nav-links.open { display: flex; flex-direction: column; position: fixed; top: 68px; left: 0; right: 0; background: white; padding: 24px 5%; box-shadow: 0 8px 30px rgba(0,0,0,0.1); gap: 20px; z-index: 199; }
+            .page-hero-inner { flex-direction: column; align-items: flex-start; }
+            .progress-step .step-label { display: none; }
+            .card { padding: 24px 20px; }
+            .mission-id-row { flex-direction: column; align-items: stretch; }
+            .submit-bar { flex-direction: column; align-items: stretch; }
+            .submit-btn { justify-content: center; }
+            .success-meta { gap: 20px; padding: 16px 20px; }
+            .footer-top { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+    <a href="index.html" class="logo">
+        <img src="logo.png" alt="Sunlytics">
+        <span class="logo-text">SUNLYTICS</span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="index.html#how-it-works">How it Works</a></li>
+        <li><a href="index.html#pricing">Pricing</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="fly-for-us.html">Fly for Us</a></li>
+        <li><a href="index.html#calculator" class="nav-cta">Free Analysis</a></li>
+    </ul>
+    <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+    <div class="page-hero-inner">
+        <div class="page-hero-text">
+            <div class="tag">Pilot Dashboard</div>
+            <h1>Upload <span>Mission Images</span></h1>
+            <p>Enter your mission ID, upload your drone images, and get paid automatically once validated.</p>
+        </div>
+        <div class="pilot-badge">
+            <div class="pilot-badge-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21 4 19 2c-2-2-4-2-5.5-.5L10 5 1.8 6.2c-.5.1-.9.6-.6 1.1l1.5 2.5 5.5-1L6 13l-2 1 1 2 2-1 3.5-2.5-1 5.5 2.5 1.5c.5.3 1 0 1.1-.6z"/></svg>
+            </div>
+            <div class="pilot-badge-text">
+                <div class="name">Verified Pilot</div>
+                <div class="role">Sunlytics Partner Network</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- PROGRESS STEPS -->
+<div class="progress-bar-wrap">
+    <div class="progress-bar-inner">
+        <div class="progress-step active" id="pStep1">
+            <div class="step-dot">1</div>
+            <span class="step-label">Mission ID</span>
+        </div>
+        <div class="progress-step" id="pStep2">
+            <div class="step-dot">2</div>
+            <span class="step-label">Upload Images</span>
+        </div>
+        <div class="progress-step" id="pStep3">
+            <div class="step-dot">3</div>
+            <span class="step-label">Quality Check</span>
+        </div>
+        <div class="progress-step" id="pStep4">
+            <div class="step-dot">4</div>
+            <span class="step-label">Submit</span>
+        </div>
+    </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main" id="mainContent">
+
+    <!-- STEP 1: MISSION ID -->
+    <div class="card" id="cardMission">
+        <div class="card-header">
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            </div>
+            <div>
+                <div class="card-title">Mission Details</div>
+                <div class="card-subtitle">Enter the mission ID from your SMS or email alert</div>
+            </div>
+        </div>
+
+        <div class="mission-id-row">
+            <div class="form-group">
+                <label>Mission ID</label>
+                <input type="text" id="missionId" placeholder="e.g. SUN-2026-04821" autocomplete="off">
+            </div>
+            <div class="form-group" style="max-width:180px;">
+                <label>Your Pilot ID</label>
+                <input type="text" id="pilotId" placeholder="e.g. PLT-0094" autocomplete="off">
+            </div>
+            <button class="verify-btn" onclick="verifyMission()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                Verify
+            </button>
+        </div>
+
+        <div class="mission-info-box" id="missionInfoBox">
+            <div class="mission-info-grid">
+                <div class="mission-info-item">
+                    <div class="label">Address</div>
+                    <div class="value" id="infoAddress">—</div>
+                </div>
+                <div class="mission-info-item">
+                    <div class="label">Mission Type</div>
+                    <div class="value" id="infoType">—</div>
+                </div>
+                <div class="mission-info-item">
+                    <div class="label">Images Required</div>
+                    <div class="value" id="infoImages">—</div>
+                </div>
+                <div class="mission-info-item">
+                    <div class="label">Reward</div>
+                    <div class="value orange" id="infoReward">—</div>
+                </div>
+                <div class="mission-info-item">
+                    <div class="label">Status</div>
+                    <div class="value"><span class="status-pill active" id="infoStatus">—</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- STEP 2: UPLOAD IMAGES -->
+    <div class="card" id="cardUpload" style="opacity:0.45; pointer-events:none;">
+        <div class="card-header">
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            </div>
+            <div>
+                <div class="card-title">Upload Drone Images</div>
+                <div class="card-subtitle">Drag and drop or click to select your raw image files</div>
+            </div>
+        </div>
+
+        <div class="upload-zone" id="uploadZone">
+            <input type="file" id="fileInput" multiple accept="image/*,.dng,.raw,.tiff,.tif" onchange="handleFiles(this.files)">
+            <div class="upload-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            </div>
+            <h3>Drop images here or click to browse</h3>
+            <p>Upload all raw images from your flight. Do not edit or compress.<br>Minimum 60 images recommended per standard rooftop mission.</p>
+            <div class="file-types">
+                <span class="file-type-tag">JPG</span>
+                <span class="file-type-tag">JPEG</span>
+                <span class="file-type-tag">PNG</span>
+                <span class="file-type-tag">DNG</span>
+                <span class="file-type-tag">RAW</span>
+                <span class="file-type-tag">TIFF</span>
+            </div>
+        </div>
+
+        <div class="file-preview-wrap" id="filePreview">
+            <div class="file-count-bar">
+                <span class="count" id="fileCountLabel">0 images selected</span>
+                <button class="clear-btn" onclick="clearFiles()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    Clear all
+                </button>
+            </div>
+            <div class="file-grid" id="fileGrid"></div>
+        </div>
+    </div>
+
+    <!-- STEP 3: QUALITY CHECKLIST -->
+    <div class="card" id="cardChecklist" style="opacity:0.45; pointer-events:none;">
+        <div class="card-header">
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 0 2-2h11"/></svg>
+            </div>
+            <div>
+                <div class="card-title">Pre-Submission Checklist</div>
+                <div class="card-subtitle">Confirm each point before submitting — rejections cause delays in payment</div>
+            </div>
+        </div>
+
+        <div class="checklist" id="checklist">
+            <div class="check-item" onclick="toggleCheck(this)">
+                <div class="check-box">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div class="check-text">
+                    <h4>I followed the pre-planned flight route exactly</h4>
+                    <p>The drone completed the full automated waypoint mission without manual overrides that affected coverage.</p>
+                </div>
+            </div>
+            <div class="check-item" onclick="toggleCheck(this)">
+                <div class="check-box">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div class="check-text">
+                    <h4>Images are unedited raw files</h4>
+                    <p>No filters, cropping, brightness adjustments, or compression applied. Straight from the SD card or drone storage.</p>
+                </div>
+            </div>
+            <div class="check-item" onclick="toggleCheck(this)">
+                <div class="check-box">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div class="check-text">
+                    <h4>All images are in focus and not motion-blurred</h4>
+                    <p>Images taken in suitable lighting. Blurry, overexposed, or dark images may cause automatic rejection.</p>
+                </div>
+            </div>
+            <div class="check-item" onclick="toggleCheck(this)">
+                <div class="check-box">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div class="check-text">
+                    <h4>The correct property was photographed</h4>
+                    <p>Images show the address specified in the mission. GPS metadata is present in the files.</p>
+                </div>
+            </div>
+            <div class="check-item" onclick="toggleCheck(this)">
+                <div class="check-box">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div class="check-text">
+                    <h4>Full roof coverage is included</h4>
+                    <p>All roof sections and angles are covered with sufficient overlap (at least 70%) between consecutive images.</p>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 24px;">
+            <div class="form-group">
+                <label>Notes for the Sunlytics team (optional)</label>
+                <textarea id="pilotNotes" placeholder="Any issues encountered during the mission, weather conditions, partial coverage reasons, etc."></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- STEP 4: SUBMIT BAR -->
+    <div class="submit-bar" id="submitBar" style="opacity:0.45; pointer-events:none;">
+        <div class="submit-bar-info">
+            <div class="reward" id="submitReward">€100</div>
+            <div class="reward-label">Paid automatically after image validation</div>
+            <div class="validation-hints" id="validationHints">
+                <span class="hint-pill fail" id="hintMission">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    Mission not verified
+                </span>
+                <span class="hint-pill fail" id="hintFiles">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    No images selected
+                </span>
+                <span class="hint-pill fail" id="hintChecklist">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    Checklist incomplete
+                </span>
+            </div>
+        </div>
+        <button class="submit-btn" id="submitBtn" onclick="submitMission()" disabled>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            Submit Mission
+        </button>
+    </div>
+
+    <!-- UPLOAD PROGRESS -->
+    <div class="upload-progress-wrap" id="uploadProgress">
+        <div class="upload-progress-bar-bg">
+            <div class="upload-progress-bar-fill" id="progressFill"></div>
+        </div>
+        <div class="upload-progress-label" id="progressLabel">Uploading images... 0%</div>
+    </div>
+
+    <!-- SUCCESS STATE -->
+    <div class="success-overlay" id="successOverlay">
+        <div class="success-circle">
+            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h2>Mission Uploaded!</h2>
+        <p>Your images have been received and are queued for quality validation. You will be notified by email and SMS once the review is complete — usually within a few hours.</p>
+        <div class="success-meta">
+            <div class="success-meta-item">
+                <div class="label">Mission ID</div>
+                <div class="value" id="successMissionId">—</div>
+            </div>
+            <div class="success-meta-item">
+                <div class="label">Images Uploaded</div>
+                <div class="value" id="successImageCount">—</div>
+            </div>
+            <div class="success-meta-item">
+                <div class="label">Reward</div>
+                <div class="value green" id="successReward">€100</div>
+            </div>
+            <div class="success-meta-item">
+                <div class="label">Payment ETA</div>
+                <div class="value">~2–4 hrs</div>
+            </div>
+        </div>
+        <div class="success-actions">
+            <a href="fly-for-us.html" class="btn-secondary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21 4 19 2c-2-2-4-2-5.5-.5L10 5 1.8 6.2c-.5.1-.9.6-.6 1.1l1.5 2.5 5.5-1L6 13l-2 1 1 2 2-1 3.5-2.5-1 5.5 2.5 1.5c.5.3 1 0 1.1-.6z"/></svg>
+                Back to Pilot Page
+            </a>
+            <button class="btn-secondary" onclick="resetForm()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.09"/></svg>
+                Upload Another Mission
+            </button>
+        </div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-top">
+        <div class="footer-brand">
+            <a href="index.html" class="logo" style="text-decoration:none;">
+                <img src="logo.png" style="width:30px;height:30px;">
+                <span class="logo-text">SUNLYTICS</span>
+            </a>
+            <p>Smart solar analysis for Latvia and the Baltic region.</p>
+        </div>
+        <div class="footer-links">
+            <h4>Product</h4>
+            <ul>
+                <li><a href="index.html#how-it-works">How it Works</a></li>
+                <li><a href="index.html#pricing">Pricing</a></li>
+                <li><a href="index.html#calculator">Free Analysis</a></li>
+            </ul>
+        </div>
+        <div class="footer-links">
+            <h4>Company</h4>
+            <ul>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="fly-for-us.html">Fly for Us</a></li>
+                <li><a href="privacy.html">Privacy Policy</a></li>
+                <li><a href="terms.html">Terms of Service</a></li>
+            </ul>
+        </div>
+        <div class="footer-links">
+            <h4>Pilots</h4>
+            <ul>
+                <li><a href="fly-for-us.html#register">Join the Network</a></li>
+                <li><a href="upload-mission.html">Upload Mission</a></li>
+                <li><a href="contact.html">Get Support</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 Sunlytics. All rights reserved.</p>
+        <p><a href="privacy.html">Privacy Policy</a> &nbsp;&bull;&nbsp; <a href="terms.html">Terms of Service</a></p>
+    </div>
+</footer>
+
+<script>
+    // ── State ──
+    let missionVerified = false;
+    let selectedFiles = [];
+    let missionData = null;
+
+    // ── Nav toggle ──
+    function toggleMenu() {
+        document.getElementById('navLinks').classList.toggle('open');
+    }
+
+    // ── Drag & drop ──
+    const zone = document.getElementById('uploadZone');
+    zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+    zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+    zone.addEventListener('drop', e => {
+        e.preventDefault();
+        zone.classList.remove('drag-over');
+        handleFiles(e.dataTransfer.files);
+    });
+
+    // ── Verify Mission ──
+    function verifyMission() {
+        const id = document.getElementById('missionId').value.trim();
+        const pid = document.getElementById('pilotId').value.trim();
+        const input = document.getElementById('missionId');
+
+        if (!id || !pid) {
+            input.classList.add('error');
+            document.getElementById('pilotId').classList.add('error');
+            return;
+        }
+
+        // Simulate verification with mock data
+        const mockMissions = {
+            'SUN-2026-04821': { address: 'Brīvības iela 44, Riga', type: 'Rooftop Solar Survey', images: '60–80 images', reward: '€100', status: 'Awaiting Upload' },
+            'SUN-2026-03307': { address: 'Jūrmalas gatve 12, Jūrmala', type: 'Large Roof Survey', images: '80–120 images', reward: '€150', status: 'Awaiting Upload' },
+            'SUN-2026-05512': { address: 'Merķeļa iela 7, Riga', type: 'Rooftop Solar Survey', images: '60–80 images', reward: '€100', status: 'Awaiting Upload' },
+        };
+
+        const mission = mockMissions[id.toUpperCase()] || {
+            address: 'Confirmed address on file',
+            type: 'Rooftop Solar Survey',
+            images: '60–80 images',
+            reward: '€100',
+            status: 'Awaiting Upload'
+        };
+
+        missionData = mission;
+        missionVerified = true;
+
+        input.classList.remove('error');
+        input.classList.add('valid');
+        document.getElementById('pilotId').classList.remove('error');
+
+        document.getElementById('infoAddress').textContent = mission.address;
+        document.getElementById('infoType').textContent = mission.type;
+        document.getElementById('infoImages').textContent = mission.images;
+        document.getElementById('infoReward').textContent = mission.reward;
+        document.getElementById('infoStatus').textContent = mission.status;
+        document.getElementById('submitReward').textContent = mission.reward;
+        document.getElementById('successReward').textContent = mission.reward;
+        document.getElementById('missionInfoBox').classList.add('visible');
+
+        // Unlock next steps
+        unlockCard('cardUpload');
+        unlockCard('cardChecklist');
+        unlockCard('submitBar');
+
+        setStep(2);
+        updateHints();
+
+        document.getElementById('cardUpload').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // ── File handling ──
+    function handleFiles(files) {
+        const newFiles = Array.from(files).filter(f => f.type.startsWith('image/') || /\.(dng|raw|tiff?|cr2|nef|arw)$/i.test(f.name));
+        selectedFiles = [...selectedFiles, ...newFiles];
+        renderPreviews();
+        updateHints();
+        if (selectedFiles.length > 0) setStep(3);
+    }
+
+    function renderPreviews() {
+        const grid = document.getElementById('fileGrid');
+        const wrap = document.getElementById('filePreview');
+        const label = document.getElementById('fileCountLabel');
+        const MAX_SHOWN = 20;
+
+        label.textContent = `${selectedFiles.length} image${selectedFiles.length !== 1 ? 's' : ''} selected`;
+        grid.innerHTML = '';
+
+        const shown = selectedFiles.slice(0, MAX_SHOWN);
+        shown.forEach((file, i) => {
+            const thumb = document.createElement('div');
+            thumb.className = 'file-thumb';
+            if (file.type.startsWith('image/')) {
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(file);
+                thumb.appendChild(img);
+            } else {
+                thumb.innerHTML = `<svg class="file-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`;
+            }
+            const nameTag = document.createElement('div');
+            nameTag.className = 'file-name';
+            nameTag.textContent = file.name;
+            thumb.appendChild(nameTag);
+
+            const removeBtn = document.createElement('button');
+            removeBtn.className = 'remove-file';
+            removeBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`;
+            removeBtn.onclick = (e) => { e.stopPropagation(); removeFile(i); };
+            thumb.appendChild(removeBtn);
+            grid.appendChild(thumb);
+        });
+
+        if (selectedFiles.length > MAX_SHOWN) {
+            const more = document.createElement('div');
+            more.className = 'more-files-tile';
+            more.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>+${selectedFiles.length - MAX_SHOWN} more`;
+            grid.appendChild(more);
+        }
+
+        wrap.classList.toggle('visible', selectedFiles.length > 0);
+    }
+
+    function removeFile(index) {
+        selectedFiles.splice(index, 1);
+        renderPreviews();
+        updateHints();
+    }
+
+    function clearFiles() {
+        selectedFiles = [];
+        renderPreviews();
+        document.getElementById('fileInput').value = '';
+        updateHints();
+    }
+
+    // ── Checklist ──
+    function toggleCheck(item) {
+        item.classList.toggle('checked');
+        updateHints();
+    }
+
+    function allChecked() {
+        const items = document.querySelectorAll('#checklist .check-item');
+        return Array.from(items).every(i => i.classList.contains('checked'));
+    }
+
+    // ── Hints & validation ──
+    const checkSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
+    const crossSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`;
+
+    function updateHints() {
+        const hMission = document.getElementById('hintMission');
+        const hFiles = document.getElementById('hintFiles');
+        const hChecklist = document.getElementById('hintChecklist');
+        const btn = document.getElementById('submitBtn');
+
+        if (missionVerified) {
+            hMission.className = 'hint-pill ok';
+            hMission.innerHTML = checkSVG + ' Mission verified';
+        } else {
+            hMission.className = 'hint-pill fail';
+            hMission.innerHTML = crossSVG + ' Mission not verified';
+        }
+
+        if (selectedFiles.length > 0) {
+            hFiles.className = 'hint-pill ok';
+            hFiles.innerHTML = checkSVG + ` ${selectedFiles.length} image${selectedFiles.length !== 1 ? 's' : ''} ready`;
+        } else {
+            hFiles.className = 'hint-pill fail';
+            hFiles.innerHTML = crossSVG + ' No images selected';
+        }
+
+        if (allChecked()) {
+            hChecklist.className = 'hint-pill ok';
+            hChecklist.innerHTML = checkSVG + ' Checklist complete';
+        } else {
+            const checked = document.querySelectorAll('#checklist .check-item.checked').length;
+            const total = document.querySelectorAll('#checklist .check-item').length;
+            hChecklist.className = 'hint-pill fail';
+            hChecklist.innerHTML = crossSVG + ` Checklist ${checked}/${total}`;
+        }
+
+        const ready = missionVerified && selectedFiles.length > 0 && allChecked();
+        btn.disabled = !ready;
+
+        if (ready) setStep(4);
+    }
+
+    // ── Progress steps ──
+    function setStep(n) {
+        for (let i = 1; i <= 4; i++) {
+            const el = document.getElementById(`pStep${i}`);
+            if (i < n) { el.className = 'progress-step done'; el.querySelector('.step-dot').innerHTML = checkSVG; }
+            else if (i === n) el.className = 'progress-step active';
+            else el.className = 'progress-step';
+        }
+    }
+
+    function unlockCard(id) {
+        const el = document.getElementById(id);
+        el.style.opacity = '1';
+        el.style.pointerEvents = 'auto';
+        el.style.transition = 'opacity 0.3s';
+    }
+
+    // ── Submit ──
+    function submitMission() {
+        const missionId = document.getElementById('missionId').value.trim().toUpperCase();
+
+        // Hide submit bar, show progress
+        document.getElementById('submitBar').style.display = 'none';
+        const progressWrap = document.getElementById('uploadProgress');
+        progressWrap.classList.add('visible');
+        const fill = document.getElementById('progressFill');
+        const label = document.getElementById('progressLabel');
+
+        let pct = 0;
+        const interval = setInterval(() => {
+            pct += Math.random() * 12 + 3;
+            if (pct >= 100) { pct = 100; clearInterval(interval); showSuccess(missionId); }
+            fill.style.width = pct + '%';
+            label.textContent = pct < 100
+                ? `Uploading images... ${Math.round(pct)}%`
+                : 'Validating upload...';
+        }, 180);
+    }
+
+    function showSuccess(missionId) {
+        setTimeout(() => {
+            document.getElementById('uploadProgress').classList.remove('visible');
+            document.getElementById('cardMission').style.display = 'none';
+            document.getElementById('cardUpload').style.display = 'none';
+            document.getElementById('cardChecklist').style.display = 'none';
+            document.getElementById('successMissionId').textContent = missionId;
+            document.getElementById('successImageCount').textContent = selectedFiles.length;
+            document.getElementById('successOverlay').classList.add('visible');
+            document.getElementById('successOverlay').scrollIntoView({ behavior: 'smooth' });
+            setStep(4);
+            document.querySelectorAll('.progress-step').forEach(s => { s.className = 'progress-step done'; s.querySelector('.step-dot').innerHTML = checkSVG; });
+        }, 600);
+    }
+
+    function resetForm() {
+        missionVerified = false;
+        selectedFiles = [];
+        missionData = null;
+
+        document.getElementById('missionId').value = '';
+        document.getElementById('pilotId').value = '';
+        document.getElementById('missionId').className = '';
+        document.getElementById('pilotId').className = '';
+        document.getElementById('missionInfoBox').classList.remove('visible');
+        document.getElementById('filePreview').classList.remove('visible');
+        document.getElementById('fileGrid').innerHTML = '';
+        document.getElementById('fileInput').value = '';
+        document.getElementById('pilotNotes').value = '';
+        document.querySelectorAll('#checklist .check-item').forEach(i => i.classList.remove('checked'));
+
+        document.getElementById('successOverlay').classList.remove('visible');
+        document.getElementById('cardMission').style.display = '';
+        document.getElementById('cardUpload').style.display = '';
+        document.getElementById('cardChecklist').style.display = '';
+        document.getElementById('cardUpload').style.opacity = '0.45';
+        document.getElementById('cardUpload').style.pointerEvents = 'none';
+        document.getElementById('cardChecklist').style.opacity = '0.45';
+        document.getElementById('cardChecklist').style.pointerEvents = 'none';
+        document.getElementById('submitBar').style.opacity = '0.45';
+        document.getElementById('submitBar').style.pointerEvents = 'none';
+        document.getElementById('submitBar').style.display = '';
+
+        for (let i = 1; i <= 4; i++) {
+            const el = document.getElementById(`pStep${i}`);
+            el.className = i === 1 ? 'progress-step active' : 'progress-step';
+            el.querySelector('.step-dot').innerHTML = i;
+        }
+
+        updateHints();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>
