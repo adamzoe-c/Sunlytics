@@ -153,6 +153,32 @@
         }
         .hero-cta:hover { transform: translateY(-3px); box-shadow: 0 16px 44px rgba(247,151,30,0.52); }
 
+        .hero-cta-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: white;
+            color: var(--navy);
+            padding: 18px 44px;
+            border-radius: 50px;
+            font-size: 17px;
+            font-weight: 700;
+            text-decoration: none;
+            border: 2px solid #e8e8e8;
+            transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .hero-cta-secondary:hover { transform: translateY(-3px); border-color: var(--orange); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+
+        .hero-cta-wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
         /* ── HOW IT WORKS ── */
         .section-wrap { padding: 90px 5%; text-align: center; }
         .section-tag { display: inline-block; background: #fff3e0; color: #c45000; padding: 5px 16px; border-radius: 50px; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 16px; }
@@ -502,7 +528,10 @@
         </div>
     </div>
 
-    <a href="#register" class="hero-cta"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21 4 19 2c-2-2-4-2-5.5-.5L10 5 1.8 6.2c-.5.1-.9.6-.6 1.1l1.5 2.5 5.5-1L6 13l-2 1 1 2 2-1 3.5-2.5-1 5.5 2.5 1.5c.5.3 1 0 1.1-.6z"/></svg> Apply to Fly for Us</a>
+    <div class="hero-cta-wrap">
+        <a href="#register" class="hero-cta"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21 4 19 2c-2-2-4-2-5.5-.5L10 5 1.8 6.2c-.5.1-.9.6-.6 1.1l1.5 2.5 5.5-1L6 13l-2 1 1 2 2-1 3.5-2.5-1 5.5 2.5 1.5c.5.3 1 0 1.1-.6z"/></svg> Apply to Fly for Us</a>
+        <a href="upload-mission.html" class="hero-cta-secondary"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Upload Mission Images</a>
+    </div>
 </section>
 
 <!-- HOW IT WORKS -->
