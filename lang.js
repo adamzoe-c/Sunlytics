@@ -362,5 +362,10 @@ function initLang() {
     applyLang(saved);
 }
 
-// Auto-init on DOM ready
-document.addEventListener('DOMContentLoaded', initLang);
+// Auto-init: use DOMContentLoaded if not yet fired, otherwise run immediately
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLang);
+} else {
+    // DOM already ready (script loads after </script> tag)
+    initLang();
+}
