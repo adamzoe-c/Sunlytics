@@ -104,60 +104,6 @@
             border-radius: 2px;
         }
 
-        /* ── LANGUAGE SWITCHER ── */
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .lang-switcher {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            background: var(--off-white);
-            border-radius: 10px;
-            padding: 4px;
-        }
-
-        .lang-btn {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            background: none;
-            border: none;
-            border-radius: 7px;
-            padding: 5px 9px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--gray);
-            font-family: inherit;
-            transition: all 0.18s;
-            letter-spacing: 0.4px;
-        }
-
-        .lang-btn img {
-            width: 20px;
-            height: 14px;
-            object-fit: cover;
-            border-radius: 2px;
-            display: block;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
-        }
-
-        .lang-btn:hover {
-            color: var(--navy);
-            background: white;
-            box-shadow: 0 1px 6px rgba(0,0,0,0.08);
-        }
-
-        .lang-btn.active {
-            color: var(--orange-dark);
-            background: white;
-            box-shadow: 0 1px 8px rgba(247,151,30,0.2);
-        }
-
         /* ── HERO ── */
         .hero {
             min-height: 90vh;
@@ -847,22 +793,6 @@
                 gap: 20px;
                 z-index: 199;
             }
-            .lang-btn span, .lang-btn { font-size: 11px; padding: 4px 7px; }
-            .lang-btn img { width: 18px; height: 12px; }
-
-            .nav-links.open {
-                display: flex;
-                flex-direction: column;
-                position: fixed;
-                top: 68px;
-                left: 0;
-                right: 0;
-                background: white;
-                padding: 24px 5%;
-                box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-                gap: 20px;
-                z-index: 199;
-            }
 
             .stat-item {
                 padding: 30px 20px;
@@ -926,7 +856,6 @@
             }
         }
     </style>
-    <script src="lang.js"></script>
 </head>
 <body>
 
@@ -937,29 +866,16 @@
         <span class="logo-text">SUNLYTICS</span>
     </div>
     <ul class="nav-links" id="navLinks">
-        <li><a href="index.html#how-it-works"><span data-i18n="nav_how">How it Works</span></a></li>
-        <li><a href="index.html#pricing"><span data-i18n="nav_pricing">Pricing</span></a></li>
-        <li><a href="about.html"><span data-i18n="nav_about">About</span></a></li>
-        <li><a href="contact.html"><span data-i18n="nav_contact">Contact</span></a></li>
-        <li><a href="index.html#weather"><span data-i18n="nav_drone">Drone Status</span></a></li>
-        <li><a href="fly-for-us.html"><span data-i18n="nav_fly">Fly for Us</span></a></li>
-        <li><a href="index.html#calculator" class="nav-cta"><span data-i18n="nav_cta">Free Analysis</span></a></li>
+        <li><a href="index.html#how-it-works">How it Works</a></li>
+        <li><a href="index.html#pricing">Pricing</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="index.html#weather">Drone Status</a></li>
+        <li><a href="index.html#calculator" class="nav-cta">Free Analysis</a></li>
     </ul>
-    <div class="nav-right">
-        <div class="lang-switcher">
-            <button class="lang-btn active" id="langEN" onclick="setLang('en')">
-                <img src="united-kingdom.png" alt="English">
-                EN
-            </button>
-            <button class="lang-btn" id="langLV" onclick="setLang('lv')">
-                <img src="latvia.png" alt="Latviešu">
-                LV
-            </button>
-        </div>
-        <button class="hamburger" onclick="toggleMenu()">
-            <span></span><span></span><span></span>
-        </button>
-    </div>
+    <button class="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+    </button>
 </nav>
 
 <!-- HERO -->
@@ -967,13 +883,13 @@
     <div class="hero-content">
         <div class="hero-badge">
             <span style="width:14px;height:14px;display:inline-block;vertical-align:middle;flex-shrink:0;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/><circle cx="12" cy="12" r="4"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="M12 2v2"/><path d="M12 20v2"/></svg></span>
-            <span data-i18n-html="hero_badge">Serving Latvia &amp; Baltic Region &nbsp;&bull;&nbsp; Results in 60 Seconds</span>
+            Serving Latvia &amp; Baltic Region &nbsp;&bull;&nbsp; Results in 60 Seconds
         </div>
-        <h1><span data-i18n="hero_h1_line1">Know Your Roof's</span><br><span data-i18n="hero_h1_line2" style="background:linear-gradient(135deg,var(--orange),var(--orange-dark));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Solar Potential</span><br><span data-i18n="hero_h1_line3">Instantly</span></h1>
-        <p data-i18n="hero_p">Enter your address and receive a free AI-powered solar analysis in seconds. No engineers. No weeks of waiting. No cost.</p>
+        <h1>Know Your Roof's<br><span>Solar Potential</span><br>Instantly</h1>
+        <p>Enter your address and receive a free AI-powered solar analysis in seconds. No engineers. No weeks of waiting. No cost.</p>
         <div class="hero-buttons">
-            <a href="#calculator" class="btn-primary"><span style="width:18px;height:18px;display:inline-block;vertical-align:middle;flex-shrink:0;color:white;stroke:white;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></span><span data-i18n="hero_btn_primary">Get Free Analysis</span></a>
-            <a href="#how-it-works" class="btn-secondary"><span style="width:18px;height:18px;display:inline-block;vertical-align:middle;flex-shrink:0;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg></span><span data-i18n="hero_btn_sec">See How It Works</span></a>
+            <a href="#calculator" class="btn-primary"><span style="width:18px;height:18px;display:inline-block;vertical-align:middle;flex-shrink:0;color:white;stroke:white;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></span> Get Free Analysis</a>
+            <a href="#how-it-works" class="btn-secondary"><span style="width:18px;height:18px;display:inline-block;vertical-align:middle;flex-shrink:0;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg></span> See How It Works</a>
         </div>
     </div>
 </section>
@@ -982,19 +898,19 @@
 <div class="trust-bar">
     <div class="trust-item">
         <div class="trust-icon"><span style="width:16px;height:16px;display:inline-block;vertical-align:middle;flex-shrink:0;color:white;stroke:white;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/><circle cx="12" cy="12" r="4"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="M12 2v2"/><path d="M12 20v2"/></svg></span></div>
-        <span data-i18n="trust_satellite">Satellite-powered analysis</span>
+        <span>Satellite-powered analysis</span>
     </div>
     <div class="trust-item">
         <div class="trust-icon"><span style="width:16px;height:16px;display:inline-block;vertical-align:middle;flex-shrink:0;color:white;stroke:white;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V12"/><path d="M12 12 7 7"/><path d="M12 12l5-5"/><circle cx="4.5" cy="4.5" r="2.5"/><circle cx="19.5" cy="4.5" r="2.5"/><path d="M4.5 7v.5a2.5 2.5 0 0 0 2.5 2.5h10a2.5 2.5 0 0 0 2.5-2.5V7"/><path d="M8 22h8"/></svg></span></div>
-        <span data-i18n="trust_drone">Certified drone operators</span>
+        <span>Certified drone operators</span>
     </div>
     <div class="trust-item">
         <div class="trust-icon"><span style="width:16px;height:16px;display:inline-block;vertical-align:middle;flex-shrink:0;color:white;stroke:white;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span></div>
-        <span data-i18n="trust_gdpr">GDPR compliant</span>
+        <span>GDPR compliant</span>
     </div>
     <div class="trust-item">
         <div class="trust-icon"><span style="width:16px;height:16px;display:inline-block;vertical-align:middle;flex-shrink:0;color:white;stroke:white;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span></div>
-        <span data-i18n="trust_report">Full report in 24 hours</span>
+        <span>Full report in 24 hours</span>
     </div>
 </div>
 
@@ -1002,63 +918,64 @@
 <div class="stats">
     <div class="stat-item">
         <div class="stat-number">60s</div>
-        <div class="stat-label" data-i18n="stat_instant">Instant Results</div>
+        <div class="stat-label">Instant Results</div>
     </div>
     <div class="stat-item">
         <div class="stat-number">24h</div>
-        <div class="stat-label" data-i18n="stat_drone">Full Drone Report</div>
+        <div class="stat-label">Full Drone Report</div>
     </div>
     <div class="stat-item">
         <div class="stat-number">&#8364;0</div>
-        <div class="stat-label" data-i18n="stat_free">Free Analysis</div>
+        <div class="stat-label">Free Analysis</div>
     </div>
     <div class="stat-item">
         <div class="stat-number">95%</div>
-        <div class="stat-label" data-i18n="stat_accuracy">Accuracy Rate</div>
+        <div class="stat-label">Accuracy Rate</div>
     </div>
 </div>
 
 <!-- HOW IT WORKS -->
 <section class="section-wrap" id="how-it-works">
-    <div class="section-tag" data-i18n="hiw_tag">Process</div>
-    <div class="section-title"><span data-i18n="hiw_title">How</span> <span style="background:linear-gradient(135deg,var(--orange),var(--orange-dark));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Sunlytics</span> <span data-i18n="hiw_title2">Works</span></div>
-    <div class="section-subtitle" data-i18n="hiw_sub">Three simple steps to complete solar clarity</div>
+    <div class="section-tag">Process</div>
+    <div class="section-title">How <span>Sunlytics</span> Works</div>
+    <div class="section-subtitle">Three simple steps to complete solar clarity</div>
     <div class="steps">
         <div class="step">
             <div class="step-icon"><span style="width:28px;height:28px;display:inline-block;vertical-align:middle;flex-shrink:0;color:white;stroke:white;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span></div>
-            <h3 data-i18n="step1_h">Enter Your Address</h3>
-            <p data-i18n="step1_p">Type your building address anywhere in Latvia or the Baltic region. Our system instantly pulls satellite imagery of your roof.</p>
+            <h3>Enter Your Address</h3>
+            <p>Type your building address anywhere in Latvia or the Baltic region. Our system instantly pulls satellite imagery of your roof.</p>
         </div>
         <div class="step">
             <div class="step-icon"><span style="width:28px;height:28px;display:inline-block;vertical-align:middle;flex-shrink:0;color:white;stroke:white;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg></span></div>
-            <h3 data-i18n="step2_h">Get Instant Results</h3>
-            <p data-i18n="step2_p">Receive your Solar Score, usable roof area, payback period and 25-year profit estimate — completely free, in seconds.</p>
+            <h3>Get Instant Results</h3>
+            <p>Receive your Solar Score, usable roof area, payback period and 25-year profit estimate — completely free, in seconds.</p>
         </div>
         <div class="step">
             <div class="step-icon"><span style="width:28px;height:28px;display:inline-block;vertical-align:middle;flex-shrink:0;color:white;stroke:white;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></span></div>
-            <h3 data-i18n="step3_h">Get Full Drone Report</h3>
-            <p data-i18n="step3_p">Want 100% accuracy? We dispatch a certified drone operator to your site and deliver a professional PDF report within 24 hours.</p>
+            <h3>Get Full Drone Report</h3>
+            <p>Want 100% accuracy? We dispatch a certified drone operator to your site and deliver a professional PDF report within 24 hours.</p>
         </div>
     </div>
 </section>
 
 <!-- CALCULATOR -->
 <section class="section-wrap calc-bg" id="calculator">
-    <div class="section-tag" data-i18n="calc_tag">Free Tool</div>
-    <div class="section-title"><span data-i18n="calc_title">Check Your</span> <span data-i18n="calc_title2" style="background:linear-gradient(135deg,var(--orange),var(--orange-dark));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Solar Potential</span></div>
-    <div class="section-subtitle" data-i18n="calc_sub">Instant analysis powered by satellite data — no signup needed</div>
+    <div class="section-tag">Free Tool</div>
+    <div class="section-title">Check Your <span>Solar Potential</span></div>
+    <div class="section-subtitle">Instant analysis powered by satellite data — no signup needed</div>
     <div class="calculator-box">
-        <h2 data-i18n="calc_h2">Enter Your Building Address</h2>
-        <p data-i18n="calc_p">Type your address or pick your location directly on the map</p>
+        <h2>Enter Your Building Address</h2>
+        <p>Type your address or pick your location directly on the map</p>
 
         <!-- ── TABS ── -->
         <div class="calc-tabs">
-            <button class="calc-tab active" id="tabText" onclick="switchTab('text')"><span data-i18n="tab_text">Type Address</span>
+            <button class="calc-tab active" id="tabText" onclick="switchTab('text')">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="17" y1="18" x2="3" y2="18"/></svg>
                 Type Address
             </button>
             <button class="calc-tab" id="tabMap" onclick="switchTab('map')">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                Pick on Map
             </button>
         </div>
 
@@ -1066,7 +983,7 @@
         <div id="panelText">
             <div class="input-wrapper">
                 <span class="input-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span>
-                <input type="text" id="addressInput" placeholder="e.g. Brivibas iela 55, Riga, Latvia" data-i18n-ph="addr_ph" />
+                <input type="text" id="addressInput" placeholder="e.g. Brivibas iela 55, Riga, Latvia" />
             </div>
             <button class="analyze-btn" onclick="analyzeAddress()">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;stroke:white;"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
@@ -1092,27 +1009,29 @@
                 <span id="mapSelectedAddress" style="flex:1; font-weight:600;"></span>
                 <span style="font-size:12px; color:#aaa; font-weight:400;" id="mapGeocodeStatus"></span>
             </div>
-            <div id="mapHint" data-i18n="map_hint" style="font-size:13px; color:#9ca3af; margin-bottom:14px; text-align:center;">Click anywhere on the map to pin your property</div>
+            <div id="mapHint" style="font-size:13px; color:#9ca3af; margin-bottom:14px; text-align:center;">
+                Click anywhere on the map to pin your property
+            </div>
             <button class="analyze-btn" id="mapAnalyzeBtn" onclick="analyzeFromMap()" disabled style="opacity:0.5;">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;stroke:white;"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-                <span data-i18n="analyze_btn">Analyze My Roof</span>
+                Analyze My Roof
             </button>
         </div>
 
         <div class="free-note" style="margin-top:18px;">
-            <span data-i18n-html="free_note">&#10003; 100% Free &nbsp;&bull;&nbsp; No signup required &nbsp;&bull;&nbsp; Instant results</span>
+            &#10003; 100% Free &nbsp;&bull;&nbsp; No signup required &nbsp;&bull;&nbsp; Instant results
         </div>
     </div>
 </section>
 
 <!-- PRICING -->
 <section class="section-wrap" id="pricing">
-    <div class="section-tag" data-i18n="pricing_tag">Pricing</div>
-    <div class="section-title"><span data-i18n="pricing_title">Simple,</span> <span data-i18n="pricing_title2" style="background:linear-gradient(135deg,var(--orange),var(--orange-dark));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Transparent</span> <span data-i18n="pricing_title3">Pricing</span></div>
-    <div class="section-subtitle" data-i18n="pricing_sub">Start free, upgrade when you need full accuracy</div>
+    <div class="section-tag">Pricing</div>
+    <div class="section-title">Simple, <span>Transparent</span> Pricing</div>
+    <div class="section-subtitle">Start free, upgrade when you need full accuracy</div>
     <div class="pricing-cards">
         <div class="pricing-card">
-            <div class="plan-name" data-i18n="plan1_name">Instant Report</div>
+            <div class="plan-name">Instant Report</div>
             <div class="plan-price">&#8364;0 <span>/ free</span></div>
             <div class="plan-desc">Perfect for getting a quick overview of your solar potential using satellite data.</div>
             <ul class="plan-features">
@@ -1127,8 +1046,8 @@
             </a>
         </div>
         <div class="pricing-card featured">
-            <div class="featured-badge" data-i18n="plan2_badge">Most Popular</div>
-            <div class="plan-name" data-i18n="plan2_name">Full Drone Report</div>
+            <div class="featured-badge">Most Popular</div>
+            <div class="plan-name">Full Drone Report</div>
             <div class="plan-price">&#8364;149 <span>/ report</span></div>
             <div class="plan-desc">Full on-site drone inspection with a professional PDF report delivered in 24 hours.</div>
             <ul class="plan-features">
@@ -1167,55 +1086,56 @@
 
 <!-- WEATHER -->
 <section class="section-wrap" id="weather">
-    <div class="section-tag" data-i18n="weather_tag">Live Status</div>
-    <div class="section-title"><span data-i18n="weather_title">Drone Flight</span> <span data-i18n="weather_title2" style="background:linear-gradient(135deg,var(--orange),var(--orange-dark));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Weather Status</span></div>
-    <div class="section-subtitle" data-i18n="weather_sub">Real-time conditions for drone operations across the Baltic region</div>
+    <div class="section-tag">Live Status</div>
+    <div class="section-title">Drone Flight <span>Weather Status</span></div>
+    <div class="section-subtitle">Real-time conditions for drone operations across the Baltic region</div>
     <div class="weather-widget">
-        <div class="drone-status status-loading" id="droneStatus" data-i18n="drone_checking">Checking conditions...
+        <div class="drone-status status-loading" id="droneStatus">
+            Checking conditions...
         </div>
         <div class="weather-grid">
             <div class="weather-card">
                 <span class="w-icon"><span style="width:28px;height:28px;display:inline-block;vertical-align:middle;flex-shrink:0;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg></span></span>
                 <div class="val" id="tempVal">--</div>
-                <div class="lbl" data-i18n="weather_temp">Temperature</div>
+                <div class="lbl">Temperature</div>
             </div>
             <div class="weather-card">
                 <span class="w-icon"><span style="width:28px;height:28px;display:inline-block;vertical-align:middle;flex-shrink:0;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg></span></span>
                 <div class="val" id="windVal">--</div>
-                <div class="lbl" data-i18n="weather_wind">Wind Speed</div>
+                <div class="lbl">Wind Speed</div>
             </div>
             <div class="weather-card">
                 <span class="w-icon"><span style="width:28px;height:28px;display:inline-block;vertical-align:middle;flex-shrink:0;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="16" y1="13" x2="16" y2="21"/><line x1="8" y1="13" x2="8" y2="21"/><line x1="12" y1="15" x2="12" y2="23"/><path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25"/></svg></span></span>
                 <div class="val" id="rainVal">--</div>
-                <div class="lbl" data-i18n="weather_rain">Rain Chance</div>
+                <div class="lbl">Rain Chance</div>
             </div>
         </div>
         <div class="weather-note">
-            <span data-i18n="weather_note">Weather data for Riga, Latvia. Drone flights are scheduled when wind is below 10 m/s, rain chance below 50%, and temperature above 0°C.</span>
+            Weather data for Riga, Latvia. Drone flights are scheduled when wind is below 10 m/s, rain chance below 50%, and temperature above 0&deg;C.
         </div>
     </div>
 </section>
 
 <!-- COVERAGE -->
 <section class="coverage-section">
-    <div class="section-tag" data-i18n="coverage_tag">Coverage</div>
-    <div class="section-title"><span data-i18n="coverage_title">Serving the</span> <span data-i18n="coverage_title2" style="background:linear-gradient(135deg,var(--orange),var(--orange-dark));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Baltic Region</span></div>
-    <div class="section-subtitle" data-i18n="coverage_sub" style="margin-bottom:48px;">Currently operating in Latvia with expansion across the Baltic states</div>
+    <div class="section-tag">Coverage</div>
+    <div class="section-title">Serving the <span>Baltic Region</span></div>
+    <div class="section-subtitle" style="margin-bottom:48px;">Currently operating in Latvia with expansion across the Baltic states</div>
     <div class="coverage-flags">
         <div class="flag-card">
             <img src="latvia.png" alt="Latvia">
             <div class="country">Latvia</div>
-            <div class="status" data-i18n="lv_status">Active Now</div>
+            <div class="status">Active Now</div>
         </div>
         <div class="flag-card">
             <img src="lithuania.png" alt="Lithuania">
             <div class="country">Lithuania</div>
-            <div class="status" data-i18n="lt_status">Coming Soon</div>
+            <div class="status">Coming Soon</div>
         </div>
         <div class="flag-card">
             <img src="estonia.png" alt="Estonia">
             <div class="country">Estonia</div>
-            <div class="status" data-i18n="ee_status">Coming Soon</div>
+            <div class="status">Coming Soon</div>
         </div>
     </div>
 </section>
@@ -1393,40 +1313,22 @@
                 <img src="logo.png" alt="Sunlytics" style="width:30px; height:30px;">
                 <span class="logo-text">SUNLYTICS</span>
             </div>
-            <p data-i18n="footer_brand_p">Smart solar analysis for Latvia and the Baltic region. Fast, accurate, and affordable.</p>
+            <p>Smart solar analysis for Latvia and the Baltic region. Fast, accurate, and affordable.</p>
         </div>
         <div class="footer-links">
             <h4>Product</h4>
             <ul>
-                <li><a href="#how-it-works"><span data-i18n="nav_how">How it Works</span></a></li>
-                <li><a href="#pricing"><span data-i18n="nav_pricing">Pricing</span></a></li>
+                <li><a href="#how-it-works">How it Works</a></li>
+                <li><a href="#pricing">Pricing</a></li>
                 <li><a href="#calculator">Free Analysis</a></li>
-                <li><a href="#weather"><span data-i18n="nav_drone">Drone Status</span></a></li>
-            </ul>
-        </div>
-        <div class="footer-links">
-            <h4>Company</h4>
-            <ul>
-                <li><a href="about.html"><span data-i18n="nav_about">About Us</span></a></li>
-                <li><a href="contact.html"><span data-i18n="nav_contact">Contact</span></a></li>
-                <li><a href="fly-for-us.html"><span data-i18n="nav_fly">Fly for Us</span></a></li>
-                <li><a href="privacy.html">Privacy Policy</a></li>
-                <li><a href="terms.html">Terms of Service</a></li>
-            </ul>
-        </div>
-        <div class="footer-links">
-            <h4>Pilots</h4>
-            <ul>
-                <li><a href="fly-for-us.html">Fly for Us</a></li>
-                <li><a href="upload-mission.html">Upload Mission</a></li>
-                <li><a href="contact.html">Get Support</a></li>
+                <li><a href="#weather">Drone Status</a></li>
             </ul>
         </div>
         <div class="footer-links">
             <h4>Contact</h4>
             <ul>
-                <li><a href="mailto:info@sunlytics.lv">info@sunlytics.lv</a></li>
-                <li><a href="#">sunlytics.lv</a></li>
+                <li><a href="mailto:info@sunlytics.eu">info@sunlytics.eu</a></li>
+                <li><a href="#">sunlytics.eu</a></li>
                 <li><a href="#">Riga, Latvia</a></li>
             </ul>
         </div>
@@ -1439,10 +1341,587 @@
 
 <script>
     function toggleMenu() {
-        const nav = document.getElementById('navLinks');
-        nav.classList.toggle('open');
+        document.getElementById('navLinks').classList.toggle('open');
     }
-    initLang();
+
+    async function loadWeather() {
+        try {
+            const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=56.9496&longitude=24.1052&current=temperature_2m,wind_speed_10m,precipitation_probability&timezone=Europe/Riga');
+            const data = await res.json();
+            const temp = data.current.temperature_2m;
+            const windKmh = data.current.wind_speed_10m;
+            const rain = data.current.precipitation_probability;
+            const windMs = (windKmh / 3.6).toFixed(1);
+
+            document.getElementById('tempVal').textContent = temp + '\u00b0C';
+            document.getElementById('windVal').textContent = windMs + ' m/s';
+            document.getElementById('rainVal').textContent = rain + '%';
+
+            const canFly = parseFloat(windMs) < 10 && rain < 50 && temp > 0;
+            const status = document.getElementById('droneStatus');
+            if (canFly) {
+                status.textContent = '\u2705 Drone Can Fly Today';
+                status.className = 'drone-status status-good';
+            } else {
+                status.textContent = '\u274c Drone Flight Not Recommended';
+                status.className = 'drone-status status-bad';
+            }
+        } catch(e) {
+            document.getElementById('droneStatus').textContent = 'Weather data unavailable';
+        }
+    }
+
+    function analyzeAddress() {
+        const address = document.getElementById('addressInput').value.trim();
+        if (!address) {
+            document.getElementById('addressInput').style.borderColor = '#ff4e00';
+            document.getElementById('addressInput').placeholder = 'Please enter an address first';
+            return;
+        }
+        document.getElementById('addressInput').style.borderColor = '#e8e8e8';
+        showLoadingModal(address);
+    }
+
+    function showLoadingModal(address, lat, lng) {
+        document.getElementById('resAddress').textContent = address;
+        document.getElementById('resultsModal').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+
+        document.getElementById('loadingState').style.display = 'block';
+        document.getElementById('resultsState').style.display = 'none';
+
+        setTimeout(() => {
+            document.getElementById('loadingState').style.display = 'none';
+            document.getElementById('resultsState').style.display = 'block';
+            generateResults(address, lat, lng);
+        }, 2500);
+    }
+
+    function generateResults(address, lat, lng) {
+        // ── REAL LATVIAN SOLAR DATA (source: PVGIS / EU Joint Research Centre) ──
+        // Annual solar irradiance (kWh/kWp) by region in Latvia
+        // Riga: ~950, Liepāja: ~990, Daugavpils: ~970, Valmiera: ~940, Jēkabpils: ~960
+        const regions = [
+            { names: ['riga','rīga'],          irr: 950 },
+            { names: ['liepāja','liepaja','liepāja'],    irr: 990 },
+            { names: ['daugavpils'],            irr: 970 },
+            { names: ['valmiera'],              irr: 940 },
+            { names: ['jēkabpils','jekabpils'], irr: 960 },
+            { names: ['jelgava'],               irr: 955 },
+            { names: ['jūrmala','jurmala'],     irr: 960 },
+            { names: ['ventspils'],             irr: 985 },
+            { names: ['rēzekne','rezekne'],     irr: 965 },
+        ];
+
+        // If we have map coordinates, use latitude to estimate irradiance
+        // Latvia spans ~55.7°N (south) to ~57.7°N (north) — southern Latvia gets ~5% more sun
+        let irradiance = 960; // Latvia national average
+        if (lat) {
+            // Southern Latvia (closer to 55.7°N) gets slightly more sun
+            const latFactor = 1 + (57.7 - lat) * 0.008;
+            irradiance = Math.round(960 * latFactor);
+        } else {
+            // Try to match region name from address
+            const addrLower = address.toLowerCase();
+            for (const r of regions) {
+                if (r.names.some(n => addrLower.includes(n))) {
+                    irradiance = r.irr;
+                    break;
+                }
+            }
+        }
+
+        // ── REALISTIC ASSUMPTIONS (Latvia market averages) ──
+        // Average residential roof usable area: 40–120 m²
+        // We don't know the roof so we use a typical Latvian house: 60 m² usable
+        // Panel efficiency: 20% (modern panels), 1 kWp needs ~5 m²
+        // Electricity price Latvia 2024: ~0.22 €/kWh (Sadales tīkls data)
+        // Install cost Latvia: ~900 €/kWp (industry average 2024)
+        // Annual degradation: 0.5% per year
+
+        const usableArea = 60;           // m² — typical Latvian residential roof
+        const systemKw = +(usableArea / 5).toFixed(1);  // kWp (1 kWp = 5 m²)
+        const annualProduction = Math.round(systemKw * irradiance);  // kWh/yr
+        const electricityPrice = 0.22;   // €/kWh Latvia average
+        const annualSavings = Math.round(annualProduction * electricityPrice);
+        const installCost = Math.round(systemKw * 900);
+        const payback = (installCost / annualSavings).toFixed(1);
+
+        // 25-year profit with 0.5% annual panel degradation and 3% electricity price inflation
+        let profit25 = 0;
+        let yearlyProduction = annualProduction;
+        let yearlyPrice = electricityPrice;
+        for (let y = 1; y <= 25; y++) {
+            profit25 += yearlyProduction * yearlyPrice;
+            yearlyProduction *= 0.995;   // 0.5% degradation
+            yearlyPrice *= 1.03;         // 3% price inflation
+        }
+        profit25 = Math.round(profit25 - installCost);
+
+        // Solar score: based on irradiance vs best possible in Latvia (990)
+        const score = Math.round((irradiance / 990) * 100);
+        const rating = score >= 95 ? 'Excellent' : score >= 90 ? 'Very Good' : 'Good';
+        const ratingColor = score >= 95 ? '#2e7d32' : score >= 90 ? '#f7971e' : '#888';
+
+        document.getElementById('resAddress').textContent = address;
+        document.getElementById('resScore').textContent = score + '%';
+        document.getElementById('resRating').textContent = rating;
+        document.getElementById('resRating').style.color = ratingColor;
+        document.getElementById('resArea').textContent = usableArea + ' m\u00b2 (typical)';
+        document.getElementById('resPayback').textContent = payback + ' Years';
+        document.getElementById('resProfit').textContent = '\u20ac' + profit25.toLocaleString();
+        document.getElementById('resSavings').textContent = '\u20ac' + annualSavings + '/yr';
+        document.getElementById('resSystem').textContent = systemKw + ' kWp';
+        document.getElementById('resProduction').textContent = annualProduction.toLocaleString() + ' kWh/yr';
+
+        // Score bar
+        document.getElementById('scoreBar').style.width = score + '%';
+    }
+
+    function closeModal() {
+        document.getElementById('resultsModal').style.display = 'none';
+        document.body.style.overflow = '';
+    }
+
+    function showResults() {
+        document.getElementById('droneFormState').style.display = 'none';
+        document.getElementById('resultsState').style.display = 'block';
+        document.getElementById('resultsModal').scrollTop = 0;
+    }
+
+    function orderDroneReport() {
+        const address = document.getElementById('addressInput').value.trim();
+        document.getElementById('resultsState').style.display = 'none';
+        document.getElementById('droneFormState').style.display = 'block';
+        document.getElementById('droneAddress').value = address;
+        document.getElementById('resultsModal').scrollTop = 0;
+    }
+
+    function referToPartner() {
+        // Replace this URL with real SolarPro Latvia link when ready
+        alert('Redirecting to SolarPro Latvia — replace this with the real partner URL!');
+        // window.open('https://solarprolatvia.lv?ref=sunlytics', '_blank');
+    }
+
+    // ── FAQ ──────────────────────────────────────────────────────
+    const faqs = [
+        {
+            q: 'How accurate is the free satellite analysis?',
+            a: 'The free analysis uses real Latvian solar irradiance data (PVGIS/EU JRC) and is accurate to within 10–15% for most properties. For 100% precision — including exact roof dimensions, shading, and structural details — order our professional drone report.'
+        },
+        {
+            q: 'How does the drone get access to my roof?',
+            a: 'Our certified drone operators fly above your property from public airspace — no ladders, no scaffolding, no access required inside your home. The drone captures high-resolution imagery of your roof from above. You just need to be available to confirm the appointment.'
+        },
+        {
+            q: 'How long does the drone report take?',
+            a: 'Once the drone flight is completed, your professional PDF report is delivered within 24 hours directly to your email. Scheduling the flight itself typically takes 1–2 business days depending on weather conditions.'
+        },
+        {
+            q: 'What if the weather is bad on the day of the flight?',
+            a: 'We monitor wind speed, rain probability, and temperature before every flight. If conditions are unsuitable we will reschedule at no extra cost. You can also check our live drone status widget on the homepage.'
+        },
+        {
+            q: 'Is my data safe and GDPR compliant?',
+            a: 'Yes. We collect only the data necessary to provide our service (your address and contact details). We never sell your data to third parties. All data is processed in compliance with EU GDPR regulations. See our Privacy Policy for full details.'
+        },
+        {
+            q: 'Do I have to pay anything upfront?',
+            a: 'The online solar analysis is completely free — no card required. For the drone report (€149), you are not charged until we confirm your appointment and you approve. Payment is arranged directly with our team.'
+        },
+        {
+            q: 'What does the partner installation quote involve?',
+            a: 'Our partner SolarPro Latvia will visit your property for a free physical inspection, confirm the findings from your Sunlytics report, and provide a no-obligation quote for the full solar panel installation. There is no commitment to proceed.'
+        },
+    ];
+
+    function initFaq() {
+        const list = document.getElementById('faqList');
+        faqs.forEach((item, i) => {
+            const el = document.createElement('div');
+            el.style.cssText = 'background:#f9f9f9; border-radius:16px; border:1px solid #efefef; overflow:hidden;';
+            el.innerHTML = `
+                <button onclick="toggleFaq(${i})" style="width:100%; display:flex; justify-content:space-between; align-items:center; padding:22px 24px; background:none; border:none; cursor:pointer; font-family:inherit; text-align:left; gap:16px;">
+                    <span style="font-size:15px; font-weight:700; color:#1a1a1a;">${item.q}</span>
+                    <span id="faqIcon${i}" style="flex-shrink:0; width:28px; height:28px; background:#efefef; border-radius:50%; display:flex; align-items:center; justify-content:center; transition:background 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                    </span>
+                </button>
+                <div id="faqAnswer${i}" style="display:none; padding:0 24px 22px;">
+                    <p style="font-size:14px; color:#6b7280; line-height:1.75; margin:0;">${item.a}</p>
+                </div>`;
+            list.appendChild(el);
+        });
+    }
+
+    function toggleFaq(i) {
+        const answer = document.getElementById('faqAnswer' + i);
+        const icon   = document.getElementById('faqIcon' + i);
+        const isOpen = answer.style.display === 'block';
+        // Close all
+        faqs.forEach((_, j) => {
+            document.getElementById('faqAnswer' + j).style.display = 'none';
+            document.getElementById('faqIcon' + j).style.background = '#efefef';
+        });
+        if (!isOpen) {
+            answer.style.display = 'block';
+            icon.style.background = 'linear-gradient(135deg,#f7971e,#ff4e00)';
+            icon.querySelector('svg').style.stroke = 'white';
+        }
+    }
+
+    // ── COOKIES ──────────────────────────────────────────────────
+    function acceptCookies() {
+        localStorage.setItem('cookieConsent', 'accepted');
+        document.getElementById('cookieBanner').style.display = 'none';
+    }
+
+    function declineCookies() {
+        localStorage.setItem('cookieConsent', 'declined');
+        document.getElementById('cookieBanner').style.display = 'none';
+    }
+
+    function initCookieBanner() {
+        if (!localStorage.getItem('cookieConsent')) {
+            setTimeout(() => {
+                document.getElementById('cookieBanner').style.display = 'block';
+            }, 1500);
+        }
+    }
+
+    initFaq();
+    initCookieBanner();
+    loadWeather();
+</script>
+
+<!-- RESULTS MODAL -->
+<div id="resultsModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.7); z-index:1000; align-items:center; justify-content:center; padding:20px; overflow-y:auto;">
+    <div style="background:white; border-radius:28px; max-width:680px; width:100%; max-height:90vh; overflow-y:auto; position:relative; box-shadow:0 24px 80px rgba(0,0,0,0.3);">
+
+        <!-- Close button -->
+        <button onclick="closeModal()" style="position:absolute; top:16px; right:16px; background:#f5f5f5; border:none; width:36px; height:36px; border-radius:50%; font-size:18px; cursor:pointer; color:#666; z-index:10;">&#10005;</button>
+
+        <!-- Loading State -->
+        <div id="loadingState" style="padding:60px 40px; text-align:center;">
+            <div style="width:70px; height:70px; background:linear-gradient(135deg,#f7971e,#ff4e00); border-radius:50%; margin:0 auto 24px; display:flex; align-items:center; justify-content:center; font-size:28px; animation:pulse 1.5s infinite;">&#9728;</div>
+            <h3 style="font-size:22px; font-weight:800; color:#1a1a1a; margin-bottom:10px;">Analyzing Your Roof...</h3>
+            <p style="color:#6b7280; font-size:15px; margin-bottom:32px;">Processing satellite imagery and solar data for your location</p>
+            <div style="background:#f5f5f5; border-radius:50px; height:6px; overflow:hidden; max-width:300px; margin:0 auto;">
+                <div style="height:100%; background:linear-gradient(135deg,#f7971e,#ff4e00); animation:loading 2.5s ease-in-out; border-radius:50px;"></div>
+            </div>
+            <p style="color:#aaa; font-size:12px; margin-top:16px;">This usually takes a few seconds</p>
+        </div>
+
+        <!-- Results State -->
+        <div id="resultsState" style="display:none;">
+
+            <!-- Header -->
+            <div style="background:linear-gradient(135deg,#222222,#333333); border-radius:28px 28px 0 0; padding:32px 36px;">
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:6px;">
+                    <img src="logo.png" style="width:28px; height:28px; object-fit:contain;">
+                    <span style="color:rgba(255,255,255,0.6); font-size:13px; font-weight:600; letter-spacing:1px;">SUNLYTICS ANALYSIS</span>
+                </div>
+                <h2 style="color:white; font-size:22px; font-weight:800; margin-bottom:4px;">Solar Feasibility Report</h2>
+                <p id="resAddress" style="color:rgba(255,255,255,0.55); font-size:14px;"></p>
+            </div>
+
+            <div style="padding:32px 36px;">
+
+                <!-- Solar Score -->
+                <div style="background:#ffffff; border-radius:20px; padding:24px; margin-bottom:24px; border:1px solid #e8e8e8;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                        <div>
+                            <div style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#c45000; margin-bottom:4px;">Solar Utilization Score</div>
+                            <div style="display:flex; align-items:baseline; gap:10px;">
+                                <span id="resScore" style="font-size:48px; font-weight:800; background:linear-gradient(135deg,#f7971e,#ff4e00); -webkit-background-clip:text; -webkit-text-fill-color:transparent;"></span>
+                                <span id="resRating" style="font-size:16px; font-weight:700;"></span>
+                            </div>
+                        </div>
+                        <div style="font-size:40px;">&#9728;</div>
+                    </div>
+                    <div style="background:#e8e8e8; border-radius:50px; height:8px; overflow:hidden;">
+                        <div id="scoreBar" style="height:100%; background:linear-gradient(135deg,#f7971e,#ff4e00); border-radius:50px; width:0%; transition:width 1s ease;"></div>
+                    </div>
+                </div>
+
+                <!-- Key Numbers Grid -->
+                <div class="results-grid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:24px;">
+                    <div style="background:#f5f5f5; border-radius:16px; padding:20px 16px; text-align:center; border:1px solid #efefef;">
+                        <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#c45000; margin-bottom:8px;">Usable Area</div>
+                        <div id="resArea" style="font-size:20px; font-weight:800; color:#1a1a1a;"></div>
+                    </div>
+                    <div style="background:#f5f5f5; border-radius:16px; padding:20px 16px; text-align:center; border:1px solid #efefef;">
+                        <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#c45000; margin-bottom:8px;">Payback Period</div>
+                        <div id="resPayback" style="font-size:20px; font-weight:800; color:#1a1a1a;"></div>
+                    </div>
+                    <div style="background:#f5f5f5; border-radius:16px; padding:20px 16px; text-align:center; border:1px solid #efefef;">
+                        <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#c45000; margin-bottom:8px;">25-Year Profit</div>
+                        <div id="resProfit" style="font-size:20px; font-weight:800; color:#1a1a1a;"></div>
+                    </div>
+                    <div style="background:#f5f5f5; border-radius:16px; padding:20px 16px; text-align:center; border:1px solid #efefef;">
+                        <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#c45000; margin-bottom:8px;">Annual Savings</div>
+                        <div id="resSavings" style="font-size:20px; font-weight:800; color:#1a1a1a;"></div>
+                    </div>
+                    <div style="background:#f5f5f5; border-radius:16px; padding:20px 16px; text-align:center; border:1px solid #efefef;">
+                        <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#c45000; margin-bottom:8px;">System Size</div>
+                        <div id="resSystem" style="font-size:20px; font-weight:800; color:#1a1a1a;"></div>
+                    </div>
+                    <div style="background:#f5f5f5; border-radius:16px; padding:20px 16px; text-align:center; border:1px solid #efefef;">
+                        <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#c45000; margin-bottom:8px;">Annual Production</div>
+                        <div id="resProduction" style="font-size:20px; font-weight:800; color:#1a1a1a;"></div>
+                    </div>
+                </div>
+
+                <!-- Disclaimer -->
+                <div style="background:#f0f4ff; border-radius:14px; padding:16px 20px; margin-bottom:24px; display:flex; gap:12px; align-items:flex-start;">
+                    <span style="font-size:18px; flex-shrink:0;">&#8505;</span>
+                    <p style="font-size:13px; color:#555; line-height:1.6;">These are <strong>regional average estimates</strong> based on real Latvian solar irradiance data (PVGIS/EU JRC) and a typical 60 m² residential roof. Actual results depend on your specific roof size, orientation and shading. For 100% accurate figures, order our professional drone report.</p>
+                </div>
+
+                <!-- Drone Report CTA -->
+                <div style="background:linear-gradient(135deg,#ffffff,#e8e8e8); border-radius:20px; padding:28px; border:1px solid #ffc07a; text-align:center; margin-bottom:16px;">
+                    <h3 style="font-size:20px; font-weight:800; color:#1a1a1a; margin-bottom:8px;">Want 100% Accurate Results?</h3>
+                    <p style="color:#6b7280; font-size:14px; margin-bottom:20px; line-height:1.6;">Our certified drone operators will inspect your roof and deliver a professional PDF report within 24 hours — for just <strong style="color:#c45000;">&#8364;149</strong></p>
+                    <button onclick="orderDroneReport()" style="background:linear-gradient(135deg,#f7971e,#ff4e00); color:white; border:none; padding:16px 36px; border-radius:50px; font-size:16px; font-weight:700; cursor:pointer; box-shadow:0 6px 24px rgba(247,151,30,0.38); width:100%; font-family:inherit;">
+                        &#9654; Order Drone Report — &#8364;149
+                    </button>
+                </div>
+
+                <!-- SolarPro Latvia Partner CTA -->
+                <div style="background:linear-gradient(135deg,#f0fff4,#e6f7ee); border-radius:20px; padding:24px; border:1px solid #a7f3c0; margin-bottom:16px;">
+                    <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+                        <div style="width:40px; height:40px; background:linear-gradient(135deg,#22c55e,#16a34a); border-radius:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+                        </div>
+                        <div>
+                            <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#16a34a;">Certified Installation Partner</div>
+                            <div style="font-size:16px; font-weight:800; color:#1a1a1a;">SolarPro Latvia</div>
+                        </div>
+                        <div style="margin-left:auto; background:#dcfce7; color:#16a34a; font-size:11px; font-weight:700; padding:4px 10px; border-radius:50px; white-space:nowrap;">FREE QUOTE</div>
+                    </div>
+                    <p style="color:#374151; font-size:13px; line-height:1.6; margin-bottom:16px;">Our certified installation partner will visit your property, physically confirm your results, and provide a <strong>no-obligation installation quote</strong> — completely free.</p>
+                    <div style="display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap;">
+                        <div style="background:white; border-radius:8px; padding:8px 12px; font-size:12px; font-weight:600; color:#374151; border:1px solid #d1fae5; display:flex; align-items:center; gap:6px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                            Licensed installer
+                        </div>
+                        <div style="background:white; border-radius:8px; padding:8px 12px; font-size:12px; font-weight:600; color:#374151; border:1px solid #d1fae5; display:flex; align-items:center; gap:6px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                            10-year warranty
+                        </div>
+                        <div style="background:white; border-radius:8px; padding:8px 12px; font-size:12px; font-weight:600; color:#374151; border:1px solid #d1fae5; display:flex; align-items:center; gap:6px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                            No obligation
+                        </div>
+                    </div>
+                    <button onclick="referToPartner()" style="background:linear-gradient(135deg,#22c55e,#16a34a); color:white; border:none; padding:14px 36px; border-radius:50px; font-size:15px; font-weight:700; cursor:pointer; width:100%; font-family:inherit; box-shadow:0 6px 20px rgba(34,197,94,0.35); display:flex; align-items:center; justify-content:center; gap:10px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        Get Free Installation Quote
+                    </button>
+                </div>
+
+                <button onclick="closeModal()" style="width:100%; background:#f5f5f5; border:none; padding:14px; border-radius:50px; font-size:14px; font-weight:600; cursor:pointer; color:#666; font-family:inherit;">
+                    Close — Analyze Another Address
+                </button>
+
+            </div>
+        </div>
+
+        <!-- Drone Order Form State -->
+        <div id="droneFormState" style="display:none; padding:36px 36px 32px;">
+            <!-- Back button -->
+            <button onclick="showResults()" style="display:flex; align-items:center; gap:6px; background:none; border:none; color:#6b7280; font-size:14px; font-weight:600; cursor:pointer; margin-bottom:24px; padding:0; font-family:inherit;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                Back to Results
+            </button>
+
+            <div style="text-align:center; margin-bottom:28px;">
+                <div style="width:56px; height:56px; background:linear-gradient(135deg,#f7971e,#ff4e00); border-radius:16px; display:flex; align-items:center; justify-content:center; margin:0 auto 16px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V12"/><path d="M12 12 7 7"/><path d="M12 12l5-5"/><circle cx="4.5" cy="4.5" r="2.5"/><circle cx="19.5" cy="4.5" r="2.5"/><path d="M4.5 7v.5a2.5 2.5 0 0 0 2.5 2.5h10a2.5 2.5 0 0 0 2.5-2.5V7"/><path d="M8 22h8"/></svg>
+                </div>
+                <h2 style="font-size:24px; font-weight:800; color:#1a1a1a; margin-bottom:8px;">Order Your Drone Report</h2>
+                <p style="color:#6b7280; font-size:14px; line-height:1.6;">Fill in your details and we will contact you within a few hours to confirm your appointment</p>
+            </div>
+
+            <div style="margin-bottom:14px;">
+                <label style="font-size:13px; font-weight:600; color:#1a1a1a; margin-bottom:6px; display:block;">Full Name</label>
+                <input type="text" placeholder="Your full name" style="width:100%; padding:15px 18px; border:2px solid #e8e8e8; border-radius:12px; font-size:15px; outline:none; font-family:inherit; background:#ffffff; transition:border-color 0.2s;" onfocus="this.style.borderColor='#f7971e'" onblur="this.style.borderColor='#e8e8e8'">
+            </div>
+            <div style="margin-bottom:14px;">
+                <label style="font-size:13px; font-weight:600; color:#1a1a1a; margin-bottom:6px; display:block;">Email Address</label>
+                <input type="email" placeholder="your@email.com" style="width:100%; padding:15px 18px; border:2px solid #e8e8e8; border-radius:12px; font-size:15px; outline:none; font-family:inherit; background:#ffffff; transition:border-color 0.2s;" onfocus="this.style.borderColor='#f7971e'" onblur="this.style.borderColor='#e8e8e8'">
+            </div>
+            <div style="margin-bottom:14px;">
+                <label style="font-size:13px; font-weight:600; color:#1a1a1a; margin-bottom:6px; display:block;">Phone Number</label>
+                <input type="tel" placeholder="+371 ..." style="width:100%; padding:15px 18px; border:2px solid #e8e8e8; border-radius:12px; font-size:15px; outline:none; font-family:inherit; background:#ffffff; transition:border-color 0.2s;" onfocus="this.style.borderColor='#f7971e'" onblur="this.style.borderColor='#e8e8e8'">
+            </div>
+            <div style="margin-bottom:24px;">
+                <label style="font-size:13px; font-weight:600; color:#1a1a1a; margin-bottom:6px; display:block;">Property Address</label>
+                <input type="text" id="droneAddress" placeholder="Building address" style="width:100%; padding:15px 18px; border:2px solid #e8e8e8; border-radius:12px; font-size:15px; outline:none; font-family:inherit; background:#ffffff; transition:border-color 0.2s;" onfocus="this.style.borderColor='#f7971e'" onblur="this.style.borderColor='#e8e8e8'">
+            </div>
+
+            <button style="width:100%; background:linear-gradient(135deg,#f7971e,#ff4e00); color:white; border:none; padding:17px; border-radius:14px; font-size:16px; font-weight:700; cursor:pointer; font-family:inherit; box-shadow:0 6px 24px rgba(247,151,30,0.35); margin-bottom:12px; display:flex; align-items:center; justify-content:center; gap:10px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Confirm Order — &#8364;149
+            </button>
+            <p style="font-size:12px; color:#aaa; text-align:center;">You will not be charged now. We will contact you to confirm details and arrange payment.</p>
+        </div>
+
+    </div>
+</div>
+
+
+<style>
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.08); opacity: 0.85; }
+}
+@keyframes loading {
+    0% { width: 0%; }
+    100% { width: 100%; }
+}
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ── CALC TABS ── */
+.calc-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 22px;
+    background: #f2f2f2;
+    border-radius: 12px;
+    padding: 5px;
+}
+.calc-tab {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 9px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    background: transparent;
+    color: #9ca3af;
+    transition: all 0.2s;
+    font-family: inherit;
+}
+.calc-tab.active {
+    background: white;
+    color: var(--navy);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.09);
+}
+.calc-tab:hover:not(.active) { color: var(--orange); }
+</style>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script>
+    // ── TAB SWITCHING ────────────────────────────────────────────
+    let mapInitialized = false;
+    let leafletMap = null;
+    let mapMarker = null;
+    let mapLat = null, mapLng = null;
+    let mapAddress = null;
+
+    function switchTab(tab) {
+        const isText = tab === 'text';
+        document.getElementById('tabText').classList.toggle('active', isText);
+        document.getElementById('tabMap').classList.toggle('active', !isText);
+        document.getElementById('panelText').style.display = isText ? 'block' : 'none';
+        document.getElementById('panelMap').style.display = isText ? 'none' : 'block';
+        if (!isText && !mapInitialized) initMap();
+    }
+
+    // ── MAP INIT ─────────────────────────────────────────────────
+    function initMap() {
+        mapInitialized = true;
+
+        // Check connectivity by attempting to load a tile
+        const offlineNotice = document.getElementById('mapOfflineNotice');
+        const mapLoading   = document.getElementById('mapLoading');
+
+        if (!navigator.onLine) {
+            offlineNotice.style.display = 'flex';
+            mapLoading.style.display = 'none';
+            return;
+        }
+
+        leafletMap = L.map('map', { zoomControl: true }).setView([56.9496, 24.1052], 12);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© <a href="https://openstreetmap.org">OpenStreetMap</a>',
+            maxZoom: 19,
+        }).addTo(leafletMap);
+
+        // Hide loading spinner once first tile loads
+        leafletMap.on('load', () => { mapLoading.style.display = 'none'; });
+        setTimeout(() => { mapLoading.style.display = 'none'; }, 2000);
+
+        // Custom orange marker
+        const orangeIcon = L.divIcon({
+            html: `<div style="width:32px;height:32px;background:linear-gradient(135deg,#f7971e,#ff4e00);border-radius:50% 50% 50% 0;transform:rotate(-45deg);box-shadow:0 3px 14px rgba(247,151,30,0.55);border:3px solid white;"></div>`,
+            iconSize: [32, 32],
+            iconAnchor: [16, 32],
+            className: ''
+        });
+
+        leafletMap.on('click', async function(e) {
+            mapLat = e.latlng.lat;
+            mapLng = e.latlng.lng;
+
+            if (mapMarker) mapMarker.setLatLng(e.latlng);
+            else mapMarker = L.marker(e.latlng, { icon: orangeIcon }).addTo(leafletMap);
+
+            const row    = document.getElementById('mapAddressRow');
+            const hint   = document.getElementById('mapHint');
+            const status = document.getElementById('mapGeocodeStatus');
+            const addrEl = document.getElementById('mapSelectedAddress');
+            const btn    = document.getElementById('mapAnalyzeBtn');
+
+            row.style.display = 'flex';
+            hint.style.display = 'none';
+            addrEl.textContent = `${mapLat.toFixed(5)}, ${mapLng.toFixed(5)}`;
+            status.textContent = 'Looking up address…';
+            btn.disabled = false;
+            btn.style.opacity = '1';
+            mapAddress = `${mapLat.toFixed(5)}, ${mapLng.toFixed(5)}`;
+
+            // Reverse geocode via Nominatim (free, no key)
+            try {
+                const res = await fetch(
+                    `https://nominatim.openstreetmap.org/reverse?lat=${mapLat}&lon=${mapLng}&format=json`,
+                    { headers: { 'Accept-Language': 'en' } }
+                );
+                const data = await res.json();
+                if (data && data.display_name) {
+                    mapAddress = data.display_name;
+                    addrEl.textContent = data.display_name;
+                    status.textContent = '';
+                    // Also sync text input
+                    document.getElementById('addressInput').value = data.display_name;
+                } else {
+                    status.textContent = '(coordinates only)';
+                }
+            } catch {
+                status.textContent = '(offline — coordinates only)';
+            }
+        });
+
+        // Handle tile error = offline
+        leafletMap.on('tileerror', () => {
+            offlineNotice.style.display = 'flex';
+        });
+    }
+
+    function analyzeFromMap() {
+        if (!mapAddress) return;
+        document.getElementById('addressInput').value = mapAddress;
+        showLoadingModal(mapAddress, mapLat, mapLng);
+    }
 </script>
 </body>
 </html>
