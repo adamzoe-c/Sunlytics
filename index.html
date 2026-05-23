@@ -1173,48 +1173,96 @@
         showLoadingModal(address);
     }
 
-    function showLoadingModal(address) {
-        document.getElementById('modalAddress').textContent = address;
+    function showLoadingModal(address, lat, lng) {
+        document.getElementById('resAddress').textContent = address;
         document.getElementById('resultsModal').style.display = 'flex';
         document.body.style.overflow = 'hidden';
 
-        // Simulate analysis loading
         document.getElementById('loadingState').style.display = 'block';
         document.getElementById('resultsState').style.display = 'none';
 
         setTimeout(() => {
             document.getElementById('loadingState').style.display = 'none';
             document.getElementById('resultsState').style.display = 'block';
-            generateResults(address);
+            generateResults(address, lat, lng);
         }, 2500);
     }
 
-    function generateResults(address) {
-        // Realistic randomized results based on address length as seed
-        const seed = address.length;
-        const score = Math.min(95, Math.max(68, 75 + (seed % 20)));
-        const area = Math.floor(200 + (seed * 37) % 8000);
-        const systemKw = Math.floor(area * 0.055);
-        const annualProduction = Math.floor(systemKw * 950);
-        const annualSavings = Math.floor(annualProduction * 0.18);
-        const installCost = Math.floor(systemKw * 850);
-        const payback = (installCost / annualSavings).toFixed(1);
-        const profit25 = Math.floor((annualSavings * 25) - installCost);
-        const panels = Math.floor(systemKw / 0.55);
+    function generateResults(address, lat, lng) {
+        // ── REAL LATVIAN SOLAR DATA (source: PVGIS / EU Joint Research Centre) ──
+        // Annual solar irradiance (kWh/kWp) by region in Latvia
+        // Riga: ~950, Liepāja: ~990, Daugavpils: ~970, Valmiera: ~940, Jēkabpils: ~960
+        const regions = [
+            { names: ['riga','rīga'],          irr: 950 },
+            { names: ['liepāja','liepaja','liepāja'],    irr: 990 },
+            { names: ['daugavpils'],            irr: 970 },
+            { names: ['valmiera'],              irr: 940 },
+            { names: ['jēkabpils','jekabpils'], irr: 960 },
+            { names: ['jelgava'],               irr: 955 },
+            { names: ['jūrmala','jurmala'],     irr: 960 },
+            { names: ['ventspils'],             irr: 985 },
+            { names: ['rēzekne','rezekne'],     irr: 965 },
+        ];
 
-        const rating = score >= 85 ? 'Excellent' : score >= 70 ? 'Good' : 'Average';
-        const ratingColor = score >= 85 ? '#2e7d32' : score >= 70 ? '#f7971e' : '#888';
+        // If we have map coordinates, use latitude to estimate irradiance
+        // Latvia spans ~55.7°N (south) to ~57.7°N (north) — southern Latvia gets ~5% more sun
+        let irradiance = 960; // Latvia national average
+        if (lat) {
+            // Southern Latvia (closer to 55.7°N) gets slightly more sun
+            const latFactor = 1 + (57.7 - lat) * 0.008;
+            irradiance = Math.round(960 * latFactor);
+        } else {
+            // Try to match region name from address
+            const addrLower = address.toLowerCase();
+            for (const r of regions) {
+                if (r.names.some(n => addrLower.includes(n))) {
+                    irradiance = r.irr;
+                    break;
+                }
+            }
+        }
+
+        // ── REALISTIC ASSUMPTIONS (Latvia market averages) ──
+        // Average residential roof usable area: 40–120 m²
+        // We don't know the roof so we use a typical Latvian house: 60 m² usable
+        // Panel efficiency: 20% (modern panels), 1 kWp needs ~5 m²
+        // Electricity price Latvia 2024: ~0.22 €/kWh (Sadales tīkls data)
+        // Install cost Latvia: ~900 €/kWp (industry average 2024)
+        // Annual degradation: 0.5% per year
+
+        const usableArea = 60;           // m² — typical Latvian residential roof
+        const systemKw = +(usableArea / 5).toFixed(1);  // kWp (1 kWp = 5 m²)
+        const annualProduction = Math.round(systemKw * irradiance);  // kWh/yr
+        const electricityPrice = 0.22;   // €/kWh Latvia average
+        const annualSavings = Math.round(annualProduction * electricityPrice);
+        const installCost = Math.round(systemKw * 900);
+        const payback = (installCost / annualSavings).toFixed(1);
+
+        // 25-year profit with 0.5% annual panel degradation and 3% electricity price inflation
+        let profit25 = 0;
+        let yearlyProduction = annualProduction;
+        let yearlyPrice = electricityPrice;
+        for (let y = 1; y <= 25; y++) {
+            profit25 += yearlyProduction * yearlyPrice;
+            yearlyProduction *= 0.995;   // 0.5% degradation
+            yearlyPrice *= 1.03;         // 3% price inflation
+        }
+        profit25 = Math.round(profit25 - installCost);
+
+        // Solar score: based on irradiance vs best possible in Latvia (990)
+        const score = Math.round((irradiance / 990) * 100);
+        const rating = score >= 95 ? 'Excellent' : score >= 90 ? 'Very Good' : 'Good';
+        const ratingColor = score >= 95 ? '#2e7d32' : score >= 90 ? '#f7971e' : '#888';
 
         document.getElementById('resAddress').textContent = address;
         document.getElementById('resScore').textContent = score + '%';
         document.getElementById('resRating').textContent = rating;
         document.getElementById('resRating').style.color = ratingColor;
-        document.getElementById('resArea').textContent = area.toLocaleString() + ' m\u00b2';
+        document.getElementById('resArea').textContent = usableArea + ' m\u00b2 (typical)';
         document.getElementById('resPayback').textContent = payback + ' Years';
         document.getElementById('resProfit').textContent = '\u20ac' + profit25.toLocaleString();
-        document.getElementById('resSavings').textContent = '\u20ac' + annualSavings.toLocaleString();
+        document.getElementById('resSavings').textContent = '\u20ac' + annualSavings + '/yr';
         document.getElementById('resSystem').textContent = systemKw + ' kWp';
-        document.getElementById('resPanels').textContent = panels + ' panels';
         document.getElementById('resProduction').textContent = annualProduction.toLocaleString() + ' kWh/yr';
 
         // Score bar
@@ -1238,7 +1286,7 @@
 </script>
 
 <!-- RESULTS MODAL -->
-<div id="resultsModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(15,21,53,0.75); z-index:1000; align-items:center; justify-content:center; padding:20px; overflow-y:auto;">
+<div id="resultsModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.7); z-index:1000; align-items:center; justify-content:center; padding:20px; overflow-y:auto;">
     <div style="background:white; border-radius:28px; max-width:680px; width:100%; max-height:90vh; overflow-y:auto; position:relative; box-shadow:0 24px 80px rgba(0,0,0,0.3);">
 
         <!-- Close button -->
@@ -1318,7 +1366,7 @@
                 <!-- Disclaimer -->
                 <div style="background:#f0f4ff; border-radius:14px; padding:16px 20px; margin-bottom:24px; display:flex; gap:12px; align-items:flex-start;">
                     <span style="font-size:18px; flex-shrink:0;">&#8505;</span>
-                    <p style="font-size:13px; color:#555; line-height:1.6;">This is a <strong>preliminary estimate</strong> based on satellite imagery. Results may vary by 10–20%. For a fully accurate assessment, order our professional drone report.</p>
+                    <p style="font-size:13px; color:#555; line-height:1.6;">These are <strong>regional average estimates</strong> based on real Latvian solar irradiance data (PVGIS/EU JRC) and a typical 60 m² residential roof. Actual results depend on your specific roof size, orientation and shading. For 100% accurate figures, order our professional drone report.</p>
                 </div>
 
                 <!-- Drone Report CTA -->
@@ -1518,7 +1566,7 @@
     function analyzeFromMap() {
         if (!mapAddress) return;
         document.getElementById('addressInput').value = mapAddress;
-        showLoadingModal(mapAddress);
+        showLoadingModal(mapAddress, mapLat, mapLng);
     }
 </script>
 </body>
