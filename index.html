@@ -802,7 +802,19 @@
             }
 
             .calculator-box { padding: 32px 20px; }
-            .trust-bar { gap: 16px; }
+
+            /* Trust bar: 2-column grid so icons align neatly */
+            .trust-bar {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 14px 20px;
+                padding: 20px 5%;
+                justify-items: start;
+            }
+            .trust-item {
+                width: 100%;
+            }
+
             .footer-top { flex-direction: column; }
             .footer-bottom { flex-direction: column; text-align: center; }
             .step { width: 100%; max-width: 360px; }
@@ -810,6 +822,23 @@
 
             .hero-buttons { flex-direction: column; align-items: center; }
             .btn-primary, .btn-secondary { width: 100%; max-width: 320px; justify-content: center; }
+
+            /* Results modal: 2-column grid so 3rd card is never cut off */
+            .results-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+
+            /* Tighten modal padding on small screens */
+            #resultsModal > div {
+                border-radius: 20px;
+            }
+            #resultsState > div:first-child {
+                border-radius: 20px 20px 0 0;
+                padding: 24px 20px !important;
+            }
+            #resultsState > div:last-child {
+                padding: 20px 16px !important;
+            }
         }
     </style>
 </head>
@@ -1336,7 +1365,7 @@
                 </div>
 
                 <!-- Key Numbers Grid -->
-                <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:24px;">
+                <div class="results-grid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:24px;">
                     <div style="background:#f5f5f5; border-radius:16px; padding:20px 16px; text-align:center; border:1px solid #efefef;">
                         <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#c45000; margin-bottom:8px;">Usable Area</div>
                         <div id="resArea" style="font-size:20px; font-weight:800; color:#1a1a1a;"></div>
