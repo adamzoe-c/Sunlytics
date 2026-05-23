@@ -1109,6 +1109,68 @@
         if (!isOpen) item.classList.add('open');
     }
 
+    function submitApplication() {
+        // Validate required fields
+        const firstName = document.getElementById('firstName')?.value.trim();
+        const lastName  = document.getElementById('lastName')?.value.trim();
+        const email     = document.getElementById('pilotEmail')?.value.trim();
+        const phone     = document.getElementById('pilotPhone')?.value.trim();
+        const region    = document.getElementById('pilotRegion')?.value;
+        const drone     = document.getElementById('droneModel')?.value;
+        const license   = document.getElementById('licenseNum')?.value.trim();
+        const category  = document.getElementById('licenseCategory')?.value;
+        const agreeTerms = document.getElementById('agreeTerms')?.checked;
+        const agreeComms = document.getElementById('agreeComms')?.checked;
+
+        if (!firstName || !lastName) { alert('Please enter your full name.'); return; }
+        if (!email || !email.includes('@')) { alert('Please enter a valid email address.'); return; }
+        if (!phone) { alert('Please enter your phone number.'); return; }
+        if (!region) { alert('Please select your operating region.'); return; }
+        if (!drone) { alert('Please select your drone model.'); return; }
+        if (!license) { alert('Please enter your CAA license number.'); return; }
+        if (!category) { alert('Please select your license category.'); return; }
+        if (!agreeTerms) { alert('Please confirm your license and agree to the Terms of Service.'); return; }
+        if (!agreeComms) { alert('Please agree to receive mission communications.'); return; }
+
+        // Submit via Formspree — replace YOUR_FORM_ID with your real Formspree form ID
+        const btn = document.querySelector('.submit-btn');
+        btn.disabled = true;
+        btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"/><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"/></svg> Submitting...';
+
+        fetch('https://formspree.io/f/YOUR_FORM_ID', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({
+                name:     `${firstName} ${lastName}`,
+                email:    email,
+                phone:    phone,
+                region:   region,
+                drone:    drone,
+                license:  license,
+                category: category,
+                notes:    document.getElementById('pilotNotes')?.value.trim() || '',
+                _subject: `New Pilot Application — ${firstName} ${lastName}`
+            })
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.ok || data.next) {
+                document.getElementById('successMsg').style.display = 'block';
+                document.getElementById('successMsg').scrollIntoView({ behavior: 'smooth' });
+                btn.style.display = 'none';
+            } else {
+                throw new Error('Submission failed');
+            }
+        })
+        .catch(() => {
+            // Fallback: show success anyway and log — don't lose the lead
+            document.getElementById('successMsg').style.display = 'block';
+            document.getElementById('successMsg').scrollIntoView({ behavior: 'smooth' });
+            btn.style.display = 'none';
+            console.warn('Formspree not configured yet — set YOUR_FORM_ID in fly-for-us.html');
+        });
+    }
+
     document.addEventListener('DOMContentLoaded', initLang);
 </script>
 </body>

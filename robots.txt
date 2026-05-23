@@ -1,0 +1,8 @@
+# Sunlytics — robots.txt
+User-agent: *
+Allow: /
+
+# Don't index the pilot upload dashboard
+Disallow: /upload-mission.html
+
+Sitemap: https://sunlytics.eu/sitemap.xml
