@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service - Sunlytics</title>
+    <style>
+        :root { --orange: #f7971e; --orange-dark: #ff4e00; --navy: #0f1535; --white: #ffffff; --off-white: #fdf8f3; --gray: #6b7280; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--white); color: var(--navy); }
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 16px 5%; background: rgba(255,255,255,0.97); box-shadow: 0 1px 20px rgba(0,0,0,0.07); position: sticky; top: 0; z-index: 200; }
+        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .logo img { width: 36px; height: 36px; object-fit: contain; }
+        .logo-text { font-size: 20px; font-weight: 800; background: linear-gradient(135deg, var(--orange), var(--orange-dark)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 1px; }
+        .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--navy); font-weight: 500; font-size: 15px; }
+        .nav-links a:hover { color: var(--orange); }
+        .nav-cta { background: linear-gradient(135deg, var(--orange), var(--orange-dark)); color: white !important; padding: 11px 26px; border-radius: 50px; font-weight: 600 !important; }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+        .hamburger span { display: block; width: 24px; height: 2px; background: var(--navy); border-radius: 2px; }
+
+        .page-hero { background: linear-gradient(135deg, var(--navy), #1a2550); padding: 70px 5%; text-align: center; }
+        .page-hero h1 { font-size: clamp(28px, 4vw, 44px); font-weight: 800; color: white; margin-bottom: 10px; }
+        .page-hero p { color: rgba(255,255,255,0.5); font-size: 14px; }
+
+        .doc-section { max-width: 780px; margin: 0 auto; padding: 70px 5%; }
+        .doc-section h2 { font-size: 22px; font-weight: 800; color: var(--navy); margin: 36px 0 12px; }
+        .doc-section h2:first-child { margin-top: 0; }
+        .doc-section p { color: var(--gray); font-size: 15px; line-height: 1.85; margin-bottom: 14px; }
+        .doc-section ul { padding-left: 20px; margin-bottom: 14px; }
+        .doc-section ul li { color: var(--gray); font-size: 15px; line-height: 1.85; margin-bottom: 6px; }
+        .highlight { background: var(--off-white); border-left: 4px solid var(--orange); border-radius: 0 12px 12px 0; padding: 16px 20px; margin: 20px 0; }
+        .highlight p { margin: 0; }
+
+        footer { background: #080e24; color: white; padding: 40px 5%; text-align: center; }
+        .footer-bottom { color: rgba(255,255,255,0.3); font-size: 13px; }
+        .footer-bottom a { color: var(--orange); text-decoration: none; }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+            .nav-links.open { display: flex; flex-direction: column; position: fixed; top: 68px; left: 0; right: 0; background: white; padding: 24px 5%; box-shadow: 0 8px 30px rgba(0,0,0,0.1); gap: 20px; z-index: 199; }
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <a href="index.html" class="logo">
+        <img src="logo.png" alt="Sunlytics">
+        <span class="logo-text">SUNLYTICS</span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="index.html#how-it-works">How it Works</a></li>
+        <li><a href="index.html#pricing">Pricing</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="index.html#calculator" class="nav-cta">Free Analysis</a></li>
+    </ul>
+    <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+</nav>
+
+<section class="page-hero">
+    <h1>Terms of Service</h1>
+    <p>Last updated: May 2026</p>
+</section>
+
+<div class="doc-section">
+    <div class="highlight"><p>By using Sunlytics, you agree to these terms. Please read them carefully before using our services.</p></div>
+
+    <h2>1. Our Services</h2>
+    <p>Sunlytics provides two services:</p>
+    <ul>
+        <li><strong>Free instant analysis</strong> — a preliminary solar estimate based on satellite imagery</li>
+        <li><strong>Drone report (€149)</strong> — a professional on-site inspection with a PDF report delivered within 24 hours</li>
+    </ul>
+
+    <h2>2. Accuracy of Free Analysis</h2>
+    <p>The free instant analysis is an estimate based on satellite data and solar irradiance models. Results may vary by 10–20% from actual conditions. This estimate is provided for informational purposes only and should not be used as the sole basis for investment decisions. For full accuracy, we recommend ordering the drone report.</p>
+
+    <h2>3. Drone Report Service</h2>
+    <p>The drone report is conducted by certified drone operators. By ordering this service:</p>
+    <ul>
+        <li>You confirm that you have the right to authorize access to the property</li>
+        <li>You agree that drone flights are subject to weather conditions and may be rescheduled</li>
+        <li>You understand that delivery is within 24 hours of successful drone flight completion</li>
+    </ul>
+
+    <h2>4. Payment</h2>
+    <p>Payment for the drone report is due before the inspection takes place. We accept Visa, Mastercard, PayPal, and bank transfer. All prices are in Euros and include VAT where applicable.</p>
+
+    <h2>5. Cancellations and Refunds</h2>
+    <p>You may cancel your drone report order up to 24 hours before the scheduled inspection for a full refund. Cancellations made less than 24 hours before the inspection may be subject to a cancellation fee. If a drone flight cannot be completed due to weather after three attempts, a full refund will be issued.</p>
+
+    <h2>6. Limitation of Liability</h2>
+    <p>Sunlytics is not liable for decisions made based on our analysis results. Our reports are intended to assist — not replace — professional engineering assessments for major installations.</p>
+
+    <h2>7. Intellectual Property</h2>
+    <p>All content on our website including reports, designs, and analysis tools are the property of Sunlytics and may not be reproduced without permission.</p>
+
+    <h2>8. Governing Law</h2>
+    <p>These terms are governed by the laws of the Republic of Latvia. Any disputes shall be resolved in the courts of Riga, Latvia.</p>
+
+    <h2>9. Contact</h2>
+    <p>For questions about these terms, contact us at <a href="mailto:info@sunlytics.eu" style="color:var(--orange);">info@sunlytics.eu</a>.</p>
+</div>
+
+<footer>
+    <p class="footer-bottom">&copy; 2026 Sunlytics. &nbsp;&bull;&nbsp; <a href="privacy.html">Privacy Policy</a> &nbsp;&bull;&nbsp; <a href="contact.html">Contact</a></p>
+</footer>
+<script>function toggleMenu(){document.getElementById('navLinks').classList.toggle('open');}</script>
+</body>
+</html>

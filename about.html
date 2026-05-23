@@ -3,292 +3,641 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About | Sunlytics Solar Intelligence</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-    
+    <title>About Us - Sunlytics</title>
     <style>
         :root {
-            --bg-body: #ffffff;
-            --bg-section: #fcfcfc;
-            --accent-orange: #FF8C00; 
-            --accent-yellow: #FFD700;
-            --text-main: #1a1a1a;
-            --text-dim: #666666;
-            --border: #e5e5e5;
-            --gradient: linear-gradient(135deg, #FF8C00 0%, #FFD700 100%);
-            --shadow: 0 10px 30px rgba(0,0,0,0.08);
+            --orange: #f7971e;
+            --orange-dark: #ff4e00;
+            --navy: #0f1535;
+            --white: #ffffff;
+            --off-white: #fdf8f3;
+            --gray: #6b7280;
+            --border: #ffe0b2;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-body);
-            color: var(--text-main);
-            line-height: 1.7;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--white);
+            color: var(--navy);
             overflow-x: hidden;
         }
 
-        /* --- NAVIGATION --- */
+        /* ── NAVBAR ── */
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 5%;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            position: fixed;
-            width: 100%;
+            padding: 16px 5%;
+            background: rgba(255,255,255,0.97);
+            box-shadow: 0 1px 20px rgba(0,0,0,0.07);
+            position: sticky;
             top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid var(--border);
+            z-index: 200;
         }
 
-        .logo-container {
+        .logo {
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-weight: 800;
-            font-size: 1.1rem;
+            gap: 10px;
             text-decoration: none;
-            color: #000;
         }
 
-        .logo-container img { height: 30px; }
+        .logo img { width: 36px; height: 36px; object-fit: contain; }
 
-        .nav-links { display: flex; gap: 15px; }
-
-        .nav-links a { 
-            color: var(--text-main); 
-            text-decoration: none; 
-            font-size: 0.75rem; 
-            font-weight: 700; 
-            text-transform: uppercase;
+        .logo-text {
+            font-size: 20px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
         }
 
-        /* --- HEADER & GRADIENT FIX --- */
-        header {
-            padding: 160px 8% 60px;
-            background: var(--bg-section);
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--navy);
+            font-weight: 500;
+            font-size: 15px;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--orange); }
+        .nav-links a.active { color: var(--orange); font-weight: 700; }
+
+        .nav-cta {
+            background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+            color: white !important;
+            padding: 11px 26px;
+            border-radius: 50px;
+            font-weight: 600 !important;
+            box-shadow: 0 4px 15px rgba(247,151,30,0.35);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 4px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--navy);
+            border-radius: 2px;
+        }
+
+        /* ── HERO ── */
+        .about-hero {
+            background: linear-gradient(135deg, var(--navy), #1a2550);
+            padding: 90px 5% 80px;
             text-align: center;
         }
 
-        header h1 {
-            font-size: clamp(2.2rem, 5vw, 3.5rem);
-            font-weight: 800;
+        .about-hero .section-tag {
+            background: rgba(247,151,30,0.15);
+            color: var(--orange);
+            display: inline-block;
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
             margin-bottom: 20px;
-            background: var(--gradient);
-            /* Standard property for compatibility */
-            background-clip: text;
-            /* Vendor prefix for Chrome/Safari */
+        }
+
+        .about-hero h1 {
+            font-size: clamp(32px, 5vw, 56px);
+            font-weight: 800;
+            color: white;
+            margin-bottom: 18px;
+            letter-spacing: -0.5px;
+            line-height: 1.1;
+        }
+
+        .about-hero h1 span {
+            background: linear-gradient(135deg, var(--orange), var(--orange-dark));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        header p {
-            max-width: 800px;
+        .about-hero p {
+            font-size: 17px;
+            color: rgba(255,255,255,0.6);
+            max-width: 560px;
             margin: 0 auto;
-            font-size: 1.1rem;
-            color: var(--text-dim);
-            font-weight: 300;
+            line-height: 1.75;
         }
 
-        /* --- GRID LAYOUT --- */
-        section { padding: 60px 8%; }
+        /* ── FOUNDER ── */
+        .founder-section {
+            padding: 90px 5%;
+            background: var(--off-white);
+        }
 
-        .grid-2 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 50px;
+        .founder-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            gap: 60px;
             align-items: center;
+            flex-wrap: wrap;
         }
 
-        h2 { font-size: 1.8rem; margin-bottom: 20px; font-weight: 800; color: #000; }
-        
-        .accent-bar {
-            width: 50px;
-            height: 4px;
-            background: var(--gradient);
-            margin-bottom: 20px;
-            border-radius: 2px;
+        .founder-photo {
+            flex-shrink: 0;
+            width: 280px;
         }
 
-        /* --- SATELLITE IMAGE --- */
-        .img-box {
-            width: 100%;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border);
-        }
-
-        .img-box img {
-            width: 100%;
-            height: 100%;
-            display: block;
+        .founder-photo img {
+            width: 280px;
+            height: 340px;
             object-fit: cover;
+            border-radius: 24px;
+            box-shadow: 0 16px 50px rgba(0,0,0,0.15);
+            border: 4px solid white;
         }
 
-        /* --- PILLAR SECTION (CLEANED) --- */
-        .pillar-container {
-            background: var(--bg-section);
-            padding: 80px 8%;
+        .founder-photo-placeholder {
+            width: 280px;
+            height: 340px;
+            border-radius: 24px;
+            background: linear-gradient(135deg, #e8eaf6, #f5f5f5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 4px solid white;
+            box-shadow: 0 16px 50px rgba(0,0,0,0.1);
+            gap: 12px;
         }
 
-        .pillar-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
- .pillar-card {
-            background: #ffffff;
-            padding: 40px 30px;
-            border-radius: 15px;
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
+        .founder-photo-placeholder img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            opacity: 0.4;
         }
 
-        .pillar-card:hover { transform: translateY(-8px); }
+        .founder-photo-placeholder p {
+            font-size: 13px;
+            color: #aaa;
+            font-weight: 500;
+        }
 
-        .pillar-card h4 {
-            color: #000;
-            font-size: 1.1rem;
+        .founder-info { flex: 1; min-width: 280px; }
+
+        .founder-tag {
+            display: inline-block;
+            background: #fff3e0;
+            color: #c45000;
+            padding: 5px 14px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .founder-info h2 {
+            font-size: clamp(26px, 3vw, 38px);
             font-weight: 800;
-            margin-bottom: 15px;
+            color: var(--navy);
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
+        }
+
+        .founder-info .founder-title {
+            font-size: 15px;
+            color: var(--orange);
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
+        .founder-info p {
+            font-size: 15px;
+            color: var(--gray);
+            line-height: 1.85;
+            margin-bottom: 16px;
+        }
+
+        .founder-badges {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 24px;
+        }
+
+        .founder-badge {
             display: flex;
             align-items: center;
+            gap: 8px;
+            background: white;
+            border: 1px solid #f0e6dc;
+            border-radius: 50px;
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        .founder-badge img {
+            width: 18px;
+            height: 18px;
+            object-fit: contain;
+        }
+
+        /* ── STORY CARDS ── */
+        .story-section {
+            padding: 90px 5%;
+            text-align: center;
+        }
+
+        .section-tag {
+            display: inline-block;
+            background: #fff3e0;
+            color: #c45000;
+            padding: 5px 16px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: clamp(28px, 3.5vw, 44px);
+            font-weight: 800;
+            margin-bottom: 14px;
+            color: var(--navy);
+            letter-spacing: -0.5px;
+        }
+
+        .section-title span {
+            background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-subtitle {
+            font-size: 16px;
+            color: var(--gray);
+            margin-bottom: 56px;
+            line-height: 1.6;
+        }
+
+        .story-cards {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+            max-width: 1050px;
+            margin: 0 auto;
+        }
+
+        .story-card {
+            background: white;
+            border-radius: 24px;
+            padding: 40px 30px;
+            width: 300px;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.07);
+            border: 1px solid #f0e6dc;
+            text-align: left;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .story-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 44px rgba(247,151,30,0.14);
+        }
+
+        .card-icon {
+            width: 54px;
+            height: 54px;
+            background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 22px;
+        }
+
+        .card-icon img {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+        }
+
+        .story-card h3 {
+            font-size: 19px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--navy);
+        }
+
+        .story-card p {
+            color: var(--gray);
+            line-height: 1.8;
+            font-size: 14px;
+        }
+
+        /* ── MISSION BANNER ── */
+        .mission-banner {
+            background: linear-gradient(135deg, var(--navy), #1a2550);
+            padding: 80px 5%;
+            text-align: center;
+        }
+
+        .mission-banner h2 {
+            font-size: clamp(24px, 3.5vw, 40px);
+            font-weight: 800;
+            color: white;
+            max-width: 700px;
+            margin: 0 auto 20px;
+            line-height: 1.3;
+            letter-spacing: -0.5px;
+        }
+
+        .mission-banner h2 span {
+            background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .mission-banner p {
+            color: rgba(255,255,255,0.55);
+            font-size: 16px;
+            max-width: 560px;
+            margin: 0 auto 40px;
+            line-height: 1.75;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+            color: white;
+            padding: 16px 36px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 700;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 8px 28px rgba(247,151,30,0.38);
+            transition: transform 0.25s, box-shadow 0.25s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 36px rgba(247,151,30,0.48);
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            background: #080e24;
+            color: white;
+            padding: 60px 5% 36px;
+        }
+
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 44px;
+        }
+
+        .footer-brand p {
+            color: rgba(255,255,255,0.45);
+            font-size: 14px;
+            margin-top: 12px;
+            max-width: 240px;
+            line-height: 1.6;
+        }
+
+        .footer-links h4 {
+            font-size: 11px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .footer-links ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
             gap: 10px;
         }
 
-        .pillar-card h4::before {
-            content: '';
-            width: 8px;
-            height: 8px;
-            background: var(--accent-orange);
-            border-radius: 50%;
+        .footer-links ul a {
+            color: rgba(255,255,255,0.45);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
         }
 
-        .pillar-card p { font-size: 0.9rem; color: var(--text-dim); }
+        .footer-links ul a:hover { color: var(--orange); }
 
-        /* --- FOOTER --- */
-        footer {
-            background: #fdfdfd;
-            padding: 60px 8% 30px;
-            border-top: 1px solid var(--border);
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .footer-links h4 { font-size: 0.9rem; margin-bottom: 15px; color: #000; }
-        .footer-links a { display: block; color: var(--text-dim); text-decoration: none; margin-bottom: 10px; font-size: 0.85rem; }
-
-        .payment-methods {
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.07);
+            padding-top: 24px;
             display: flex;
-            gap: 15px;
-            justify-content: center;
-            padding-top: 30px;
-            border-top: 1px solid #eee;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
         }
 
-        .payment-methods img { height: 22px; width: auto; object-fit: contain; }
+        .footer-bottom p { color: rgba(255,255,255,0.3); font-size: 13px; }
+        .footer-bottom a { color: var(--orange); text-decoration: none; }
 
-        .copyright { margin-top: 30px; font-size: 0.75rem; text-align: center; color: #999; }
+        /* ── MOBILE ── */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+
+            .nav-links.open {
+                display: flex;
+                flex-direction: column;
+                position: fixed;
+                top: 68px;
+                left: 0;
+                right: 0;
+                background: white;
+                padding: 24px 5%;
+                box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+                gap: 20px;
+                z-index: 199;
+            }
+
+            .founder-inner { flex-direction: column; align-items: center; text-align: center; }
+            .founder-badges { justify-content: center; }
+            .founder-photo { width: 100%; display: flex; justify-content: center; }
+            .founder-photo-placeholder { width: 240px; height: 290px; }
+            .story-card { width: 100%; max-width: 360px; }
+            .footer-top { flex-direction: column; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+        }
     </style>
 </head>
 <body>
 
-    <nav>
-        <a href="index.html" class="logo-container">
-            <img src="logo.png" alt="Sunlytics">
-            SUNLYTICS
-        </a>
-        <div class="nav-links">
-            <a href="about.html">About</a>
-            <a href="contact.html">Contact</a>
-            <a href="price.html">Pricing</a>
-        </div>
-    </nav>
+<!-- NAVBAR -->
+<nav>
+    <a href="index.html" class="logo">
+        <img src="logo.png" alt="Sunlytics Logo">
+        <span class="logo-text">SUNLYTICS</span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="index.html#how-it-works">How it Works</a></li>
+        <li><a href="index.html#pricing">Pricing</a></li>
+        <li><a href="about.html" class="active">About</a></li>
+        <li><a href="index.html#weather">Drone Status</a></li>
+        <li><a href="index.html#calculator" class="nav-cta">Free Analysis</a></li>
+    </ul>
+    <button class="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
 
-    <header>
-        <h1>Digital Architecture for the <br>Energy Transition</h1>
-        <p>Sunlytics is a specialized digital consultancy focused on architecting the future of industrial solar energy in the Baltic and Nordic regions.</p>
-    </header>
+<!-- HERO -->
+<section class="about-hero">
+    <div class="section-tag">About Sunlytics</div>
+    <h1>Built to Make Solar <span>Simple</span></h1>
+    <p>We believe every property owner in Latvia and the Baltic region deserves fast, honest, and affordable solar analysis — without the weeks of waiting.</p>
+</section>
 
-    <section>
-        <div class="grid-2">
-            <div>
-                <div class="accent-bar"></div>
-                <h2>Mission & Vision</h2>
-                <p style="margin-bottom: 20px;"><strong>Mission:</strong> To accelerate the adoption of renewable energy by providing industrial leaders with high-precision digital tools.</p>
-                <p><strong>Vision:</strong> To become the primary digital gateway for industrial solar intelligence in Northern Europe.</p>
-            </div>
-            <div class="img-box">
-                <img src="satellite.jpg" alt="Satellite Analysis">
+<!-- FOUNDER -->
+<section class="founder-section">
+    <div class="founder-inner">
+        <div class="founder-photo">
+            <!-- Replace person.jpg with your actual photo -->
+            <div class="founder-photo-placeholder">
+                <span style="width:18px;height:18px;display:inline-block;vertical-align:middle;flex-shrink:0;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+                <p>Your photo here</p>
             </div>
         </div>
-    </section>
+        <div class="founder-info">
+            <div class="founder-tag">Founder</div>
+            <h2>The Person Behind Sunlytics</h2>
+            <div class="founder-title">Founder &amp; Developer</div>
+            <p>Sunlytics was founded by a self-taught developer with a background in healthcare — someone who understands both data-driven decision making and the importance of clear, reliable information.</p>
+            <p>After rebuilding a career through technology following personal hardship, the mission became clear: use modern tools to solve real problems for real people. Discovering that solar assessment in Latvia still required weeks of waiting and expensive engineer visits sparked the idea that became Sunlytics.</p>
+            <p>Today, Sunlytics combines satellite imagery, AI analysis, and certified drone operators to deliver what used to take weeks — in seconds and 24 hours.</p>
+            <div class="founder-badges">
+                <div class="founder-badge">
+                    <span style="width:18px;height:18px;display:inline-block;vertical-align:middle;flex-shrink:0;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span> Self-taught Developer
+                </div>
+                <div class="founder-badge">
+                    <span style="width:18px;height:18px;display:inline-block;vertical-align:middle;flex-shrink:0;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span> Healthcare Background
+                </div>
+                <div class="founder-badge">
+                    <span style="width:18px;height:18px;display:inline-block;vertical-align:middle;flex-shrink:0;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/><circle cx="12" cy="12" r="4"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="M12 2v2"/><path d="M12 20v2"/></svg></span> Solar Tech Founder
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-    <section class="pillar-container">
-        <div style="text-align: center; margin-bottom: 40px;">
-            <div class="accent-bar" style="margin: 0 auto 20px;"></div>
-            <h2>Core Business Pillars</h2>
-        </div>
-        <div class="pillar-grid">
-            <div class="pillar-card">
-                <h4>Precision Engineering</h4>
-                <p>Advanced geospatial libraries and custom algorithms providing rooftop analysis that accounts for Northern European climate variables.</p>
+<!-- STORY CARDS -->
+<section class="story-section">
+    <div class="section-tag">Our Foundation</div>
+    <div class="section-title">Story, Team &amp; <span>Mission</span></div>
+    <div class="section-subtitle">Everything that drives us forward every day</div>
+    <div class="story-cards">
+        <div class="story-card">
+            <div class="card-icon">
+                <span style="width:18px;height:18px;display:inline-block;vertical-align:middle;flex-shrink:0;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
             </div>
-            <div class="pillar-card">
-                <h4>Visual Transparency</h4>
-                <p>Our Solar Exposure Heatmaps allow CEOs to see their future energy yield before any physical construction begins.</p>
- </div>
-            <div class="pillar-card">
-                <h4>Scalable Independence</h4>
-                <p>By leveraging robust open-source technologies, we offer agile and cost-effective solutions that outpace traditional consultancy models.</p>
-            </div>
+            <h3>Our Story</h3>
+            <p>Sunlytics was born from a simple frustration — discovering that solar assessment in Latvia still required weeks of waiting and expensive engineer visits, when technology could do it in seconds. After researching the Baltic solar market, we identified a clear gap and built the solution.</p>
         </div>
-    </section>
+        <div class="story-card">
+            <div class="card-icon">
+                <span style="width:18px;height:18px;display:inline-block;vertical-align:middle;flex-shrink:0;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+            </div>
+            <h3>Who Is Behind It</h3>
+            <p>A self-taught developer with a background in healthcare who understands data-driven decision making and the importance of reliable information. After rebuilding a career through technology following personal hardship, the mission became clear: use modern tools to solve real problems for real people.</p>
+        </div>
+        <div class="story-card">
+            <div class="card-icon">
+                <span style="width:18px;height:18px;display:inline-block;vertical-align:middle;flex-shrink:0;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>
+            </div>
+            <h3>Our Mission</h3>
+            <p>To make solar energy accessible and understandable for every property owner in Latvia and the Baltic region — by replacing slow, expensive assessments with instant satellite analysis and professional drone reports delivered in 24 hours.</p>
+        </div>
+    </div>
+</section>
 
-    <footer>
-        <div class="footer-grid">
-            <div class="footer-links">
-                <h4>PRODUCT</h4>
-                <a href="price.html">Pricing</a>
-                <a href="about.html">How it works</a>
-                <a href="contact.html">Support</a>
-            </div>
-            <div class="footer-links">
-                <h4>LEGAL</h4>
-                <a href="privacy.html">Privacy Policy</a>
-                <a href="legal.html">Legal Notice</a>
-                <a href="terms.html">Terms of Service</a>
-            </div>
-            <div class="footer-links">
-                <h4 style="font-weight: 800;">SUNLYTICS</h4>
-                <p style="font-size: 0.8rem; color: var(--text-dim);">The Intelligence Behind the Array.</p>
-            </div>
-        </div>
+<!-- MISSION BANNER -->
+<section class="mission-banner">
+    <h2>Ready to Discover Your Roof's <span>Solar Potential?</span></h2>
+    <p>Join property owners across Latvia who are already saving thousands of euros with solar energy — starting with a free analysis in 60 seconds.</p>
+    <a href="index.html#calculator" class="btn-primary">Get Free Analysis</a>
+</section>
 
-        <div class="payment-methods">
-            <img src="p1.png" alt="Payment">
-            <img src="p2.png" alt="Payment">
-            <img src="p3.png" alt="Payment">
-            <img src="p4.png" alt="Payment">
-            <img src="p5.png" alt="Payment">
+<!-- FOOTER -->
+<footer>
+    <div class="footer-top">
+        <div class="footer-brand">
+            <a href="index.html" class="logo" style="text-decoration:none;">
+                <img src="logo.png" alt="Sunlytics" style="width:30px; height:30px;">
+                <span class="logo-text">SUNLYTICS</span>
+            </a>
+            <p>Smart solar analysis for Latvia and the Baltic region. Fast, accurate, and affordable.</p>
         </div>
+        <div class="footer-links">
+            <h4>Product</h4>
+            <ul>
+                <li><a href="index.html#how-it-works">How it Works</a></li>
+                <li><a href="index.html#pricing">Pricing</a></li>
+                <li><a href="index.html#calculator">Free Analysis</a></li>
+                <li><a href="index.html#weather">Drone Status</a></li>
+            </ul>
+        </div>
+        <div class="footer-links">
+            <h4>Contact</h4>
+            <ul>
+                <li><a href="mailto:info@sunlytics.eu">info@sunlytics.eu</a></li>
+                <li><a href="#">sunlytics.eu</a></li>
+                <li><a href="#">Riga, Latvia</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 Sunlytics. All rights reserved.</p>
+        <p><a href="#">Privacy Policy</a> &nbsp;&bull;&nbsp; <a href="#">Terms of Service</a></p>
+    </div>
+</footer>
 
-        <div class="copyright">
-            &copy; 2026 Sunlytics SIA. All rights reserved. Registered in Riga, Latvia.
-        </div>
-    </footer>
+<script>
+    function toggleMenu() {
+        document.getElementById('navLinks').classList.toggle('open');
+    }
+</script>
 
 </body>
 </html>
