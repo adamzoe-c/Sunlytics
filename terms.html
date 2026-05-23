@@ -101,6 +101,7 @@
             .nav-links.open { display: flex; flex-direction: column; position: fixed; top: 68px; left: 0; right: 0; background: white; padding: 24px 5%; box-shadow: 0 8px 30px rgba(0,0,0,0.1); gap: 20px; z-index: 199; }
         }
     </style>
+    <script src="lang.js"></script>
 </head>
 <body>
 <nav>
@@ -109,11 +110,11 @@
         <span class="logo-text">SUNLYTICS</span>
     </a>
     <ul class="nav-links" id="navLinks">
-        <li><a href="index.html#how-it-works">How it Works</a></li>
-        <li><a href="index.html#pricing">Pricing</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="index.html#calculator" class="nav-cta">Free Analysis</a></li>
+        <li><a href="index.html#how-it-works"><span data-i18n="nav_how">How it Works</span></a></li>
+        <li><a href="index.html#pricing"><span data-i18n="nav_pricing">Pricing</span></a></li>
+        <li><a href="about.html"><span data-i18n="nav_about">About</span></a></li>
+        <li><a href="contact.html"><span data-i18n="nav_contact">Contact</span></a></li>
+        <li><a href="index.html#calculator" class="nav-cta"><span data-i18n="nav_cta">Free Analysis</span></a></li>
     </ul>
     <div class="nav-right">
         <div class="lang-switcher">
@@ -131,8 +132,8 @@
 </nav>
 
 <section class="page-hero">
-    <h1>Terms of Service</h1>
-    <p>Last updated: May 2026</p>
+    <h1 data-i18n="terms_h1">Terms of Service</h1>
+    <p data-i18n="terms_updated">Last updated: May 2026</p>
 </section>
 
 <div class="doc-section">
@@ -176,17 +177,8 @@
 </div>
 
 <footer>
-    <p class="footer-bottom">&copy; 2026 Sunlytics. &nbsp;&bull;&nbsp; <a href="privacy.html">Privacy Policy</a> &nbsp;&bull;&nbsp; <a href="contact.html">Contact</a></p>
+    <p class="footer-bottom">&copy; 2026 Sunlytics. &nbsp;&bull;&nbsp; <a href="privacy.html">Privacy Policy</a> &nbsp;&bull;&nbsp; <a href="contact.html"><span data-i18n="nav_contact">Contact</span></a></p>
 </footer>
-<script>function toggleMenu(){document.getElementById('navLinks').classList.toggle('open');}
-    function setLang(lang) {
-        document.getElementById('langEN').classList.toggle('active', lang === 'en');
-        document.getElementById('langLV').classList.toggle('active', lang === 'lv');
-        localStorage.setItem('sunlytics-lang', lang);
-    }
-    (function() {
-        const saved = localStorage.getItem('sunlytics-lang');
-        if (saved && saved !== 'en') setLang(saved);
-    })();</script>
+<script>initLang();</script>
 </body>
 </html>
