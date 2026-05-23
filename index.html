@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sunlytics - Solar Roof Analysis</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
     <style>
         :root {
             --orange: #f7971e;
@@ -43,6 +42,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            text-decoration: none;
         }
 
         .logo img {
@@ -102,6 +102,65 @@
             height: 2px;
             background: var(--navy);
             border-radius: 2px;
+        }
+
+        /* ── LANGUAGE SWITCHER ── */
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .lang-switcher {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: var(--off-white);
+            border-radius: 10px;
+            padding: 4px;
+        }
+
+        .lang-btn {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: none;
+            border: none;
+            border-radius: 7px;
+            padding: 5px 9px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--gray);
+            font-family: inherit;
+            transition: all 0.18s;
+            letter-spacing: 0.4px;
+        }
+
+        .lang-btn img {
+            width: 20px;
+            height: 14px;
+            object-fit: cover;
+            border-radius: 2px;
+            display: block;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+        }
+
+        .lang-btn:hover {
+            color: var(--navy);
+            background: white;
+            box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+        }
+
+        .lang-btn.active {
+            color: var(--orange-dark);
+            background: white;
+            box-shadow: 0 1px 8px rgba(247,151,30,0.2);
+        }
+
+        @media (max-width: 768px) {
+            .lang-btn { font-size: 11px; padding: 4px 7px; }
+            .lang-btn img { width: 18px; height: 12px; }
         }
 
         /* ── HERO ── */
@@ -617,7 +676,7 @@
 
         .weather-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 16px;
             margin-bottom: 20px;
         }
@@ -820,6 +879,11 @@
             .step { width: 100%; max-width: 360px; }
             .pricing-card { width: 100%; max-width: 360px; }
 
+            /* Weather grid: 2x2 on mobile */
+            .weather-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+
             .hero-buttons { flex-direction: column; align-items: center; }
             .btn-primary, .btn-secondary { width: 100%; max-width: 320px; justify-content: center; }
 
@@ -861,21 +925,31 @@
 
 <!-- NAVBAR -->
 <nav>
-    <div class="logo">
+    <a href="index.html" class="logo">
         <img src="logo.png" alt="Sunlytics Logo">
         <span class="logo-text">SUNLYTICS</span>
-    </div>
+    </a>
     <ul class="nav-links" id="navLinks">
-        <li><a href="index.html#how-it-works">How it Works</a></li>
-        <li><a href="index.html#pricing">Pricing</a></li>
+        <li><a href="#how-it-works">How it Works</a></li>
+        <li><a href="#pricing">Pricing</a></li>
         <li><a href="about.html">About</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="index.html#weather">Drone Status</a></li>
-        <li><a href="index.html#calculator" class="nav-cta">Free Analysis</a></li>
+        <li><a href="#weather">Drone Status</a></li>
+        <li><a href="fly-for-us.html">Fly for Us</a></li>
+        <li><a href="#calculator" class="nav-cta">Free Analysis</a></li>
     </ul>
-    <button class="hamburger" onclick="toggleMenu()">
-        <span></span><span></span><span></span>
-    </button>
+    <div class="nav-right">
+        <div class="lang-switcher">
+            <button class="lang-btn active" id="langEN" onclick="setLang('en')">
+                <img src="united-kingdom.png" alt="English">
+                EN
+            </button>
+            <button class="lang-btn" id="langLV" onclick="setLang('lv')">
+                <img src="latvia.png" alt="Latviešu">
+                LV
+            </button>
+        </div>
+        <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+    </div>
 </nav>
 
 <!-- HERO -->
@@ -965,58 +1039,16 @@
     <div class="section-subtitle">Instant analysis powered by satellite data — no signup needed</div>
     <div class="calculator-box">
         <h2>Enter Your Building Address</h2>
-        <p>Type your address or pick your location directly on the map</p>
+        <p>Type your address to get an instant free solar analysis</p>
 
-        <!-- ── TABS ── -->
-        <div class="calc-tabs">
-            <button class="calc-tab active" id="tabText" onclick="switchTab('text')">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="17" y1="18" x2="3" y2="18"/></svg>
-                Type Address
-            </button>
-            <button class="calc-tab" id="tabMap" onclick="switchTab('map')">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-                Pick on Map
-            </button>
+        <div class="input-wrapper">
+            <span class="input-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span>
+            <input type="text" id="addressInput" placeholder="e.g. Brivibas iela 55, Riga, Latvia" />
         </div>
-
-        <!-- ── TEXT TAB ── -->
-        <div id="panelText">
-            <div class="input-wrapper">
-                <span class="input-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span>
-                <input type="text" id="addressInput" placeholder="e.g. Brivibas iela 55, Riga, Latvia" />
-            </div>
-            <button class="analyze-btn" onclick="analyzeAddress()">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;stroke:white;"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-                Analyze My Roof
-            </button>
-        </div>
-
-        <!-- ── MAP TAB ── -->
-        <div id="panelMap" style="display:none;">
-            <div id="mapOfflineNotice" style="display:none; background:#ffffff; border:1px solid #ffc07a; border-radius:12px; padding:14px 18px; margin-bottom:14px; font-size:13px; color:#c45000; display:flex; align-items:center; gap:10px;">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;flex-shrink:0;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                Map requires an internet connection. Please use the Type Address tab instead.
-            </div>
-            <div id="mapContainer" style="height:320px; border-radius:16px; overflow:hidden; border:2px solid #e8e8e8; margin-bottom:14px; position:relative; background:#f0f0f0;">
-                <div id="mapLoading" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#f5f5f5;z-index:10;gap:10px;">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#f7971e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:36px;height:36px;animation:spin 1.5s linear infinite;"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
-                    <span style="font-size:13px;color:#888;">Loading map…</span>
-                </div>
-                <div id="map" style="height:100%;width:100%;"></div>
-            </div>
-            <div id="mapAddressRow" style="display:none; background:#ffffff; border:1.5px solid #e8e8e8; border-radius:12px; padding:12px 16px; margin-bottom:14px; font-size:14px; color:#1a1a1a; display:flex; align-items:center; gap:10px;">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#f7971e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;flex-shrink:0;"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-                <span id="mapSelectedAddress" style="flex:1; font-weight:600;"></span>
-                <span style="font-size:12px; color:#aaa; font-weight:400;" id="mapGeocodeStatus"></span>
-            </div>
-            <div id="mapHint" style="font-size:13px; color:#9ca3af; margin-bottom:14px; text-align:center;">
-                Click anywhere on the map to pin your property
-            </div>
-            <button class="analyze-btn" id="mapAnalyzeBtn" onclick="analyzeFromMap()" disabled style="opacity:0.5;">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;stroke:white;"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-                Analyze My Roof
-            </button>
-        </div>
+        <button class="analyze-btn" onclick="analyzeAddress()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;stroke:white;"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+            Analyze My Roof
+        </button>
 
         <div class="free-note" style="margin-top:18px;">
             &#10003; 100% Free &nbsp;&bull;&nbsp; No signup required &nbsp;&bull;&nbsp; Instant results
@@ -1069,17 +1101,45 @@
 <div class="payment-section">
     <div class="payment-title">Accepted Payment Methods</div>
     <div class="payment-methods">
+        <!-- Visa -->
         <div class="payment-badge">
-            <span class="pay-icon pay-visa">VISA</span> Visa
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="30" viewBox="0 0 48 30" style="display:block;">
+                <rect width="48" height="30" rx="5" fill="#1a1f71"/>
+                <text x="24" y="21" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" font-weight="900" font-style="italic" fill="white" letter-spacing="0">VISA</text>
+            </svg>
+            Visa
         </div>
+        <!-- Mastercard -->
         <div class="payment-badge">
-            <span class="pay-icon pay-mc"><span class="mc-r"></span><span class="mc-l"></span></span> Mastercard
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="30" viewBox="0 0 48 30" style="display:block;">
+                <rect width="48" height="30" rx="5" fill="#252525"/>
+                <circle cx="18" cy="15" r="9" fill="#EB001B"/>
+                <circle cx="30" cy="15" r="9" fill="#F79E1B"/>
+                <path d="M24 7.8a9 9 0 0 1 0 14.4A9 9 0 0 1 24 7.8z" fill="#FF5F00"/>
+            </svg>
+            Mastercard
         </div>
+        <!-- PayPal -->
         <div class="payment-badge">
-            <span class="pay-icon pay-pp"><span style="color:#003087;font-weight:900;">Pay</span><span style="color:#009cde;font-weight:900;">Pal</span></span> PayPal
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="30" viewBox="0 0 48 30" style="display:block;">
+                <rect width="48" height="30" rx="5" fill="#f0f8ff"/>
+                <text x="8" y="20" font-family="Arial,sans-serif" font-size="11" font-weight="900" fill="#003087">Pay</text>
+                <text x="24" y="20" font-family="Arial,sans-serif" font-size="11" font-weight="900" fill="#009cde">Pal</text>
+            </svg>
+            PayPal
         </div>
+        <!-- Bank Transfer -->
         <div class="payment-badge">
-            <span style="width:28px;height:28px;display:inline-block;vertical-align:middle;flex-shrink:0;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg></span> Bank Transfer
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="30" viewBox="0 0 48 30" style="display:block;">
+                <rect width="48" height="30" rx="5" fill="#f5f5f5" stroke="#e0e0e0" stroke-width="1"/>
+                <polygon points="24,4 40,13 8,13" fill="#1a1a1a"/>
+                <rect x="10" y="14" width="4" height="9" fill="#1a1a1a"/>
+                <rect x="17" y="14" width="4" height="9" fill="#1a1a1a"/>
+                <rect x="27" y="14" width="4" height="9" fill="#1a1a1a"/>
+                <rect x="34" y="14" width="4" height="9" fill="#1a1a1a"/>
+                <rect x="8" y="24" width="32" height="2" fill="#1a1a1a"/>
+            </svg>
+            Bank Transfer
         </div>
     </div>
 </div>
@@ -1108,6 +1168,11 @@
                 <span class="w-icon"><span style="width:28px;height:28px;display:inline-block;vertical-align:middle;flex-shrink:0;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="16" y1="13" x2="16" y2="21"/><line x1="8" y1="13" x2="8" y2="21"/><line x1="12" y1="15" x2="12" y2="23"/><path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25"/></svg></span></span>
                 <div class="val" id="rainVal">--</div>
                 <div class="lbl">Rain Chance</div>
+            </div>
+            <div class="weather-card">
+                <span class="w-icon" style="font-size:26px; display:block; margin-bottom:8px;">🌤️</span>
+                <div class="val" id="conditionVal" style="font-size:13px; font-weight:700; line-height:1.3;">--</div>
+                <div class="lbl">Condition</div>
             </div>
         </div>
         <div class="weather-note">
@@ -1309,10 +1374,7 @@
 <footer id="contact">
     <div class="footer-top">
         <div class="footer-brand">
-            <div class="logo">
-                <img src="logo.png" alt="Sunlytics" style="width:30px; height:30px;">
-                <span class="logo-text">SUNLYTICS</span>
-            </div>
+            <div style="font-size:20px; font-weight:800; background:linear-gradient(135deg,var(--orange),var(--orange-dark)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; letter-spacing:1px; text-align:left;">SUNLYTICS</div>
             <p>Smart solar analysis for Latvia and the Baltic region. Fast, accurate, and affordable.</p>
         </div>
         <div class="footer-links">
@@ -1346,16 +1408,40 @@
 
     async function loadWeather() {
         try {
-            const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=56.9496&longitude=24.1052&current=temperature_2m,wind_speed_10m,precipitation_probability&timezone=Europe/Riga');
+            const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=56.9496&longitude=24.1052&current=temperature_2m,wind_speed_10m,weather_code&hourly=precipitation_probability&timezone=Europe/Riga&forecast_days=1');
             const data = await res.json();
             const temp = data.current.temperature_2m;
             const windKmh = data.current.wind_speed_10m;
-            const rain = data.current.precipitation_probability;
+            const weatherCode = data.current.weather_code;
             const windMs = (windKmh / 3.6).toFixed(1);
+
+            // Get precipitation probability for the current hour
+            const currentIso = data.current.time; // e.g. "2026-05-23T14:00"
+            const currentHour = currentIso.slice(0, 13); // "2026-05-23T14"
+            const hourIndex = data.hourly.time.findIndex(t => t.startsWith(currentHour));
+            const rain = hourIndex >= 0 ? data.hourly.precipitation_probability[hourIndex] : 0;
+
+            // Weather condition label from WMO weather code
+            function weatherLabel(code) {
+                if (code === 0) return 'Clear sky ☀️';
+                if (code <= 2) return 'Partly cloudy ⛅';
+                if (code === 3) return 'Overcast ☁️';
+                if (code <= 49) return 'Foggy 🌫️';
+                if (code <= 59) return 'Drizzle 🌦️';
+                if (code <= 69) return 'Rain 🌧️';
+                if (code <= 79) return 'Snow 🌨️';
+                if (code <= 84) return 'Rain showers 🌦️';
+                if (code <= 94) return 'Snow showers 🌨️';
+                return 'Thunderstorm ⛈️';
+            }
 
             document.getElementById('tempVal').textContent = temp + '\u00b0C';
             document.getElementById('windVal').textContent = windMs + ' m/s';
             document.getElementById('rainVal').textContent = rain + '%';
+
+            // Add condition row if element exists
+            const condEl = document.getElementById('conditionVal');
+            if (condEl) condEl.textContent = weatherLabel(weatherCode);
 
             const canFly = parseFloat(windMs) < 10 && rain < 50 && temp > 0;
             const status = document.getElementById('droneStatus');
@@ -1783,145 +1869,18 @@
 @keyframes spin {
     to { transform: rotate(360deg); }
 }
-
-/* ── CALC TABS ── */
-.calc-tabs {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 22px;
-    background: #f2f2f2;
-    border-radius: 12px;
-    padding: 5px;
-}
-.calc-tab {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 7px;
-    padding: 10px 16px;
-    border: none;
-    border-radius: 9px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    background: transparent;
-    color: #9ca3af;
-    transition: all 0.2s;
-    font-family: inherit;
-}
-.calc-tab.active {
-    background: white;
-    color: var(--navy);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.09);
-}
-.calc-tab:hover:not(.active) { color: var(--orange); }
 </style>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 <script>
-    // ── TAB SWITCHING ────────────────────────────────────────────
-    let mapInitialized = false;
-    let leafletMap = null;
-    let mapMarker = null;
-    let mapLat = null, mapLng = null;
-    let mapAddress = null;
-
-    function switchTab(tab) {
-        const isText = tab === 'text';
-        document.getElementById('tabText').classList.toggle('active', isText);
-        document.getElementById('tabMap').classList.toggle('active', !isText);
-        document.getElementById('panelText').style.display = isText ? 'block' : 'none';
-        document.getElementById('panelMap').style.display = isText ? 'none' : 'block';
-        if (!isText && !mapInitialized) initMap();
+    function setLang(lang) {
+        document.getElementById('langEN').classList.toggle('active', lang === 'en');
+        document.getElementById('langLV').classList.toggle('active', lang === 'lv');
+        localStorage.setItem('sunlytics-lang', lang);
     }
-
-    // ── MAP INIT ─────────────────────────────────────────────────
-    function initMap() {
-        mapInitialized = true;
-
-        // Check connectivity by attempting to load a tile
-        const offlineNotice = document.getElementById('mapOfflineNotice');
-        const mapLoading   = document.getElementById('mapLoading');
-
-        if (!navigator.onLine) {
-            offlineNotice.style.display = 'flex';
-            mapLoading.style.display = 'none';
-            return;
-        }
-
-        leafletMap = L.map('map', { zoomControl: true }).setView([56.9496, 24.1052], 12);
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© <a href="https://openstreetmap.org">OpenStreetMap</a>',
-            maxZoom: 19,
-        }).addTo(leafletMap);
-
-        // Hide loading spinner once first tile loads
-        leafletMap.on('load', () => { mapLoading.style.display = 'none'; });
-        setTimeout(() => { mapLoading.style.display = 'none'; }, 2000);
-
-        // Custom orange marker
-        const orangeIcon = L.divIcon({
-            html: `<div style="width:32px;height:32px;background:linear-gradient(135deg,#f7971e,#ff4e00);border-radius:50% 50% 50% 0;transform:rotate(-45deg);box-shadow:0 3px 14px rgba(247,151,30,0.55);border:3px solid white;"></div>`,
-            iconSize: [32, 32],
-            iconAnchor: [16, 32],
-            className: ''
-        });
-
-        leafletMap.on('click', async function(e) {
-            mapLat = e.latlng.lat;
-            mapLng = e.latlng.lng;
-
-            if (mapMarker) mapMarker.setLatLng(e.latlng);
-            else mapMarker = L.marker(e.latlng, { icon: orangeIcon }).addTo(leafletMap);
-
-            const row    = document.getElementById('mapAddressRow');
-            const hint   = document.getElementById('mapHint');
-            const status = document.getElementById('mapGeocodeStatus');
-            const addrEl = document.getElementById('mapSelectedAddress');
-            const btn    = document.getElementById('mapAnalyzeBtn');
-
-            row.style.display = 'flex';
-            hint.style.display = 'none';
-            addrEl.textContent = `${mapLat.toFixed(5)}, ${mapLng.toFixed(5)}`;
-            status.textContent = 'Looking up address…';
-            btn.disabled = false;
-            btn.style.opacity = '1';
-            mapAddress = `${mapLat.toFixed(5)}, ${mapLng.toFixed(5)}`;
-
-            // Reverse geocode via Nominatim (free, no key)
-            try {
-                const res = await fetch(
-                    `https://nominatim.openstreetmap.org/reverse?lat=${mapLat}&lon=${mapLng}&format=json`,
-                    { headers: { 'Accept-Language': 'en' } }
-                );
-                const data = await res.json();
-                if (data && data.display_name) {
-                    mapAddress = data.display_name;
-                    addrEl.textContent = data.display_name;
-                    status.textContent = '';
-                    // Also sync text input
-                    document.getElementById('addressInput').value = data.display_name;
-                } else {
-                    status.textContent = '(coordinates only)';
-                }
-            } catch {
-                status.textContent = '(offline — coordinates only)';
-            }
-        });
-
-        // Handle tile error = offline
-        leafletMap.on('tileerror', () => {
-            offlineNotice.style.display = 'flex';
-        });
-    }
-
-    function analyzeFromMap() {
-        if (!mapAddress) return;
-        document.getElementById('addressInput').value = mapAddress;
-        showLoadingModal(mapAddress, mapLat, mapLng);
-    }
+    (function() {
+        const saved = localStorage.getItem('sunlytics-lang');
+        if (saved && saved !== 'en') setLang(saved);
+    })();
 </script>
 </body>
 </html>
