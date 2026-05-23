@@ -833,6 +833,20 @@
         @media (max-width: 768px) {
             .nav-links { display: none; }
             .hamburger { display: flex; }
+
+            .nav-links.open {
+                display: flex;
+                flex-direction: column;
+                position: fixed;
+                top: 68px;
+                left: 0;
+                right: 0;
+                background: white;
+                padding: 24px 5%;
+                box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+                gap: 20px;
+                z-index: 199;
+            }
             .lang-btn span, .lang-btn { font-size: 11px; padding: 4px 7px; }
             .lang-btn img { width: 18px; height: 12px; }
 
@@ -1392,8 +1406,8 @@
         <div class="footer-links">
             <h4>Contact</h4>
             <ul>
-                <li><a href="mailto:info@sunlytics.eu">info@sunlytics.eu</a></li>
-                <li><a href="#">sunlytics.eu</a></li>
+                <li><a href="mailto:info@sunlytics.lv">info@sunlytics.lv</a></li>
+                <li><a href="#">sunlytics.lv</a></li>
                 <li><a href="#">Riga, Latvia</a></li>
             </ul>
         </div>
@@ -1404,6 +1418,12 @@
     </div>
 </footer>
 
-<script>initLang();</script>
+<script>
+    function toggleMenu() {
+        const nav = document.getElementById('navLinks');
+        nav.classList.toggle('open');
+    }
+    initLang();
+</script>
 </body>
 </html>
