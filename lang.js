@@ -13,6 +13,7 @@ const TRANSLATIONS = {
   nav_about:        { en: "About",              lv: "Par mums" },
   nav_contact:      { en: "Contact",            lv: "Kontakti" },
   nav_drone:        { en: "Drone Status",       lv: "Drona statuss" },
+  nav_fly:          { en: "Fly for Us",         lv: "Lido mūsu vārdā" },
   nav_cta:          { en: "Free Analysis",      lv: "Bezmaksas analīze" },
 
   /* ── INDEX — HERO ──────────────────────────────────── */
