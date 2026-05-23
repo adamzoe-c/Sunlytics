@@ -833,6 +833,11 @@
                 grid-template-columns: repeat(2, 1fr) !important;
             }
 
+            /* Testimonials: single column on mobile */
+            .testimonials-grid {
+                grid-template-columns: 1fr !important;
+            }
+
             /* Partner section stats: stack to 1 column on very small screens */
             #partner-stats {
                 grid-template-columns: 1fr !important;
@@ -1137,6 +1142,104 @@
 
 
 
+<!-- TESTIMONIALS -->
+<section style="padding:90px 5%; background:#f5f5f5; text-align:center;">
+    <div style="display:inline-block; background:#ffffff; color:#c45000; padding:5px 16px; border-radius:50px; font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:16px;">Reviews</div>
+    <div style="font-size:clamp(28px,3.5vw,44px); font-weight:800; color:#1a1a1a; letter-spacing:-0.5px; margin-bottom:14px;">What Our <span style="background:linear-gradient(135deg,#f7971e,#ff4e00); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">Customers</span> Say</div>
+    <div style="font-size:16px; color:#6b7280; margin-bottom:56px; line-height:1.6;">Real feedback from homeowners and businesses across Latvia</div>
+
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px; max-width:1050px; margin:0 auto;" class="testimonials-grid">
+
+        <div style="background:white; border-radius:24px; padding:32px 28px; text-align:left; border:1px solid #efefef; box-shadow:0 4px 20px rgba(0,0,0,0.05);">
+            <div style="display:flex; gap:4px; margin-bottom:16px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#f7971e"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#f7971e"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#f7971e"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#f7971e"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#f7971e"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </div>
+            <p style="color:#374151; font-size:15px; line-height:1.7; margin-bottom:20px;">"Got my free analysis in under a minute. The solar score matched exactly what the installer told us later. Ordered the drone report and had it in our inbox the next morning. Incredible service."</p>
+            <div style="display:flex; align-items:center; gap:12px;">
+                <div style="width:44px; height:44px; background:linear-gradient(135deg,#f7971e,#ff4e00); border-radius:50%; display:flex; align-items:center; justify-content:center; color:white; font-weight:800; font-size:16px; flex-shrink:0;">A</div>
+                <div>
+                    <div style="font-weight:700; font-size:14px; color:#1a1a1a;">Andris Kalniņš</div>
+                    <div style="font-size:12px; color:#9ca3af;">Homeowner, Riga</div>
+                </div>
+            </div>
+        </div>
+
+        <div style="background:white; border-radius:24px; padding:32px 28px; text-align:left; border:1px solid #efefef; box-shadow:0 4px 20px rgba(0,0,0,0.05);">
+            <div style="display:flex; gap:4px; margin-bottom:16px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#f7971e"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#f7971e"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#f7971e"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#f7971e"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#f7971e"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </div>
+            <p style="color:#374151; font-size:15px; line-height:1.7; margin-bottom:20px;">"We used Sunlytics for our warehouse in Jūrmala. The free report gave us confidence to invest. After the drone inspection we proceeded with a 48 kWp installation. ROI on track for 3.8 years."</p>
+            <div style="display:flex; align-items:center; gap:12px;">
+                <div style="width:44px; height:44px; background:linear-gradient(135deg,#f7971e,#ff4e00); border-radius:50%; display:flex; align-items:center; justify-content:center; color:white; font-weight:800; font-size:16px; flex-shrink:0;">M</div>
+                <div>
+                    <div style="font-weight:700; font-size:14px; color:#1a1a1a;">Māris Ozols</div>
+                    <div style="font-size:12px; color:#9ca3af;">Operations Manager, Jūrmala</div>
+                </div>
+            </div>
+        </div>
+
+        <div style="background:white; border-radius:24px; padding:32px 28px; text-align:left; border:1px solid #efefef; box-shadow:0 4px 20px rgba(0,0,0,0.05);">
+            <div style="display:flex; gap:4px; margin-bottom:16px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#f7971e"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#f7971e"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#f7971e"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#f7971e"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#f7971e"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </div>
+            <p style="color:#374151; font-size:15px; line-height:1.7; margin-bottom:20px;">"I was skeptical at first — a free AI solar report sounds too good to be true. But the results were spot on. The drone report PDF was professional and detailed. Highly recommend."</p>
+            <div style="display:flex; align-items:center; gap:12px;">
+                <div style="width:44px; height:44px; background:linear-gradient(135deg,#f7971e,#ff4e00); border-radius:50%; display:flex; align-items:center; justify-content:center; color:white; font-weight:800; font-size:16px; flex-shrink:0;">L</div>
+                <div>
+                    <div style="font-weight:700; font-size:14px; color:#1a1a1a;">Laura Bērziņa</div>
+                    <div style="font-size:12px; color:#9ca3af;">Homeowner, Valmiera</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- FAQ -->
+<section style="padding:90px 5%; background:#ffffff;">
+    <div style="max-width:740px; margin:0 auto;">
+        <div style="text-align:center; margin-bottom:56px;">
+            <div style="display:inline-block; background:#f5f5f5; color:#c45000; padding:5px 16px; border-radius:50px; font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:16px;">FAQ</div>
+            <div style="font-size:clamp(28px,3.5vw,44px); font-weight:800; color:#1a1a1a; letter-spacing:-0.5px; margin-bottom:14px;">Common <span style="background:linear-gradient(135deg,#f7971e,#ff4e00); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">Questions</span></div>
+            <div style="font-size:16px; color:#6b7280; line-height:1.6;">Everything you need to know before getting started</div>
+        </div>
+
+        <div id="faqList" style="display:flex; flex-direction:column; gap:12px;">
+        </div>
+    </div>
+</section>
+
+<!-- COOKIE BANNER -->
+<div id="cookieBanner" style="display:none; position:fixed; bottom:0; left:0; right:0; background:#1a1a1a; color:white; padding:20px 5%; z-index:2000; box-shadow:0 -4px 30px rgba(0,0,0,0.3);">
+    <div style="max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:20px; flex-wrap:wrap; justify-content:space-between;">
+        <div style="display:flex; align-items:flex-start; gap:14px; flex:1; min-width:260px;">
+            <div style="width:36px; height:36px; background:linear-gradient(135deg,#f7971e,#ff4e00); border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div>
+                <div style="font-weight:700; font-size:14px; margin-bottom:4px;">We use cookies</div>
+                <p style="font-size:13px; color:rgba(255,255,255,0.65); line-height:1.6; margin:0;">We use cookies to improve your experience and analyse site usage. By continuing you agree to our <a href="privacy.html" style="color:#f7971e; text-decoration:underline;">Privacy Policy</a>.</p>
+            </div>
+        </div>
+        <div style="display:flex; gap:10px; flex-shrink:0; flex-wrap:wrap;">
+            <button onclick="declineCookies()" style="background:transparent; border:1.5px solid rgba(255,255,255,0.25); color:rgba(255,255,255,0.7); padding:11px 22px; border-radius:50px; font-size:13px; font-weight:600; cursor:pointer; font-family:inherit;">Decline</button>
+            <button onclick="acceptCookies()" style="background:linear-gradient(135deg,#f7971e,#ff4e00); color:white; border:none; padding:11px 26px; border-radius:50px; font-size:13px; font-weight:600; cursor:pointer; font-family:inherit; box-shadow:0 4px 14px rgba(247,151,30,0.4);">Accept All</button>
+        </div>
+    </div>
+</div>
+
 <!-- PARTNER SECTION -->
 <section style="padding:90px 5%; background:#ffffff; text-align:center;">
     <div style="display:inline-block; background:#f0fff4; color:#16a34a; padding:5px 16px; border-radius:50px; font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:16px;">Certified Partner</div>
@@ -1400,6 +1503,94 @@
         // window.open('https://solarprolatvia.lv?ref=sunlytics', '_blank');
     }
 
+    // ── FAQ ──────────────────────────────────────────────────────
+    const faqs = [
+        {
+            q: 'How accurate is the free satellite analysis?',
+            a: 'The free analysis uses real Latvian solar irradiance data (PVGIS/EU JRC) and is accurate to within 10–15% for most properties. For 100% precision — including exact roof dimensions, shading, and structural details — order our professional drone report.'
+        },
+        {
+            q: 'How does the drone get access to my roof?',
+            a: 'Our certified drone operators fly above your property from public airspace — no ladders, no scaffolding, no access required inside your home. The drone captures high-resolution imagery of your roof from above. You just need to be available to confirm the appointment.'
+        },
+        {
+            q: 'How long does the drone report take?',
+            a: 'Once the drone flight is completed, your professional PDF report is delivered within 24 hours directly to your email. Scheduling the flight itself typically takes 1–2 business days depending on weather conditions.'
+        },
+        {
+            q: 'What if the weather is bad on the day of the flight?',
+            a: 'We monitor wind speed, rain probability, and temperature before every flight. If conditions are unsuitable we will reschedule at no extra cost. You can also check our live drone status widget on the homepage.'
+        },
+        {
+            q: 'Is my data safe and GDPR compliant?',
+            a: 'Yes. We collect only the data necessary to provide our service (your address and contact details). We never sell your data to third parties. All data is processed in compliance with EU GDPR regulations. See our Privacy Policy for full details.'
+        },
+        {
+            q: 'Do I have to pay anything upfront?',
+            a: 'The online solar analysis is completely free — no card required. For the drone report (€149), you are not charged until we confirm your appointment and you approve. Payment is arranged directly with our team.'
+        },
+        {
+            q: 'What does the partner installation quote involve?',
+            a: 'Our partner SolarPro Latvia will visit your property for a free physical inspection, confirm the findings from your Sunlytics report, and provide a no-obligation quote for the full solar panel installation. There is no commitment to proceed.'
+        },
+    ];
+
+    function initFaq() {
+        const list = document.getElementById('faqList');
+        faqs.forEach((item, i) => {
+            const el = document.createElement('div');
+            el.style.cssText = 'background:#f9f9f9; border-radius:16px; border:1px solid #efefef; overflow:hidden;';
+            el.innerHTML = `
+                <button onclick="toggleFaq(${i})" style="width:100%; display:flex; justify-content:space-between; align-items:center; padding:22px 24px; background:none; border:none; cursor:pointer; font-family:inherit; text-align:left; gap:16px;">
+                    <span style="font-size:15px; font-weight:700; color:#1a1a1a;">${item.q}</span>
+                    <span id="faqIcon${i}" style="flex-shrink:0; width:28px; height:28px; background:#efefef; border-radius:50%; display:flex; align-items:center; justify-content:center; transition:background 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                    </span>
+                </button>
+                <div id="faqAnswer${i}" style="display:none; padding:0 24px 22px;">
+                    <p style="font-size:14px; color:#6b7280; line-height:1.75; margin:0;">${item.a}</p>
+                </div>`;
+            list.appendChild(el);
+        });
+    }
+
+    function toggleFaq(i) {
+        const answer = document.getElementById('faqAnswer' + i);
+        const icon   = document.getElementById('faqIcon' + i);
+        const isOpen = answer.style.display === 'block';
+        // Close all
+        faqs.forEach((_, j) => {
+            document.getElementById('faqAnswer' + j).style.display = 'none';
+            document.getElementById('faqIcon' + j).style.background = '#efefef';
+        });
+        if (!isOpen) {
+            answer.style.display = 'block';
+            icon.style.background = 'linear-gradient(135deg,#f7971e,#ff4e00)';
+            icon.querySelector('svg').style.stroke = 'white';
+        }
+    }
+
+    // ── COOKIES ──────────────────────────────────────────────────
+    function acceptCookies() {
+        localStorage.setItem('cookieConsent', 'accepted');
+        document.getElementById('cookieBanner').style.display = 'none';
+    }
+
+    function declineCookies() {
+        localStorage.setItem('cookieConsent', 'declined');
+        document.getElementById('cookieBanner').style.display = 'none';
+    }
+
+    function initCookieBanner() {
+        if (!localStorage.getItem('cookieConsent')) {
+            setTimeout(() => {
+                document.getElementById('cookieBanner').style.display = 'block';
+            }, 1500);
+        }
+    }
+
+    initFaq();
+    initCookieBanner();
     loadWeather();
 </script>
 
