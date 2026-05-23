@@ -3,7 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terms of Service - Sunlytics</title>
+    <!-- PRIMARY SEO -->
+    <title>Terms of Service | Sunlytics</title>
+    <meta name="description" content="Sunlytics Terms of Service — the rules and conditions for using our solar analysis platform and drone inspection service.">
+    <meta name="author" content="Sunlytics">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://sunlytics.eu/terms.html">
+    <!-- OPEN GRAPH -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sunlytics.eu/terms.html">
+    <meta property="og:title" content="Terms of Service | Sunlytics">
+    <meta property="og:description" content="Sunlytics Terms of Service — the rules and conditions for using our solar analysis platform and drone inspection service.">
+    <meta property="og:image" content="https://sunlytics.eu/og-image.jpg">
+    <meta property="og:site_name" content="Sunlytics">
+    <!-- TWITTER CARD -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Terms of Service | Sunlytics">
+    <meta name="twitter:description" content="Sunlytics Terms of Service — the rules and conditions for using our solar analysis platform and drone inspection service.">
+    <meta name="twitter:image" content="https://sunlytics.eu/og-image.jpg">
+    <!-- FAVICON -->
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <meta name="theme-color" content="#f7971e">
+    <!-- HREFLANG -->
+    <link rel="alternate" hreflang="en" href="https://sunlytics.eu/terms.html">
+    <link rel="alternate" hreflang="x-default" href="https://sunlytics.eu/terms.html">
     <style>
         :root { --orange: #f7971e; --orange-dark: #ff4e00; --navy: #1a1a1a; --white: #ffffff; --off-white: #f5f5f5; --gray: #6b7280; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -166,8 +190,7 @@
             .footer-bottom { flex-direction: column; text-align: center; }
         }
         </style>
-    <script src="lang.js"></script>
-</head>
+    </head>
 <body>
 <!-- NAVBAR -->
 <nav>
@@ -176,12 +199,12 @@
         <span class="logo-text">SUNLYTICS</span>
     </a>
     <ul class="nav-links" id="navLinks">
-        <li><a href="index.html#how-it-works">How it Works</a></li>
-        <li><a href="index.html#pricing">Pricing</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="index.html#weather">Drone Status</a></li>
-        <li><a href="fly-for-us.html">Fly for Us</a></li>
-        <li><a href="index.html#calculator" class="nav-cta">Free Analysis</a></li>
+        <li><a href="index.html#how-it-works"><span data-i18n="nav_how">How it Works</span></a></li>
+        <li><a href="index.html#pricing"><span data-i18n="nav_pricing">Pricing</span></a></li>
+        <li><a href="about.html"><span data-i18n="nav_about">About</span></a></li>
+        <li><a href="index.html#weather"><span data-i18n="nav_drone">Drone Status</span></a></li>
+        <li><a href="fly-for-us.html"><span data-i18n="nav_fly">Fly for Us</span></a></li>
+        <li><a href="index.html#calculator" class="nav-cta"><span data-i18n="nav_cta">Free Analysis</span></a></li>
     </ul>
     <div class="nav-right">
         <div class="lang-switcher">
@@ -253,16 +276,16 @@
         <div class="footer-links">
             <h4>Product</h4>
             <ul>
-                <li><a href="index.html#how-it-works">How it Works</a></li>
-                <li><a href="index.html#pricing">Pricing</a></li>
-                <li><a href="index.html#calculator">Free Analysis</a></li>
-                <li><a href="index.html#weather">Drone Status</a></li>
+                <li><a href="index.html#how-it-works"><span data-i18n="nav_how">How it Works</span></a></li>
+                <li><a href="index.html#pricing"><span data-i18n="nav_pricing">Pricing</span></a></li>
+                <li><a href="index.html#calculator"><span data-i18n="nav_cta">Free Analysis</span></a></li>
+                <li><a href="index.html#weather"><span data-i18n="nav_drone">Drone Status</span></a></li>
             </ul>
         </div>
-                <div class="footer-links">
+        <div class="footer-links">
             <h4>Contact</h4>
             <ul>
-                <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="contact.html"><span data-i18n="nav_contact">Contact Us</span></a></li>
                 <li><a href="mailto:info@sunlytics.lv">info@sunlytics.lv</a></li>
                 <li><a href="#">sunlytics.lv</a></li>
                 <li><a href="#">Riga, Latvia</a></li>
@@ -274,20 +297,12 @@
         <p><a href="privacy.html">Privacy Policy</a> &nbsp;&bull;&nbsp; <a href="terms.html">Terms of Service</a></p>
     </div>
 </footer>
-<script>initLang();</script>
+<script src="lang.js"></script>
 <script>
     function toggleMenu() {
         document.getElementById('navLinks').classList.toggle('open');
     }
-    function setLang(lang) {
-        document.getElementById('langEN').classList.toggle('active', lang === 'en');
-        document.getElementById('langLV').classList.toggle('active', lang === 'lv');
-        localStorage.setItem('sunlytics-lang', lang);
-    }
-    (function() {
-        const saved = localStorage.getItem('sunlytics-lang');
-        if (saved && saved !== 'en') setLang(saved);
-    })();
+    document.addEventListener('DOMContentLoaded', initLang);
 </script>
 </body>
 </html>

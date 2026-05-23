@@ -1,326 +1,366 @@
 /**
- * Sunlytics — shared translations (EN / LV)
- * Each key maps to { en: "...", lv: "..." }
- * Elements opt in with:  data-i18n="key"          → sets textContent
- *                        data-i18n-ph="key"        → sets placeholder
- *                        data-i18n-html="key"      → sets innerHTML (use sparingly)
+ * Sunlytics — Shared Language System
+ * Works across all pages. Safe to use with any existing JS.
+ * Usage: add <script src="lang.js"></script> before </body>
+ * Tag elements with data-i18n="key" or data-i18n-ph="key" for placeholders.
  */
+
 const TRANSLATIONS = {
+    en: {
+        // ── NAV ──────────────────────────────────────────────────
+        nav_how:        'How it Works',
+        nav_pricing:    'Pricing',
+        nav_about:      'About',
+        nav_drone:      'Drone Status',
+        nav_fly:        'Fly for Us',
+        nav_cta:        'Free Analysis',
+        nav_contact:    'Contact Us',
 
-  /* ── NAV ───────────────────────────────────────────── */
-  nav_how:          { en: "How it Works",       lv: "Kā tas strādā" },
-  nav_pricing:      { en: "Pricing",            lv: "Cenas" },
-  nav_about:        { en: "About",              lv: "Par mums" },
-  nav_contact:      { en: "Contact",            lv: "Kontakti" },
-  nav_drone:        { en: "Drone Status",       lv: "Drona statuss" },
-  nav_fly:          { en: "Fly for Us",         lv: "Lido mūsu vārdā" },
-  nav_cta:          { en: "Free Analysis",      lv: "Bezmaksas analīze" },
+        // ── INDEX — Hero ─────────────────────────────────────────
+        hero_badge:     '🛰 Satellite-Powered Solar Analysis',
+        hero_h1_a:      "Know Your Roof's",
+        hero_h1_b:      'Solar Potential',
+        hero_h1_c:      'Instantly',
+        hero_p:         'Get a free AI-powered solar feasibility report in 60 seconds. No signup, no payment — just enter your address.',
+        hero_btn_primary:   'Get Free Analysis',
+        hero_btn_secondary: 'See How It Works',
 
-  /* ── INDEX — HERO ──────────────────────────────────── */
-  hero_badge:       { en: "Serving Latvia & Baltic Region &nbsp;&bull;&nbsp; Results in 60 Seconds",
-                      lv: "Apkalpojam Latviju un Baltijas reģionu &nbsp;&bull;&nbsp; Rezultāti 60 sekundēs" },
-  hero_h1_line1:    { en: "Know Your Roof's",   lv: "Uzzini sava jumta" },
-  hero_h1_line2:    { en: "Solar Potential",    lv: "Saules enerģijas potenciālu" },
-  hero_h1_line3:    { en: "Instantly",          lv: "Uzreiz" },
-  hero_p:           { en: "Enter your address and receive a free AI-powered solar analysis in seconds. No engineers. No weeks of waiting. No cost.",
-                      lv: "Ievadi adresi un saņem bezmaksas AI saules analīzi sekunžu laikā. Bez inženieriem. Bez nedēļu gaidīšanas. Bez maksas." },
-  hero_btn_primary: { en: "Get Free Analysis",  lv: "Iegūt bezmaksas analīzi" },
-  hero_btn_sec:     { en: "See How It Works",   lv: "Skatīt, kā tas strādā" },
+        // ── INDEX — How it Works ──────────────────────────────────
+        how_tag:        'Simple Process',
+        how_h2_a:       'Three Steps to',
+        how_h2_b:       'Solar Clarity',
+        how_step1_h:    'Enter Your Address',
+        how_step1_p:    'Type your building address and our AI instantly pulls satellite data for your exact location.',
+        how_step2_h:    'Get Instant Results',
+        how_step2_p:    'Receive your free solar feasibility score, estimated savings, payback period, and system size.',
+        how_step3_h:    'Get Full Drone Report',
+        how_step3_p:    'Order a certified drone inspection for a professional PDF report delivered within 24 hours.',
 
-  /* ── INDEX — TRUST BAR ─────────────────────────────── */
-  trust_satellite:  { en: "Satellite-powered analysis", lv: "Satelīta analīze" },
-  trust_drone:      { en: "Certified drone operators",  lv: "Sertificēti dronu operatori" },
-  trust_gdpr:       { en: "GDPR compliant",             lv: "VDAR atbilstīgs" },
-  trust_report:     { en: "Full report in 24 hours",    lv: "Pilns pārskats 24 stundu laikā" },
+        // ── INDEX — Calculator ────────────────────────────────────
+        calc_h2:        'Enter Your Building Address',
+        calc_btn:       'Analyse My Roof',
+        calc_placeholder: 'e.g. Brīvības iela 1, Riga',
 
-  /* ── INDEX — STATS ─────────────────────────────────── */
-  stat_instant:     { en: "Instant Results",    lv: "Tūlītēji rezultāti" },
-  stat_drone:       { en: "Full Drone Report",  lv: "Pilns drona pārskats" },
-  stat_free:        { en: "Free Analysis",      lv: "Bezmaksas analīze" },
-  stat_accuracy:    { en: "Accuracy Rate",      lv: "Precizitātes līmenis" },
+        // ── INDEX — Pricing ───────────────────────────────────────
+        pricing_tag:    'Simple Pricing',
+        pricing_h2_a:   'Start Free,',
+        pricing_h2_b:   'Go Deeper When Ready',
+        pricing_free_name:  'Free Analysis',
+        pricing_free_price: '€0',
+        pricing_free_desc:  'Instant satellite-based solar report',
+        pricing_drone_name: 'Drone Report',
+        pricing_drone_price:'€149',
+        pricing_drone_desc: 'Full certified drone inspection + PDF',
 
-  /* ── INDEX — HOW IT WORKS ──────────────────────────── */
-  hiw_tag:          { en: "Process",            lv: "Process" },
-  hiw_title:        { en: "How",                lv: "Kā" },
-  hiw_title2:       { en: "Works",              lv: "Darbojas" },
-  hiw_sub:          { en: "Three simple steps to complete solar clarity",
-                      lv: "Trīs vienkārši soļi pilnīgai saules skaidrībai" },
-  step1_h:          { en: "Enter Your Address", lv: "Ievadi savu adresi" },
-  step1_p:          { en: "Type your building address anywhere in Latvia or the Baltic region. Our system instantly pulls satellite imagery of your roof.",
-                      lv: "Ievadi ēkas adresi jebkur Latvijā vai Baltijas reģionā. Mūsu sistēma nekavējoties iegūst satelīta attēlus tavam jumtam." },
-  step2_h:          { en: "Get Instant Results", lv: "Saņem tūlītējus rezultātus" },
-  step2_p:          { en: "Receive your Solar Score, usable roof area, payback period and 25-year profit estimate — completely free, in seconds.",
-                      lv: "Saņem savu Saules Rādītāju, izmantojamo jumta platību, atmaksāšanās periodu un 25 gadu peļņas aplēsi — pilnīgi bez maksas, sekunžu laikā." },
-  step3_h:          { en: "Get Full Drone Report", lv: "Saņem pilnu drona pārskatu" },
-  step3_p:          { en: "Want 100% accuracy? We dispatch a certified drone operator to your site and deliver a professional PDF report within 24 hours.",
-                      lv: "Vēlies 100% precizitāti? Mēs nosūtām sertificētu drona operatoru uz tavu objektu un nogādājam profesionālu PDF pārskatu 24 stundu laikā." },
+        // ── INDEX — Modal ─────────────────────────────────────────
+        modal_loading_h:    'Analysing Your Roof...',
+        modal_loading_p:    'Pulling satellite data and calculating solar potential',
+        modal_report_title: 'Solar Feasibility Report',
+        modal_score_label:  'SOLAR UTILISATION SCORE',
+        modal_area_label:   'USABLE AREA',
+        modal_payback_label:'PAYBACK PERIOD',
+        modal_profit_label: '25-YEAR PROFIT',
+        modal_savings_label:'ANNUAL SAVINGS',
+        modal_system_label: 'SYSTEM SIZE',
+        modal_prod_label:   'ANNUAL PRODUCTION',
+        modal_drone_h:      'Want 100% Accurate Results?',
+        modal_drone_p:      'Our certified drone operators will physically inspect your roof and deliver a professional PDF report within 24 hours.',
+        modal_drone_btn:    'Order Drone Report — €149',
+        modal_partner_tag:  'Certified Installation Partner',
+        modal_partner_p:    'Our certified installation partner will visit your property, physically confirm your results, and provide a no-obligation installation quote — completely free.',
+        modal_partner_btn:  'Get Free Installation Quote',
+        modal_close:        'Close — Analyse Another Address',
+        modal_drone_form_h: 'Order Your Drone Report',
+        modal_drone_form_p: 'Fill in your details and we will contact you within a few hours to confirm your appointment',
+        modal_back:         'Back to Results',
+        modal_form_name:    'Full Name',
+        modal_form_email:   'Email Address',
+        modal_form_phone:   'Phone Number',
+        modal_form_address: 'Property Address',
+        modal_form_submit:  'Confirm Order — €149',
+        modal_form_note:    'You will not be charged now. We will contact you to confirm details and arrange payment.',
 
-  /* ── INDEX — CALCULATOR ────────────────────────────── */
-  calc_tag:         { en: "Free Tool",          lv: "Bezmaksas rīks" },
-  calc_title:       { en: "Check Your",         lv: "Pārbaudi savu" },
-  calc_title2:      { en: "Solar Potential",    lv: "Saules potenciālu" },
-  calc_sub:         { en: "Instant analysis powered by satellite data — no signup needed",
-                      lv: "Tūlītēja analīze, ko darbina satelīta dati — reģistrācija nav nepieciešama" },
-  calc_h2:          { en: "Enter Your Building Address", lv: "Ievadi sava ēkas adresi" },
-  calc_p:           { en: "Type your address or pick your location directly on the map",
-                      lv: "Ievadi adresi vai izvēlies atrašanās vietu tieši kartē" },
-  tab_text:         { en: "Type Address",       lv: "Ievadīt adresi" },
-  tab_map:          { en: "Pick on Map",        lv: "Izvēlēties kartē" },
-  addr_ph:          { en: "e.g. Brivibas iela 55, Riga, Latvia", lv: "piem. Brīvības iela 55, Rīga, Latvija" },
-  analyze_btn:      { en: "Analyze My Roof",    lv: "Analizēt manu jumtu" },
-  map_hint:         { en: "Click anywhere on the map to pin your property",
-                      lv: "Noklikšķini jebkur kartē, lai atzīmētu savu īpašumu" },
-  free_note:        { en: "✓ 100% Free &nbsp;&bull;&nbsp; No signup required &nbsp;&bull;&nbsp; Instant results",
-                      lv: "✓ 100% Bezmaksas &nbsp;&bull;&nbsp; Reģistrācija nav vajadzīga &nbsp;&bull;&nbsp; Tūlītēji rezultāti" },
+        // ── INDEX — Testimonials ──────────────────────────────────
+        testi_tag:      'Reviews',
+        testi_h2_a:     'What Our',
+        testi_h2_b:     'Customers',
+        testi_h2_c:     'Say',
+        testi_sub:      'Real feedback from homeowners and businesses across Latvia',
 
-  /* ── INDEX — PRICING ───────────────────────────────── */
-  pricing_tag:      { en: "Pricing",            lv: "Cenas" },
-  pricing_title:    { en: "Simple,",            lv: "Vienkāršas," },
-  pricing_title2:   { en: "Transparent",        lv: "Caurspīdīgas" },
-  pricing_title3:   { en: "Pricing",            lv: "Cenas" },
-  pricing_sub:      { en: "Start free, upgrade when you need full accuracy",
-                      lv: "Sāc bez maksas, jaunina, kad nepieciešama pilna precizitāte" },
-  plan1_name:       { en: "Instant Report",     lv: "Tūlītējs pārskats" },
-  plan1_desc:       { en: "Perfect for getting a quick overview of your solar potential using satellite data.",
-                      lv: "Ideāli, lai iegūtu ātru pārskatu par saules potenciālu, izmantojot satelīta datus." },
-  plan1_f1:         { en: "Satellite-based roof analysis", lv: "Satelīta jumta analīze" },
-  plan1_f2:         { en: "Solar Score & usable area",     lv: "Saules rādītājs un izmantojamā platība" },
-  plan1_f3:         { en: "Estimated payback period",      lv: "Aprēķinātais atmaksāšanās periods" },
-  plan1_f4:         { en: "25-year profit projection",     lv: "25 gadu peļņas prognoze" },
-  plan1_f5:         { en: "No signup required",            lv: "Reģistrācija nav nepieciešama" },
-  plan1_btn:        { en: "Get Free Analysis",  lv: "Iegūt bezmaksas analīzi" },
-  plan2_badge:      { en: "Most Popular",       lv: "Vispopulārākais" },
-  plan2_name:       { en: "Full Drone Report",  lv: "Pilns drona pārskats" },
-  plan2_desc:       { en: "Full on-site drone inspection with a professional PDF report delivered in 24 hours.",
-                      lv: "Pilna klātienes drona pārbaude ar profesionālu PDF pārskatu, kas piegādāts 24 stundu laikā." },
-  plan2_f1:         { en: "Everything in free plan",       lv: "Viss no bezmaksas plāna" },
-  plan2_f2:         { en: "Certified drone inspection",    lv: "Sertificēta drona pārbaude" },
-  plan2_f3:         { en: "High-res roof imagery",         lv: "Augsta izšķirtspējas jumta attēli" },
-  plan2_f4:         { en: "Accurate structural analysis",  lv: "Precīza strukturālā analīze" },
-  plan2_f5:         { en: "Professional PDF report",       lv: "Profesionāls PDF pārskats" },
-  plan2_f6:         { en: "Delivered within 24 hours",     lv: "Piegādāts 24 stundu laikā" },
-  plan2_btn:        { en: "Order Drone Report", lv: "Pasūtīt drona pārskatu" },
+        // ── INDEX — FAQ ───────────────────────────────────────────
+        faq_tag:        'FAQ',
+        faq_h2_a:       'Common',
+        faq_h2_b:       'Questions',
+        faq_sub:        'Everything you need to know before getting started',
+        faq_q1: 'How accurate is the free satellite analysis?',
+        faq_a1: 'The free analysis uses real Latvian solar irradiance data (PVGIS/EU JRC) and is accurate to within 10–15% for most properties. For 100% precision — including exact roof dimensions, shading, and structural details — order our professional drone report.',
+        faq_q2: 'How does the drone get access to my roof?',
+        faq_a2: 'Our certified drone operators fly above your property from public airspace — no ladders, no scaffolding, no access required inside your home. The drone captures high-resolution imagery of your roof from above. You just need to be available to confirm the appointment.',
+        faq_q3: 'How long does the drone report take?',
+        faq_a3: 'Once the drone flight is completed, your professional PDF report is delivered within 24 hours directly to your email. Scheduling the flight itself typically takes 1–2 business days depending on weather conditions.',
+        faq_q4: 'What if the weather is bad on the day of the flight?',
+        faq_a4: 'We monitor wind speed, rain probability, and temperature before every flight. If conditions are unsuitable we will reschedule at no extra cost. You can also check our live drone status widget on the homepage.',
+        faq_q5: 'Is my data safe and GDPR compliant?',
+        faq_a5: 'Yes. We collect only the data necessary to provide our service (your address and contact details). We never sell your data to third parties. All data is processed in compliance with EU GDPR regulations. See our Privacy Policy for full details.',
+        faq_q6: 'Do I have to pay anything upfront?',
+        faq_a6: 'The online solar analysis is completely free — no card required. For the drone report (€149), you are not charged until we confirm your appointment and you approve. Payment is arranged directly with our team.',
+        faq_q7: 'What does the partner installation quote involve?',
+        faq_a7: 'Our partner SolarPro Latvia will visit your property for a free physical inspection, confirm the findings from your Sunlytics report, and provide a no-obligation quote for the full solar panel installation. There is no commitment to proceed.',
 
-  /* ── INDEX — WEATHER ───────────────────────────────── */
-  weather_tag:      { en: "Live Status",        lv: "Tiešraides statuss" },
-  weather_title:    { en: "Drone Flight",       lv: "Drona lidojuma" },
-  weather_title2:   { en: "Weather Status",     lv: "Laika apstākļi" },
-  weather_sub:      { en: "Real-time conditions for drone operations across the Baltic region",
-                      lv: "Reāllaika apstākļi drona operācijām visā Baltijas reģionā" },
-  weather_temp:     { en: "Temperature",        lv: "Temperatūra" },
-  weather_wind:     { en: "Wind Speed",         lv: "Vēja ātrums" },
-  weather_rain:     { en: "Rain Chance",        lv: "Lietus iespēja" },
-  weather_note:     { en: "Weather data for Riga, Latvia. Drone flights are scheduled when wind is below 10 m/s, rain chance below 50%, and temperature above 0°C.",
-                      lv: "Laika dati Rīgai, Latvija. Drona lidojumi tiek plānoti, kad vējš ir zem 10 m/s, lietus iespēja zem 50% un temperatūra virs 0°C." },
-  drone_checking:   { en: "Checking conditions...",         lv: "Pārbauda apstākļus..." },
-  drone_can_fly:    { en: "✅ Drone Can Fly Today",          lv: "✅ Drons šodien var lidot" },
-  drone_no_fly:     { en: "❌ Drone Flight Not Recommended", lv: "❌ Drona lidojums nav ieteicams" },
+        // ── INDEX — Partner ───────────────────────────────────────
+        partner_tag:    'Certified Partner',
+        partner_h2_a:   'Ready to',
+        partner_h2_b:   'Install?',
+        partner_sub:    'Your solar report is just the first step. Our certified installation partner will turn your analysis into reality.',
+        partner_btn:    'Get Your Free Installation Quote',
+        partner_note:   'No payment required. A SolarPro Latvia advisor will contact you within 24 hours.',
 
-  /* ── INDEX — COVERAGE ──────────────────────────────── */
-  coverage_tag:     { en: "Coverage",           lv: "Pārklājums" },
-  coverage_title:   { en: "Serving the",        lv: "Apkalpojam" },
-  coverage_title2:  { en: "Baltic Region",      lv: "Baltijas reģionu" },
-  coverage_sub:     { en: "Currently operating in Latvia with expansion across the Baltic states",
-                      lv: "Pašlaik darbojas Latvijā ar paplašināšanos visās Baltijas valstīs" },
-  lv_status:        { en: "Active Now",         lv: "Aktīvs tagad" },
-  lt_status:        { en: "Coming Soon",        lv: "Drīzumā" },
-  ee_status:        { en: "Coming Soon",        lv: "Drīzumā" },
+        // ── INDEX — Cookie ────────────────────────────────────────
+        cookie_h:       'We use cookies',
+        cookie_p:       'We use cookies to improve your experience and analyse site usage. By continuing you agree to our',
+        cookie_policy:  'Privacy Policy',
+        cookie_decline: 'Decline',
+        cookie_accept:  'Accept All',
 
-  /* ── INDEX — TESTIMONIALS ──────────────────────────── */
-  reviews_tag:      { en: "Reviews",            lv: "Atsauksmes" },
-  reviews_title:    { en: "What Our",           lv: "Ko saka mūsu" },
-  reviews_title2:   { en: "Customers",          lv: "Klienti" },
-  reviews_title3:   { en: "Say",                lv: "" },
-  reviews_sub:      { en: "Real feedback from homeowners and businesses across Latvia",
-                      lv: "Īstas atsauksmes no māju īpašniekiem un uzņēmumiem visā Latvijā" },
+        // ── CONTACT page ──────────────────────────────────────────
+        contact_tag:        'Contact Us',
+        contact_h1_pre:     'Get In',
+        contact_h1_span:    'Touch',
+        contact_hero_p:     'Have questions about solar analysis or want to order a drone report? We are here to help.',
+        contact_info_h2:    'We Would Love to Hear From You',
+        info_email_h:       'Email Us',
+        info_based_h:       'Based In',
+        info_drone_h:       'Drone Coverage',
+        info_drone_p:       'Latvia & Baltic Region',
+        info_response_h:    'Response Time',
+        info_response_p:    'Within a few hours on business days',
+        form_h3:            'Send Us a Message',
+        form_p:             'Fill in your details and we will get back to you shortly',
+        form_name_lbl:      'Full Name',
+        form_name_ph:       'Your full name',
+        form_email_lbl:     'Email Address',
+        form_email_ph:      'your@email.com',
+        form_phone_lbl:     'Phone Number',
+        form_phone_ph:      '+371 ...',
+        form_subject_lbl:   'Subject',
+        form_msg_lbl:       'Message',
+        form_msg_ph:        'Tell us how we can help you...',
+        form_submit:        'Send Message',
 
-  /* ── INDEX — FAQ ───────────────────────────────────── */
-  faq_tag:          { en: "FAQ",                lv: "BUJ" },
-  faq_title:        { en: "Common",             lv: "Bieži" },
-  faq_title2:       { en: "Questions",          lv: "Uzdotie jautājumi" },
-  faq_sub:          { en: "Everything you need to know before getting started",
-                      lv: "Viss, kas jāzina pirms sākt" },
+        // ── PRIVACY & TERMS ───────────────────────────────────────
+        privacy_h1:         'Privacy Policy',
+        privacy_updated:    'Last updated: May 2026',
+        terms_h1:           'Terms of Service',
+        terms_updated:      'Last updated: May 2026',
 
-  /* ── INDEX — PARTNER ───────────────────────────────── */
-  partner_tag:      { en: "Certified Partner",  lv: "Sertificēts partneris" },
-  partner_title:    { en: "Ready to",           lv: "Gatavs" },
-  partner_title2:   { en: "Install?",           lv: "Uzstādīt?" },
-  partner_sub:      { en: "Your solar report is just the first step. Our certified installation partner will turn your analysis into reality.",
-                      lv: "Tavs saules pārskats ir tikai pirmais solis. Mūsu sertificētais uzstādīšanas partneris pārvērtīs tavu analīzi realitātē." },
-  partner_quote_btn:{ en: "Get Your Free Installation Quote", lv: "Iegūt bezmaksas uzstādīšanas piedāvājumu" },
-  partner_note:     { en: "No payment required. A SolarPro Latvia advisor will contact you within 24 hours.",
-                      lv: "Maksājums nav nepieciešams. SolarPro Latvia konsultants sazināsies ar tevi 24 stundu laikā." },
+        // ── FOOTER ───────────────────────────────────────────────
+        footer_tagline:     'AI-powered solar analysis for Latvia and the Baltic region.',
+        footer_col_product: 'Product',
+        footer_col_company: 'Company',
+        footer_col_legal:   'Legal',
+        footer_rights:      '© 2026 Sunlytics. All rights reserved.',
+        footer_gdpr:        'GDPR Compliant',
+    },
 
-  /* ── INDEX — FOOTER ────────────────────────────────── */
-  footer_brand_p:   { en: "Smart solar analysis for Latvia and the Baltic region. Fast, accurate, and affordable.",
-                      lv: "Vieda saules analīze Latvijai un Baltijas reģionam. Ātra, precīza un pieejama." },
-  footer_product:   { en: "Product",            lv: "Produkts" },
-  footer_contact:   { en: "Contact",            lv: "Kontakti" },
-  footer_copy:      { en: "© 2026 Sunlytics. All rights reserved.", lv: "© 2026 Sunlytics. Visas tiesības aizsargātas." },
+    lv: {
+        // ── NAV ──────────────────────────────────────────────────
+        nav_how:        'Kā tas strādā',
+        nav_pricing:    'Cenas',
+        nav_about:      'Par mums',
+        nav_drone:      'Drona statuss',
+        nav_fly:        'Lido mums',
+        nav_cta:        'Bezmaksas analīze',
+        nav_contact:    'Sazināties',
 
-  /* ── RESULTS MODAL ─────────────────────────────────── */
-  modal_loading_h:  { en: "Analyzing Your Roof...", lv: "Analizē tavu jumtu..." },
-  modal_loading_p:  { en: "Processing satellite imagery and solar data for your location",
-                      lv: "Apstrādā satelīta attēlus un saules datus tavai atrašanās vietai" },
-  modal_loading_note:{ en: "This usually takes a few seconds", lv: "Parasti tas aizņem dažas sekundes" },
-  modal_report_tag: { en: "SUNLYTICS ANALYSIS", lv: "SUNLYTICS ANALĪZE" },
-  modal_report_h:   { en: "Solar Feasibility Report", lv: "Saules enerģijas iespējamības pārskats" },
-  modal_score_lbl:  { en: "Solar Utilization Score", lv: "Saules izmantošanas rādītājs" },
-  modal_area_lbl:   { en: "Usable Area",        lv: "Izmantojamā platība" },
-  modal_payback_lbl:{ en: "Payback Period",     lv: "Atmaksāšanās periods" },
-  modal_profit_lbl: { en: "25-Year Profit",     lv: "25 gadu peļņa" },
-  modal_savings_lbl:{ en: "Annual Savings",     lv: "Ikgadējie ietaupījumi" },
-  modal_system_lbl: { en: "System Size",        lv: "Sistēmas jauda" },
-  modal_prod_lbl:   { en: "Annual Production",  lv: "Ikgadējā ražošana" },
-  modal_disclaimer: { en: "These are <strong>regional average estimates</strong> based on real Latvian solar irradiance data (PVGIS/EU JRC) and a typical 60 m² residential roof. Actual results depend on your specific roof size, orientation and shading. For 100% accurate figures, order our professional drone report.",
-                      lv: "Šīs ir <strong>reģionālās vidējās aplēses</strong>, pamatojoties uz reāliem Latvijas saules starojuma datiem (PVGIS/ES PRC) un tipisku 60 m² dzīvojamo jumtu. Faktiskais rezultāts ir atkarīgs no jūsu konkrētā jumta izmēra, orientācijas un ēnojuma. Lai iegūtu 100% precīzus skaitļus, pasūti mūsu profesionālo drona pārskatu." },
-  modal_drone_h:    { en: "Want 100% Accurate Results?", lv: "Vēlies 100% precīzus rezultātus?" },
-  modal_drone_p:    { en: "Our certified drone operators will inspect your roof and deliver a professional PDF report within 24 hours — for just <strong style=\"color:#c45000;\">€149</strong>",
-                      lv: "Mūsu sertificētie dronu operatori pārbaudīs tavu jumtu un piegādās profesionālu PDF pārskatu 24 stundu laikā — tikai par <strong style=\"color:#c45000;\">€149</strong>" },
-  modal_drone_btn:  { en: "▶ Order Drone Report — €149", lv: "▶ Pasūtīt drona pārskatu — €149" },
-  modal_close_btn:  { en: "Close — Analyze Another Address", lv: "Aizvērt — Analizēt citu adresi" },
-  modal_partner_tag:{ en: "Certified Installation Partner", lv: "Sertificēts uzstādīšanas partneris" },
-  modal_partner_pill:{ en: "FREE QUOTE", lv: "BEZMAKSAS PIEDĀVĀJUMS" },
-  modal_partner_p:  { en: "Our certified installation partner will visit your property, physically confirm your results, and provide a <strong>no-obligation installation quote</strong> — completely free.",
-                      lv: "Mūsu sertificētais uzstādīšanas partneris apmeklēs tavu īpašumu, fiziski apstiprinās tava rezultātus un sniegs <strong>uzstādīšanas piedāvājumu bez saistībām</strong> — pilnīgi bez maksas." },
-  modal_partner_btn:{ en: "Get Free Installation Quote", lv: "Iegūt bezmaksas uzstādīšanas piedāvājumu" },
+        // ── INDEX — Hero ─────────────────────────────────────────
+        hero_badge:     '🛰 Satelītu enerģijas analīze',
+        hero_h1_a:      'Uzzini sava jumta',
+        hero_h1_b:      'Saules potenciālu',
+        hero_h1_c:      'Uzreiz',
+        hero_p:         'Saņem bezmaksas AI saules enerģijas atskaiti 60 sekundēs. Nav reģistrācijas, nav maksas — tikai ievadi adresi.',
+        hero_btn_primary:   'Bezmaksas analīze',
+        hero_btn_secondary: 'Kā tas strādā',
 
-  /* ── DRONE ORDER FORM ──────────────────────────────── */
-  drone_form_h:     { en: "Order Your Drone Report", lv: "Pasūti savu drona pārskatu" },
-  drone_form_p:     { en: "Fill in your details and we will contact you within a few hours to confirm your appointment",
-                      lv: "Aizpildi savus datus un mēs sazināsimies ar tevi dažu stundu laikā, lai apstiprinātu tikšanos" },
-  drone_back:       { en: "Back to Results",    lv: "Atpakaļ uz rezultātiem" },
-  drone_confirm:    { en: "Confirm Order — €149", lv: "Apstiprināt pasūtījumu — €149" },
-  drone_no_charge:  { en: "You will not be charged now. We will contact you to confirm details and arrange payment.",
-                      lv: "Jums tagad netiks izrakstīts rēķins. Mēs sazināsimies ar jums, lai apstiprinātu detaļas un vienotos par maksājumu." },
+        // ── INDEX — How it Works ──────────────────────────────────
+        how_tag:        'Vienkāršs process',
+        how_h2_a:       'Trīs soļi līdz',
+        how_h2_b:       'Saules skaidrībai',
+        how_step1_h:    'Ievadi adresi',
+        how_step1_p:    'Ievadi ēkas adresi un mūsu AI uzreiz iegūst satelītu datus tavai atrašanās vietai.',
+        how_step2_h:    'Saņem rezultātus',
+        how_step2_p:    'Saņem bezmaksas saules enerģijas novērtējumu, aprēķinātos ietaupījumus un sistēmas izmēru.',
+        how_step3_h:    'Pilna drona atskaite',
+        how_step3_p:    'Pasūti sertificētu drona inspekciju ar profesionālu PDF atskaiti 24 stundu laikā.',
 
-  /* ── PAYMENT ───────────────────────────────────────── */
-  payment_title:    { en: "Accepted Payment Methods", lv: "Pieņemtās maksājumu metodes" },
+        // ── INDEX — Calculator ────────────────────────────────────
+        calc_h2:        'Ievadi ēkas adresi',
+        calc_btn:       'Analizēt manu jumtu',
+        calc_placeholder: 'piem. Brīvības iela 1, Rīga',
 
-  /* ── ABOUT PAGE ────────────────────────────────────── */
-  about_tag:        { en: "About Sunlytics",    lv: "Par Sunlytics" },
-  about_h1_pre:     { en: "Built to Make Solar", lv: "Izveidots, lai saules enerģiju" },
-  about_h1_span:    { en: "Simple",             lv: "Vienkāršotu" },
-  about_hero_p:     { en: "We believe every property owner in Latvia and the Baltic region deserves fast, honest, and affordable solar analysis — without the weeks of waiting.",
-                      lv: "Mēs uzskatām, ka katram īpašuma īpašniekam Latvijā un Baltijas reģionā ir tiesības uz ātru, godīgu un pieejamu saules enerģijas analīzi — bez nedēļu gaidīšanas." },
-  founder_tag:      { en: "Founder",            lv: "Dibinātājs" },
-  founder_h2:       { en: "The Person Behind Sunlytics", lv: "Cilvēks aiz Sunlytics" },
-  founder_title:    { en: "Founder & Developer", lv: "Dibinātājs un izstrādātājs" },
-  founder_p1:       { en: "Sunlytics was founded by a self-taught developer with a background in healthcare — someone who understands both data-driven decision making and the importance of clear, reliable information.",
-                      lv: "Sunlytics dibināja pašmācītais izstrādātājs ar pieredzi veselības aprūpē — cilvēks, kurš saprot gan uz datiem balstītu lēmumu pieņemšanu, gan skaidras un uzticamas informācijas nozīmi." },
-  founder_p2:       { en: "After rebuilding a career through technology following personal hardship, the mission became clear: use modern tools to solve real problems for real people. Discovering that solar assessment in Latvia still required weeks of waiting and expensive engineer visits sparked the idea that became Sunlytics.",
-                      lv: "Pēc karjeras atjaunošanas caur tehnoloģijām pēc personiskiem grūtumiem, misija kļuva skaidra: izmantot mūsdienīgus rīkus, lai risinātu reālas problēmas reāliem cilvēkiem. Atklājums, ka saules enerģijas novērtēšanai Latvijā joprojām nepieciešamas nedēļas gaidīšanas un dārgas inženieru vizītes, izraisīja ideju, kas kļuva par Sunlytics." },
-  founder_p3:       { en: "Today, Sunlytics combines satellite imagery, AI analysis, and certified drone operators to deliver what used to take weeks — in seconds and 24 hours.",
-                      lv: "Šodien Sunlytics apvieno satelīta attēlus, AI analīzi un sertificētus dronu operatorus, lai nodrošinātu to, kas agrāk aizņēma nedēļas — sekunžu un 24 stundu laikā." },
-  badge_dev:        { en: "Self-taught Developer", lv: "Pašmācītais izstrādātājs" },
-  badge_health:     { en: "Healthcare Background", lv: "Veselības aprūpes pieredze" },
-  badge_solar:      { en: "Solar Tech Founder",    lv: "Saules tehnoloģiju dibinātājs" },
-  story_tag:        { en: "Our Foundation",     lv: "Mūsu pamats" },
-  story_title:      { en: "Story, Team &",      lv: "Stāsts, komanda un" },
-  story_title2:     { en: "Mission",            lv: "Misija" },
-  story_sub:        { en: "Everything that drives us forward every day", lv: "Viss, kas mūs virza uz priekšu katru dienu" },
-  card1_h:          { en: "Our Story",          lv: "Mūsu stāsts" },
-  card1_p:          { en: "Sunlytics was born from a simple frustration — discovering that solar assessment in Latvia still required weeks of waiting and expensive engineer visits, when technology could do it in seconds. After researching the Baltic solar market, we identified a clear gap and built the solution.",
-                      lv: "Sunlytics radās no vienkāršas neapmierinātības — atklājot, ka saules enerģijas novērtēšanai Latvijā joprojām nepieciešamas nedēļas gaidīšanas un dārgas inženieru vizītes, kad tehnoloģija to varētu izdarīt sekundēs. Pētot Baltijas saules enerģijas tirgu, mēs identificējām skaidru nepilnību un izveidojām risinājumu." },
-  card2_h:          { en: "Who Is Behind It",   lv: "Kas stāv aiz tā" },
-  card2_p:          { en: "A self-taught developer with a background in healthcare who understands data-driven decision making and the importance of reliable information. After rebuilding a career through technology following personal hardship, the mission became clear: use modern tools to solve real problems for real people.",
-                      lv: "Pašmācītais izstrādātājs ar pieredzi veselības aprūpē, kurš saprot uz datiem balstītu lēmumu pieņemšanu un uzticamas informācijas nozīmi. Pēc karjeras atjaunošanas caur tehnoloģijām pēc personiskiem grūtumiem, misija kļuva skaidra: izmantot mūsdienīgus rīkus, lai risinātu reālas problēmas reāliem cilvēkiem." },
-  card3_h:          { en: "Our Mission",        lv: "Mūsu misija" },
-  card3_p:          { en: "To make solar energy accessible and understandable for every property owner in Latvia and the Baltic region — by replacing slow, expensive assessments with instant satellite analysis and professional drone reports delivered in 24 hours.",
-                      lv: "Padarīt saules enerģiju pieejamu un saprotamu katram īpašuma īpašniekam Latvijā un Baltijas reģionā — aizstājot lēnas, dārgas novērtēšanas ar tūlītēju satelīta analīzi un profesionāliem dronu pārskatiem, kas piegādāti 24 stundu laikā." },
-  mission_h2_pre:   { en: "Ready to Discover Your Roof's", lv: "Gatavs uzzināt sava jumta" },
-  mission_h2_span:  { en: "Solar Potential?",  lv: "Saules potenciālu?" },
-  mission_p:        { en: "Join property owners across Latvia who are already saving thousands of euros with solar energy — starting with a free analysis in 60 seconds.",
-                      lv: "Pievienojies māju īpašniekiem visā Latvijā, kuri jau ietaupa tūkstošus eiro ar saules enerģiju — sācot ar bezmaksas analīzi 60 sekundēs." },
-  mission_btn:      { en: "Get Free Analysis",  lv: "Iegūt bezmaksas analīzi" },
+        // ── INDEX — Pricing ───────────────────────────────────────
+        pricing_tag:    'Vienkāršas cenas',
+        pricing_h2_a:   'Sāc bez maksas,',
+        pricing_h2_b:   'Dziļāk, kad esi gatavs',
+        pricing_free_name:  'Bezmaksas analīze',
+        pricing_free_price: '€0',
+        pricing_free_desc:  'Tūlītēja satelītu saules enerģijas atskaite',
+        pricing_drone_name: 'Drona atskaite',
+        pricing_drone_price:'€149',
+        pricing_drone_desc: 'Pilna sertificēta drona inspekcija + PDF',
 
-  /* ── CONTACT PAGE ──────────────────────────────────── */
-  contact_tag:      { en: "Contact Us",         lv: "Sazinies ar mums" },
-  contact_h1_pre:   { en: "Get In",             lv: "Sazinies" },
-  contact_h1_span:  { en: "Touch",              lv: "ar mums" },
-  contact_hero_p:   { en: "Have questions about solar analysis or want to order a drone report? We are here to help.",
-                      lv: "Vai ir jautājumi par saules analīzi vai vēlies pasūtīt drona pārskatu? Mēs esam šeit, lai palīdzētu." },
-  contact_info_h2:  { en: "We Would Love to Hear From You", lv: "Mēs labprāt dzirdēsim no tevis" },
-  contact_info_p:   { en: "Whether you have questions about your solar potential, want to order a drone report, or are a solar installer looking to partner with us — reach out and we will get back to you within a few hours.",
-                      lv: "Neatkarīgi no tā, vai tev ir jautājumi par saules potenciālu, vēlies pasūtīt drona pārskatu vai esi saules uzstādītājs, kurš meklē sadarbību ar mums — sazinies un mēs atbildēsim dažu stundu laikā." },
-  info_email_h:     { en: "Email Us",           lv: "Raksti mums" },
-  info_based_h:     { en: "Based In",           lv: "Mēs atrodamies" },
-  info_drone_h:     { en: "Drone Coverage",     lv: "Drona pārklājums" },
-  info_drone_p:     { en: "Latvia & Baltic Region", lv: "Latvija un Baltijas reģions" },
-  info_response_h:  { en: "Response Time",      lv: "Atbildes laiks" },
-  info_response_p:  { en: "Within a few hours on business days", lv: "Dažu stundu laikā darba dienās" },
-  form_h3:          { en: "Send Us a Message",  lv: "Nosūti mums ziņu" },
-  form_p:           { en: "Fill in your details and we will get back to you shortly", lv: "Aizpildi savus datus un mēs drīz atbildēsim" },
-  form_name_lbl:    { en: "Full Name",          lv: "Pilns vārds" },
-  form_name_ph:     { en: "Your full name",     lv: "Tavs pilns vārds" },
-  form_email_lbl:   { en: "Email Address",      lv: "E-pasta adrese" },
-  form_email_ph:    { en: "your@email.com",     lv: "tavs@epasts.lv" },
-  form_phone_lbl:   { en: "Phone Number",       lv: "Tālruņa numurs" },
-  form_phone_ph:    { en: "+371 ...",           lv: "+371 ..." },
-  form_subject_lbl: { en: "Subject",            lv: "Temats" },
-  form_msg_lbl:     { en: "Message",            lv: "Ziņa" },
-  form_msg_ph:      { en: "Tell us how we can help you...", lv: "Pastāsti, kā mēs varam tev palīdzēt..." },
-  form_submit:      { en: "Send Message",       lv: "Nosūtīt ziņu" },
+        // ── INDEX — Modal ─────────────────────────────────────────
+        modal_loading_h:    'Analizē tavu jumtu...',
+        modal_loading_p:    'Iegūstam satelītu datus un aprēķinām saules potenciālu',
+        modal_report_title: 'Saules enerģijas iespējamības atskaite',
+        modal_score_label:  'SAULES IZMANTOŠANAS RĀDĪTĀJS',
+        modal_area_label:   'IZMANTOJAMĀ PLATĪBA',
+        modal_payback_label:'ATMAKSĀŠANĀS PERIODS',
+        modal_profit_label: '25 GADU PEĻŅA',
+        modal_savings_label:'GADA IETAUPĪJUMI',
+        modal_system_label: 'SISTĒMAS IZMĒRS',
+        modal_prod_label:   'GADA RAŽOŠANA',
+        modal_drone_h:      'Vēlies 100% precīzus rezultātus?',
+        modal_drone_p:      'Mūsu sertificētie drona operatori fiziski pārbaudīs tavu jumtu un piegādās profesionālu PDF atskaiti 24 stundu laikā.',
+        modal_drone_btn:    'Pasūtīt drona atskaiti — €149',
+        modal_partner_tag:  'Sertificēts uzstādīšanas partneris',
+        modal_partner_p:    'Mūsu sertificētais partneris apmeklēs tavu īpašumu, fiziski apstiprinās rezultātus un sniegs bezmaksas instalācijas piedāvājumu bez saistībām.',
+        modal_partner_btn:  'Saņemt bezmaksas instalācijas piedāvājumu',
+        modal_close:        'Aizvērt — analizēt citu adresi',
+        modal_drone_form_h: 'Pasūtīt drona atskaiti',
+        modal_drone_form_p: 'Aizpildi savus datus un mēs sazināsimies dažu stundu laikā, lai apstiprinātu tikšanos',
+        modal_back:         'Atpakaļ uz rezultātiem',
+        modal_form_name:    'Pilns vārds',
+        modal_form_email:   'E-pasta adrese',
+        modal_form_phone:   'Tālruņa numurs',
+        modal_form_address: 'Īpašuma adrese',
+        modal_form_submit:  'Apstiprināt pasūtījumu — €149',
+        modal_form_note:    'Maksa netiks iekasēta tagad. Mēs sazināsimies, lai apstiprinātu detaļas un vienotos par maksājumu.',
 
-  /* ── PRIVACY PAGE ──────────────────────────────────── */
-  privacy_h1:       { en: "Privacy Policy",     lv: "Privātuma politika" },
-  privacy_updated:  { en: "Last updated: May 2026", lv: "Pēdējo reizi atjaunināts: 2026. gada maijā" },
+        // ── INDEX — Testimonials ──────────────────────────────────
+        testi_tag:      'Atsauksmes',
+        testi_h2_a:     'Ko saka mūsu',
+        testi_h2_b:     'Klienti',
+        testi_h2_c:     '',
+        testi_sub:      'Īstas atsauksmes no māju īpašniekiem un uzņēmumiem visā Latvijā',
 
-  /* ── TERMS PAGE ────────────────────────────────────── */
-  terms_h1:         { en: "Terms of Service",   lv: "Pakalpojuma noteikumi" },
-  terms_updated:    { en: "Last updated: May 2026", lv: "Pēdējo reizi atjaunināts: 2026. gada maijā" },
+        // ── INDEX — FAQ ───────────────────────────────────────────
+        faq_tag:        'BUJ',
+        faq_h2_a:       'Biežāk uzdotie',
+        faq_h2_b:       'jautājumi',
+        faq_sub:        'Viss, kas jāzina pirms sākt',
+        faq_q1: 'Cik precīza ir bezmaksas satelītu analīze?',
+        faq_a1: 'Bezmaksas analīze izmanto reālus Latvijas saules starojuma datus (PVGIS/ES JRC) un ir precīza ar ±10–15% kļūdas robežu. Pilnīgai precizitātei — ieskaitot jumta izmērus, ēnojumu un konstrukcijas datus — pasūti profesionālo drona atskaiti.',
+        faq_q2: 'Kā drons piekļūst manam jumtam?',
+        faq_a2: 'Mūsu sertificētie drona operatori lido virs tava īpašuma no publiskās gaisa telpas — nav nepieciešamas kāpnes, sastatnes vai piekļuve mājai. Drons uzņem augstas izšķirtspējas attēlus no augšas. Tev tikai jābūt pieejamam, lai apstiprinātu tikšanos.',
+        faq_q3: 'Cik ilgi aizņem drona atskaite?',
+        faq_a3: 'Pēc drona lidojuma profesionālā PDF atskaite tiek piegādāta 24 stundu laikā uz tavu e-pastu. Lidojuma plānošana parasti aizņem 1–2 darba dienas atkarībā no laika apstākļiem.',
+        faq_q4: 'Ko darīt, ja lidojuma dienā ir slikts laiks?',
+        faq_a4: 'Mēs uzraugām vēja ātrumu, lietus varbūtību un temperatūru pirms katra lidojuma. Ja apstākļi nav piemēroti, mēs pārplānosim bez papildu maksas. Vari arī pārbaudīt mūsu tiešraides drona statusa logrīku mājaslapā.',
+        faq_q5: 'Vai mani dati ir droši un atbilst VDAR?',
+        faq_a5: 'Jā. Mēs apkopojam tikai pakalpojuma sniegšanai nepieciešamos datus (tava adrese un kontaktinformācija). Mēs nekad nepārdodam tavus datus trešajām pusēm. Visi dati tiek apstrādāti saskaņā ar ES VDAR noteikumiem.',
+        faq_q6: 'Vai man kaut kas jāmaksā avansā?',
+        faq_a6: 'Tiešsaistes saules analīze ir pilnīgi bezmaksas — karte nav nepieciešama. Par drona atskaiti (€149) maksa tiek iekasēta tikai pēc tikšanās apstiprināšanas. Maksājums tiek noorganizēts tieši ar mūsu komandu.',
+        faq_q7: 'Ko ietver partnera instalācijas piedāvājums?',
+        faq_a7: 'Mūsu partneris SolarPro Latvia apmeklēs tavu īpašumu bezmaksas fiziskai inspekcijai, apstiprinās Sunlytics atskaites rezultātus un sniegs bezobligāciju piedāvājumu pilnai saules paneļu instalācijai.',
+
+        // ── INDEX — Partner ───────────────────────────────────────
+        partner_tag:    'Sertificēts partneris',
+        partner_h2_a:   'Gatavs',
+        partner_h2_b:   'Uzstādīt?',
+        partner_sub:    'Tava saules enerģijas atskaite ir tikai pirmais solis. Mūsu sertificētais partneris pārvērtīs analīzi realitātē.',
+        partner_btn:    'Saņemt bezmaksas instalācijas piedāvājumu',
+        partner_note:   'Maksa nav nepieciešama. SolarPro Latvia konsultants sazināsies 24 stundu laikā.',
+
+        // ── INDEX — Cookie ────────────────────────────────────────
+        cookie_h:       'Mēs izmantojam sīkdatnes',
+        cookie_p:       'Mēs izmantojam sīkdatnes, lai uzlabotu tavu pieredzi un analizētu vietnes lietošanu. Turpinot piekrīti mūsu',
+        cookie_policy:  'Privātuma politikai',
+        cookie_decline: 'Noraidīt',
+        cookie_accept:  'Pieņemt visas',
+
+        // ── CONTACT page ──────────────────────────────────────────
+        contact_tag:        'Sazināties',
+        contact_h1_pre:     'Sazinies',
+        contact_h1_span:    'ar mums',
+        contact_hero_p:     'Vai ir jautājumi par saules analīzi vai vēlies pasūtīt drona atskaiti? Mēs esam šeit, lai palīdzētu.',
+        contact_info_h2:    'Mēs labprāt dzirdēsim no tevis',
+        info_email_h:       'Raksti mums',
+        info_based_h:       'Atrodamies',
+        info_drone_h:       'Drona pārklājums',
+        info_drone_p:       'Latvija un Baltijas reģions',
+        info_response_h:    'Atbildes laiks',
+        info_response_p:    'Dažu stundu laikā darba dienās',
+        form_h3:            'Nosūtīt ziņu',
+        form_p:             'Aizpildi savus datus un mēs atbildēsim drīzumā',
+        form_name_lbl:      'Pilns vārds',
+        form_name_ph:       'Tavs pilns vārds',
+        form_email_lbl:     'E-pasta adrese',
+        form_email_ph:      'tavs@epasts.lv',
+        form_phone_lbl:     'Tālruņa numurs',
+        form_phone_ph:      '+371 ...',
+        form_subject_lbl:   'Temats',
+        form_msg_lbl:       'Ziņa',
+        form_msg_ph:        'Pastāsti, kā varam palīdzēt...',
+        form_submit:        'Nosūtīt ziņu',
+
+        // ── PRIVACY & TERMS ───────────────────────────────────────
+        privacy_h1:         'Privātuma politika',
+        privacy_updated:    'Pēdējo reizi atjaunināts: Maijs 2026',
+        terms_h1:           'Pakalpojumu sniegšanas noteikumi',
+        terms_updated:      'Pēdējo reizi atjaunināts: Maijs 2026',
+
+        // ── FOOTER ───────────────────────────────────────────────
+        footer_tagline:     'AI saules enerģijas analīze Latvijai un Baltijas reģionam.',
+        footer_col_product: 'Produkts',
+        footer_col_company: 'Uzņēmums',
+        footer_col_legal:   'Juridiskā informācija',
+        footer_rights:      '© 2026 Sunlytics. Visas tiesības aizsargātas.',
+        footer_gdpr:        'VDAR atbilstošs',
+    }
 };
 
-/**
- * Apply translations to the current page.
- * @param {string} lang  "en" or "lv"
- */
-function applyTranslations(lang) {
-  // data-i18n → textContent
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    if (TRANSLATIONS[key] && TRANSLATIONS[key][lang] !== undefined) {
-      el.textContent = TRANSLATIONS[key][lang];
-    }
-  });
+// ── Core engine ──────────────────────────────────────────────────────────────
 
-  // data-i18n-html → innerHTML (for bold/span inside text)
-  document.querySelectorAll('[data-i18n-html]').forEach(el => {
-    const key = el.getAttribute('data-i18n-html');
-    if (TRANSLATIONS[key] && TRANSLATIONS[key][lang] !== undefined) {
-      el.innerHTML = TRANSLATIONS[key][lang];
-    }
-  });
-
-  // data-i18n-ph → placeholder
-  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
-    const key = el.getAttribute('data-i18n-ph');
-    if (TRANSLATIONS[key] && TRANSLATIONS[key][lang] !== undefined) {
-      el.placeholder = TRANSLATIONS[key][lang];
-    }
-  });
-
-  // Update <html lang=""> attribute
-  document.documentElement.lang = lang;
-}
-
-/**
- * Switch language: update buttons, save preference, apply translations.
- */
 function setLang(lang) {
-  document.getElementById('langEN').classList.toggle('active', lang === 'en');
-  document.getElementById('langLV').classList.toggle('active', lang === 'lv');
-  localStorage.setItem('sunlytics-lang', lang);
-  applyTranslations(lang);
+    if (!TRANSLATIONS[lang]) return;
+    localStorage.setItem('sunlytics_lang', lang);
+    applyLang(lang);
 }
 
-/**
- * Restore saved language on page load — call this at end of body.
- */
-function initLang() {
-  const saved = localStorage.getItem('sunlytics-lang') || 'en';
-  // Set button state without re-saving
-  document.getElementById('langEN').classList.toggle('active', saved === 'en');
-  document.getElementById('langLV').classList.toggle('active', saved === 'lv');
-  applyTranslations(saved);
+function applyLang(lang) {
+    const t = TRANSLATIONS[lang];
+    if (!t) return;
+
+    // 1. Text content: data-i18n
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key] !== undefined) el.textContent = t[key];
+    });
+
+    // 2. Placeholder: data-i18n-ph
+    document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+        const key = el.getAttribute('data-i18n-ph');
+        if (t[key] !== undefined) el.placeholder = t[key];
+    });
+
+    // 3. Active button state
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    const activeBtn = document.getElementById('lang' + lang.toUpperCase());
+    if (activeBtn) activeBtn.classList.add('active');
+
+    // 4. html lang attribute
+    document.documentElement.lang = lang;
+
+    // 5. Re-render FAQ if on index page (FAQ is JS-generated)
+    if (typeof renderFaq === 'function') renderFaq(lang);
 }
+
+function initLang() {
+    const saved = localStorage.getItem('sunlytics_lang') || 'en';
+    applyLang(saved);
+}
+
+// Auto-init on DOM ready
+document.addEventListener('DOMContentLoaded', initLang);
