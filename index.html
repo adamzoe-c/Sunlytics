@@ -104,6 +104,60 @@
             border-radius: 2px;
         }
 
+        /* ── LANGUAGE SWITCHER ── */
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .lang-switcher {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: var(--off-white);
+            border-radius: 10px;
+            padding: 4px;
+        }
+
+        .lang-btn {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: none;
+            border: none;
+            border-radius: 7px;
+            padding: 5px 9px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--gray);
+            font-family: inherit;
+            transition: all 0.18s;
+            letter-spacing: 0.4px;
+        }
+
+        .lang-btn img {
+            width: 20px;
+            height: 14px;
+            object-fit: cover;
+            border-radius: 2px;
+            display: block;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+        }
+
+        .lang-btn:hover {
+            color: var(--navy);
+            background: white;
+            box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+        }
+
+        .lang-btn.active {
+            color: var(--orange-dark);
+            background: white;
+            box-shadow: 0 1px 8px rgba(247,151,30,0.2);
+        }
+
         /* ── HERO ── */
         .hero {
             min-height: 90vh;
@@ -779,6 +833,8 @@
         @media (max-width: 768px) {
             .nav-links { display: none; }
             .hamburger { display: flex; }
+            .lang-btn span, .lang-btn { font-size: 11px; padding: 4px 7px; }
+            .lang-btn img { width: 18px; height: 12px; }
 
             .nav-links.open {
                 display: flex;
@@ -873,9 +929,21 @@
         <li><a href="index.html#weather">Drone Status</a></li>
         <li><a href="index.html#calculator" class="nav-cta">Free Analysis</a></li>
     </ul>
-    <button class="hamburger" onclick="toggleMenu()">
-        <span></span><span></span><span></span>
-    </button>
+    <div class="nav-right">
+        <div class="lang-switcher">
+            <button class="lang-btn active" id="langEN" onclick="setLang('en')">
+                <img src="united-kingdom.png" alt="English">
+                EN
+            </button>
+            <button class="lang-btn" id="langLV" onclick="setLang('lv')">
+                <img src="latvia.png" alt="Latviešu">
+                LV
+            </button>
+        </div>
+        <button class="hamburger" onclick="toggleMenu()">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
 </nav>
 
 <!-- HERO -->
@@ -1922,6 +1990,20 @@
         document.getElementById('addressInput').value = mapAddress;
         showLoadingModal(mapAddress, mapLat, mapLng);
     }
+
+    // ── LANGUAGE SWITCHER ─────────────────────────────────────────
+    function setLang(lang) {
+        document.getElementById('langEN').classList.toggle('active', lang === 'en');
+        document.getElementById('langLV').classList.toggle('active', lang === 'lv');
+        // Ready for i18n wiring — store preference
+        localStorage.setItem('sunlytics-lang', lang);
+    }
+
+    // Restore saved language on load
+    (function() {
+        const saved = localStorage.getItem('sunlytics-lang');
+        if (saved && saved !== 'en') setLang(saved);
+    })();
 </script>
 </body>
 </html>
