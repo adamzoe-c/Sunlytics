@@ -319,6 +319,61 @@ const TRANSLATIONS = {
     }
 };
 
+// ── FAQ ──────────────────────────────────────────────────────────────────────
+// Keys map to translation pairs faq_q1/faq_a1 ... faq_q7/faq_a7
+const FAQ_COUNT = 7;
+
+function renderFaq(lang) {
+    const list = document.getElementById('faqList');
+    if (!list) return;
+    const t = TRANSLATIONS[lang] || TRANSLATIONS['en'];
+    list.innerHTML = '';
+    for (let i = 1; i <= FAQ_COUNT; i++) {
+        const q = t['faq_q' + i] || '';
+        const a = t['faq_a' + i] || '';
+        const idx = i - 1;
+        const el = document.createElement('div');
+        el.style.cssText = 'background:#f9f9f9; border-radius:16px; border:1px solid #efefef; overflow:hidden;';
+        el.innerHTML = `
+            <button onclick="toggleFaq(${idx})" style="width:100%;display:flex;justify-content:space-between;align-items:center;padding:22px 24px;background:none;border:none;cursor:pointer;font-family:inherit;text-align:left;gap:16px;">
+                <span style="font-size:15px;font-weight:700;color:#1a1a1a;">${q}</span>
+                <span id="faqIcon${idx}" style="flex-shrink:0;width:28px;height:28px;background:#efefef;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background 0.2s;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                </span>
+            </button>
+            <div id="faqAnswer${idx}" style="display:none;padding:0 24px 22px;">
+                <p style="font-size:14px;color:#6b7280;line-height:1.75;margin:0;">${a}</p>
+            </div>`;
+        list.appendChild(el);
+    }
+}
+
+function toggleFaq(i) {
+    const isOpen = document.getElementById('faqAnswer' + i)?.style.display === 'block';
+    // Close all
+    for (let j = 0; j < FAQ_COUNT; j++) {
+        const ans = document.getElementById('faqAnswer' + j);
+        const ico = document.getElementById('faqIcon' + j);
+        if (ans) ans.style.display = 'none';
+        if (ico) {
+            ico.style.background = '#efefef';
+            const s = ico.querySelector('svg');
+            if (s) s.style.stroke = '#666';
+        }
+    }
+    // Open if it was closed
+    if (!isOpen) {
+        const ans = document.getElementById('faqAnswer' + i);
+        const ico = document.getElementById('faqIcon' + i);
+        if (ans) ans.style.display = 'block';
+        if (ico) {
+            ico.style.background = 'linear-gradient(135deg,#f7971e,#ff4e00)';
+            const s = ico.querySelector('svg');
+            if (s) s.style.stroke = 'white';
+        }
+    }
+}
+
 // ── Core engine ──────────────────────────────────────────────────────────────
 
 function setLang(lang) {
