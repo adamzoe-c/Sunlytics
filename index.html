@@ -1290,6 +1290,61 @@
     </div>
 </section>
 
+<script>
+// ── FAQ DATA ─────────────────────────────────────────────────────
+const faqData = [
+    {
+        q: { en: "How accurate is the free instant analysis?", lv: "Cik precīza ir bezmaksas tūlītējā analīze?" },
+        a: { en: "The free analysis is based on satellite imagery and solar irradiance data. It gives a solid estimate — usually within 10–20% of a full inspection. For exact numbers, the drone report gets you to 95%+ accuracy.", lv: "Bezmaksas analīze balstās uz satelīta attēliem un saules starojuma datiem. Tā sniedz labu aplēsi — parasti 10–20% robežās no pilnas pārbaudes. Precīziem skaitļiem drona pārskats nodrošina 95%+ precizitāti." }
+    },
+    {
+        q: { en: "What happens after I order the drone report?", lv: "Kas notiek pēc drona pārskata pasūtīšanas?" },
+        a: { en: "We contact you within a few hours to confirm. A certified local drone operator comes to your building, flies the inspection, and you get your PDF report within 24 hours.", lv: "Mēs sazināmies ar jums dažu stundu laikā, lai apstiprinātu. Sertificēts vietējais drona operators ierodas pie jūsu ēkas, veic pārbaudi, un jūs saņemat PDF pārskatu 24 stundu laikā." }
+    },
+    {
+        q: { en: "Is my data safe?", lv: "Vai mani dati ir droši?" },
+        a: { en: "Yes. We are GDPR compliant. Your data is never sold. Drone operators only receive the property address — nothing personal.", lv: "Jā. Mēs atbilstam VDAR. Jūsu dati netiek pārdoti. Dronu operatori saņem tikai īpašuma adresi — nekas personisks." }
+    },
+    {
+        q: { en: "What if the weather is bad on my drone report day?", lv: "Kas notiek, ja laiks ir slikts drona pārskata dienā?" },
+        a: { en: "No problem. We track weather automatically and reschedule your flight if conditions aren't suitable. You can also check the live drone status on our website anytime.", lv: "Nav problēmu. Mēs automātiski sekojam laika apstākļiem un pārplānojam lidojumu, ja apstākļi nav piemēroti. Jūs varat arī jebkurā laikā pārbaudīt tiešraides drona statusu mūsu vietnē." }
+    },
+    {
+        q: { en: "Do you cover areas outside Riga?", lv: "Vai jūs apkalpojat reģionus ārpus Rīgas?" },
+        a: { en: "Yes. We have pilots across Latvia including Daugavpils, Liepāja, Valmiera, Jēkabpils and more. If you are unsure about your area, just contact us.", lv: "Jā. Mums ir piloti visā Latvijā, tostarp Daugavpilī, Liepājā, Valmierā, Jēkabpilī un citur. Ja neesat pārliecināts par savu rajonu, vienkārši sazinieties ar mums." }
+    },
+    {
+        q: { en: "Can I become a drone pilot for Sunlytics?", lv: "Vai es varu kļūt par Sunlytics drona pilotu?" },
+        a: { en: "Yes! If you have a valid CAA license and a compatible drone, you can earn €100 per mission. Visit our Fly for Us page to apply.", lv: "Jā! Ja jums ir derīga CAA licence un saderīgs drons, varat nopelnīt €100 par misiju. Apmeklējiet mūsu lapu 'Lido mums', lai pieteiktos." }
+    }
+];
+
+function buildFaq() {
+    const lang = localStorage.getItem('sunlytics-lang') || 'en';
+    const container = document.getElementById('faqList');
+    if (!container) return;
+    container.innerHTML = '';
+    faqData.forEach((item, i) => {
+        container.innerHTML += `
+            <div style="background:white; border:1px solid #e8e8e8; border-radius:16px; overflow:hidden;">
+                <button onclick="toggleFaq(${i})" style="width:100%; background:none; border:none; padding:20px 24px; text-align:left; font-size:15px; font-weight:700; color:#1a1a1a; cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:16px; font-family:inherit;">
+                    <span>${item.q[lang]}</span>
+                    <span id="faqArrow${i}" style="font-size:20px; color:#f7971e; transition:transform 0.3s; flex-shrink:0;">+</span>
+                </button>
+                <div id="faqAns${i}" style="display:none; padding:0 24px 20px; font-size:14px; color:#6b7280; line-height:1.75;">${item.a[lang]}</div>
+            </div>`;
+    });
+}
+
+function toggleFaq(i) {
+    const ans = document.getElementById('faqAns' + i);
+    const arrow = document.getElementById('faqArrow' + i);
+    const isOpen = ans.style.display === 'block';
+    ans.style.display = isOpen ? 'none' : 'block';
+    arrow.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(45deg)';
+}
+</script>
+
 <!-- COOKIE BANNER -->
 <div id="cookieBanner" style="display:none; position:fixed; bottom:0; left:0; right:0; background:#1a1a1a; color:white; padding:20px 5%; z-index:2000; box-shadow:0 -4px 30px rgba(0,0,0,0.3);">
     <div style="max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:20px; flex-wrap:wrap; justify-content:space-between;">
@@ -1760,24 +1815,6 @@
         // window.open('https://solarprolatvia.lv?ref=sunlytics', '_blank');
     }
 
-    // ── FAQ ───────────────────────────────────────────────────────
-    const faqs = [
-        { q: 'How accurate is the free satellite analysis?',
-          a: 'The free analysis uses real Latvian solar irradiance data (PVGIS/EU JRC) and is accurate to within 10\u201315% for most properties. For 100% precision \u2014 including exact roof dimensions, shading, and structural details \u2014 order our professional drone report.' },
-        { q: 'How does the drone get access to my roof?',
-          a: 'Our certified drone operators fly above your property from public airspace \u2014 no ladders, no scaffolding, no access required inside your home. The drone captures high-resolution imagery of your roof from above. You just need to be available to confirm the appointment.' },
-        { q: 'How long does the drone report take?',
-          a: 'Once the drone flight is completed, your professional PDF report is delivered within 24 hours directly to your email. Scheduling the flight itself typically takes 1\u20132 business days depending on weather conditions.' },
-        { q: 'What if the weather is bad on the day of the flight?',
-          a: 'We monitor wind speed, rain probability, and temperature before every flight. If conditions are unsuitable we will reschedule at no extra cost. You can also check our live drone status widget on the homepage.' },
-        { q: 'Is my data safe and GDPR compliant?',
-          a: 'Yes. We collect only the data necessary to provide our service (your address and contact details). We never sell your data to third parties. All data is processed in compliance with EU GDPR regulations. See our Privacy Policy for full details.' },
-        { q: 'Do I have to pay anything upfront?',
-          a: 'The online solar analysis is completely free \u2014 no card required. For the drone report (\u20ac149), you are not charged until we confirm your appointment and you approve. Payment is arranged directly with our team.' },
-        { q: 'What does the partner installation quote involve?',
-          a: 'Our partner SolarPro Latvia will visit your property for a free physical inspection, confirm the findings from your Sunlytics report, and provide a no-obligation quote for the full solar panel installation. There is no commitment to proceed.' },
-    ];
-
     // ── COOKIES ───────────────────────────────────────────────────
     function acceptCookies() {
         localStorage.setItem('cookieConsent', 'accepted');
@@ -1800,9 +1837,15 @@
     document.addEventListener('DOMContentLoaded', function() {
         initCookieBanner();
         loadWeather();
-        // initLang is handled by lang.js
+        buildFaq();
     });
 </script>
 <script src="lang.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        initLang();
+        buildFaq();
+    });
+</script>
 </body>
 </html>
