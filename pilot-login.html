@@ -28,32 +28,57 @@ nav{
   padding:12px 4%;background:white;
   box-shadow:0 1px 20px rgba(0,0,0,0.07);
   position:sticky;top:0;z-index:200;
-  flex-wrap:wrap;gap:8px;
+  flex-wrap:nowrap;gap:8px;
 }
-.logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
-.logo img{width:34px;height:34px;object-fit:contain;}
-.logo-text{
-  font-size:18px;font-weight:800;letter-spacing:1px;
-  background:linear-gradient(135deg,var(--orange),var(--orange-dark));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-}
-.nav-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
-.nav-back{
-  display:flex;align-items:center;gap:5px;
-  text-decoration:none;color:var(--gray);font-size:13px;font-weight:500;
-  transition:color .2s;white-space:nowrap;
-}
-.nav-back:hover{color:var(--orange);}
-
-/* LANG */
-.lang-switcher{display:flex;align-items:center;gap:4px;background:var(--off);border-radius:10px;padding:4px;}
-.lang-btn{
-  display:flex;align-items:center;gap:5px;background:none;border:none;
-  border-radius:7px;padding:5px 8px;cursor:pointer;font-size:11px;
-  font-weight:700;color:var(--gray);font-family:inherit;transition:all .18s;
-}
-.lang-btn.active{color:var(--orange-dark);background:white;box-shadow:0 1px 8px rgba(247,151,30,0.2);}
-.lang-btn img{width:18px;height:12px;object-fit:cover;border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,0.15);}
+        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+        .logo img { width: 34px; height: 34px; object-fit: contain; }
+        .logo-text {
+            font-size: 18px; font-weight: 800; letter-spacing: 1px;
+            background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .nav-links {
+            display: flex; gap: 28px; list-style: none; align-items: center;
+        }
+        .nav-links a {
+            text-decoration: none; color: var(--navy);
+            font-weight: 500; font-size: 15px; transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--orange); }
+        .nav-links a.active { color: var(--orange); font-weight: 700; }
+        .nav-cta {
+            background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+            color: white !important; padding: 11px 26px;
+            border-radius: 50px; font-weight: 600 !important;
+            box-shadow: 0 4px 15px rgba(247,151,30,0.35);
+        }
+        .hamburger {
+            display: none; flex-direction: column; gap: 5px;
+            cursor: pointer; background: none; border: none; padding: 4px;
+        }
+        .hamburger span { display: block; width: 24px; height: 2px; background: var(--navy); border-radius: 2px; }
+        .nav-right { display: flex; align-items: center; gap: 12px; }
+        .lang-switcher {
+            display: flex; align-items: center; gap: 4px;
+            background: var(--off); border-radius: 10px; padding: 4px;
+        }
+        .lang-btn {
+            display: flex; align-items: center; gap: 5px;
+            background: none; border: none; border-radius: 7px;
+            padding: 5px 9px; cursor: pointer; font-size: 12px;
+            font-weight: 700; color: var(--gray); font-family: inherit;
+            transition: all 0.18s; letter-spacing: 0.4px;
+        }
+        .lang-btn img { width: 20px; height: 14px; object-fit: cover; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.15); }
+        .lang-btn:hover { color: var(--navy); background: white; box-shadow: 0 1px 6px rgba(0,0,0,0.08); }
+        .lang-btn.active { color: var(--orange-dark); background: white; box-shadow: 0 1px 8px rgba(247,151,30,0.2); }
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+            .nav-links.open { display: flex; flex-direction: column; position: fixed; top: 68px; left: 0; right: 0; background: white; padding: 24px 5%; box-shadow: 0 8px 30px rgba(0,0,0,0.1); gap: 20px; z-index: 199; }
+            .lang-btn { font-size: 11px; padding: 4px 7px; }
+            .lang-btn img { width: 18px; height: 12px; }
+        }
 
 /* MAIN */
 main{flex:1;display:flex;align-items:center;justify-content:center;padding:24px 16px;}
@@ -125,24 +150,30 @@ footer a{color:var(--orange);text-decoration:none;}
 </head>
 <body>
 <nav>
-  <a class="logo" href="index.html">
-    <img src="sunlytics-logo.png" alt="Sunlytics" onerror="this.style.display='none'">
-    <span class="logo-text">SUNLYTICS</span>
-  </a>
-  <div class="nav-right">
-    <div class="lang-switcher">
-      <button class="lang-btn active" id="btnEN" onclick="setLang('en')">
-        <img src="united-kingdom.png" alt="EN"> EN
-      </button>
-      <button class="lang-btn" id="btnLV" onclick="setLang('lv')">
-        <img src="latvia.png" alt="LV"> LV
-      </button>
-    </div>
-    <a class="nav-back" href="index.html">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-      <span data-i18n="back_home">Back to website</span>
+    <a href="index.html" class="logo">
+        <img src="sunlytics-logo.png" alt="Sunlytics" onerror="this.style.display='none'">
+        <span class="logo-text">SUNLYTICS</span>
     </a>
-  </div>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="index.html#how-it-works"><span data-i18n="nav_how">How it Works</span></a></li>
+        <li><a href="index.html#pricing"><span data-i18n="nav_pricing">Pricing</span></a></li>
+        <li><a href="about.html"><span data-i18n="nav_about">About</span></a></li>
+        <li><a href="index.html#weather"><span data-i18n="nav_drone">Drone Status</span></a></li>
+        <li><a href="fly-for-us.html"><span data-i18n="nav_fly">Fly for Us</span></a></li>
+        <li><a href="pilot-login.html" class="active"><span data-i18n="nav_pilot">Pilot Login</span></a></li>
+        <li><a href="index.html#calculator" class="nav-cta"><span data-i18n="nav_cta">Free Analysis</span></a></li>
+    </ul>
+    <div class="nav-right">
+        <div class="lang-switcher">
+            <button class="lang-btn active" id="btnEN" onclick="setLang('en')">
+                <img src="united-kingdom.png" alt="English"> EN
+            </button>
+            <button class="lang-btn" id="btnLV" onclick="setLang('lv')">
+                <img src="latvia.png" alt="Latviešu"> LV
+            </button>
+        </div>
+        <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')"><span></span><span></span><span></span></button>
+    </div>
 </nav>
 
 <main>
