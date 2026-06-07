@@ -310,31 +310,33 @@
             <p data-i18n="form_p">Fill in your details and we will get back to you shortly</p>
             <div class="form-group">
                 <label data-i18n="form_name_lbl">Full Name</label>
-                <input type="text" placeholder="Your full name" data-i18n-ph="form_name_ph">
+                <input type="text" id="cName" placeholder="Your full name" data-i18n-ph="form_name_ph">
             </div>
             <div class="form-group">
                 <label data-i18n="form_email_lbl">Email Address</label>
-                <input type="email" placeholder="your@email.com" data-i18n-ph="form_email_ph">
+                <input type="email" id="cEmail" placeholder="your@email.com" data-i18n-ph="form_email_ph">
             </div>
             <div class="form-group">
                 <label data-i18n="form_phone_lbl">Phone Number</label>
-                <input type="tel" placeholder="+371 ..." data-i18n-ph="form_phone_ph">
+                <input type="tel" id="cPhone" placeholder="+371 ..." data-i18n-ph="form_phone_ph">
             </div>
             <div class="form-group">
                 <label data-i18n="form_subject_lbl">Subject</label>
-                <select>
+                <select id="cSubject">
                     <option>General Inquiry</option>
                     <option>Order Drone Report</option>
                     <option>Partnership</option>
                     <option>Technical Support</option>
                     <option>Other</option>
-                </select>
+                </select id="cSubject">
             </div>
             <div class="form-group">
                 <label data-i18n="form_msg_lbl">Message</label>
-                <textarea placeholder="Tell us how we can help you..." data-i18n-ph="form_msg_ph"></textarea>
+                <textarea id="cMessage" placeholder="Tell us how we can help you..." data-i18n-ph="form_msg_ph"></textarea>
             </div>
-            <button class="submit-btn" data-i18n="form_submit">Send Message</button>
+            <button class="submit-btn" id="contactSubmitBtn" onclick="submitContact()" data-i18n="form_submit">Send Message</button>
+        <div id="contactSuccess" style="display:none;margin-top:16px;padding:14px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;color:#16a34a;font-weight:600;text-align:center;">✓ Message sent! We'll reply within a few hours.</div>
+        <div id="contactError" style="display:none;margin-top:16px;padding:14px;background:#fef2f2;border:1px solid #fecaca;border-radius:10px;color:#dc2626;font-weight:600;text-align:center;">Something went wrong. Please email us directly at info@sunlytics.lv</div>
         </div>
     </div>
 </section>
@@ -376,6 +378,51 @@
         document.getElementById('navLinks').classList.toggle('open');
     }
     document.addEventListener('DOMContentLoaded', initLang);
+
+function submitContact() {
+    const name    = document.getElementById('cName').value.trim();
+    const email   = document.getElementById('cEmail').value.trim();
+    const phone   = document.getElementById('cPhone').value.trim();
+    const subject = document.getElementById('cSubject').value;
+    const message = document.getElementById('cMessage').value.trim();
+    const btn     = document.getElementById('contactSubmitBtn');
+
+    if (!name || !email || !message) {
+        document.getElementById('contactError').textContent = 'Please fill in your name, email and message.';
+        document.getElementById('contactError').style.display = 'block';
+        return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    document.getElementById('contactSuccess').style.display = 'none';
+    document.getElementById('contactError').style.display = 'none';
+
+    fetch('https://formspree.io/f/meewaldd', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ name, email, phone, subject, message })
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.ok) {
+            document.getElementById('contactSuccess').style.display = 'block';
+            document.getElementById('cName').value = '';
+            document.getElementById('cEmail').value = '';
+            document.getElementById('cPhone').value = '';
+            document.getElementById('cMessage').value = '';
+        } else {
+            document.getElementById('contactError').style.display = 'block';
+        }
+        btn.disabled = false;
+        btn.textContent = 'Send Message';
+    })
+    .catch(() => {
+        document.getElementById('contactError').style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Send Message';
+    });
+}
 </script>
 </body>
 </html>
