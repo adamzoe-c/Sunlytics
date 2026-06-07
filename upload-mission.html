@@ -1215,10 +1215,10 @@
         handleFiles(e.dataTransfer.files);
     });
 
-    // ── Verify Mission ──
-    function verifyMission() {
-        const id = document.getElementById('missionId').value.trim();
-        const pid = document.getElementById('pilotId').value.trim();
+    // ── Verify Mission (reads from Supabase orders table) ────────
+    async function verifyMission() {
+        const id    = document.getElementById('missionId').value.trim().toUpperCase();
+        const pid   = document.getElementById('pilotId').value.trim().toUpperCase();
         const input = document.getElementById('missionId');
 
         if (!id || !pid) {
@@ -1227,46 +1227,71 @@
             return;
         }
 
-        // Simulate verification with mock data
-        const mockMissions = {
-            'SUN-2026-04821': { address: 'Brīvības iela 44, Riga', type: 'Rooftop Solar Survey', images: '60–80 images', reward: '€100', status: 'Awaiting Upload' },
-            'SUN-2026-03307': { address: 'Jūrmalas gatve 12, Jūrmala', type: 'Large Roof Survey', images: '80–120 images', reward: '€150', status: 'Awaiting Upload' },
-            'SUN-2026-05512': { address: 'Merķeļa iela 7, Riga', type: 'Rooftop Solar Survey', images: '60–80 images', reward: '€100', status: 'Awaiting Upload' },
-        };
+        // Show loading state on button
+        const btn = document.querySelector('#cardMission button');
+        const originalText = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '⏳ Verifying...';
 
-        const mission = mockMissions[id.toUpperCase()] || {
-            address: 'Confirmed address on file',
-            type: 'Rooftop Solar Survey',
-            images: '60–80 images',
-            reward: '€100',
-            status: 'Awaiting Upload'
-        };
+        try {
+            // Look up the order in Supabase
+            const { data, error } = await sb
+                .from('orders')
+                .select('id, roof_address, tier, status, scheduled_at, pilots(full_name)')
+                .eq('id', id)
+                .single();
 
-        missionData = mission;
-        missionVerified = true;
+            if (error || !data) {
+                input.classList.add('error');
+                alert('Mission ID not found. Please check and try again.');
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+                return;
+            }
 
-        input.classList.remove('error');
-        input.classList.add('valid');
-        document.getElementById('pilotId').classList.remove('error');
+            // Map tier to reward amount
+            const rewardMap = { basic: '€100', standard: '€120', complex: '€150' };
+            const imagesMap = { basic: '40–60 images', standard: '60–80 images', complex: '80–120 images' };
 
-        document.getElementById('infoAddress').textContent = mission.address;
-        document.getElementById('infoType').textContent = mission.type;
-        document.getElementById('infoImages').textContent = mission.images;
-        document.getElementById('infoReward').textContent = mission.reward;
-        document.getElementById('infoStatus').textContent = mission.status;
-        document.getElementById('submitReward').textContent = mission.reward;
-        document.getElementById('successReward').textContent = mission.reward;
-        document.getElementById('missionInfoBox').classList.add('visible');
+            const mission = {
+                address : data.roof_address || 'Address on file',
+                type    : 'Rooftop Solar Survey',
+                images  : imagesMap[data.tier] || '60–80 images',
+                reward  : rewardMap[data.tier] || '€100',
+                status  : data.status || 'Awaiting Upload',
+                orderId : data.id
+            };
 
-        // Unlock next steps
-        unlockCard('cardUpload');
-        unlockCard('cardChecklist');
-        unlockCard('submitBar');
+            missionData = mission;
+            missionVerified = true;
 
-        setStep(2);
-        updateHints();
+            input.classList.remove('error');
+            input.classList.add('valid');
+            document.getElementById('pilotId').classList.remove('error');
 
-        document.getElementById('cardUpload').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            document.getElementById('infoAddress').textContent  = mission.address;
+            document.getElementById('infoType').textContent     = mission.type;
+            document.getElementById('infoImages').textContent   = mission.images;
+            document.getElementById('infoReward').textContent   = mission.reward;
+            document.getElementById('infoStatus').textContent   = mission.status;
+            document.getElementById('submitReward').textContent = mission.reward;
+            document.getElementById('successReward').textContent = mission.reward;
+            document.getElementById('missionInfoBox').classList.add('visible');
+
+            unlockCard('cardUpload');
+            unlockCard('cardChecklist');
+            unlockCard('submitBar');
+            setStep(2);
+            updateHints();
+            document.getElementById('cardUpload').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+        } catch (err) {
+            console.error('Verification error:', err);
+            alert('Something went wrong. Please try again.');
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = originalText;
+        }
     }
 
     // ── File handling ──
@@ -1404,26 +1429,70 @@
         el.style.transition = 'opacity 0.3s';
     }
 
-    // ── Submit ──
-    function submitMission() {
+    // ── Submit (real Supabase upload) ──────────────────────────
+    async function submitMission() {
         const missionId = document.getElementById('missionId').value.trim().toUpperCase();
+        const pilotNotes = document.getElementById('pilotNotes')?.value.trim() || '';
 
-        // Hide submit bar, show progress
         document.getElementById('submitBar').style.display = 'none';
         const progressWrap = document.getElementById('uploadProgress');
         progressWrap.classList.add('visible');
-        const fill = document.getElementById('progressFill');
+        const fill  = document.getElementById('progressFill');
         const label = document.getElementById('progressLabel');
 
-        let pct = 0;
-        const interval = setInterval(() => {
-            pct += Math.random() * 12 + 3;
-            if (pct >= 100) { pct = 100; clearInterval(interval); showSuccess(missionId); }
-            fill.style.width = pct + '%';
-            label.textContent = pct < 100
-                ? `Uploading images... ${Math.round(pct)}%`
-                : 'Validating upload...';
-        }, 180);
+        try {
+            const totalFiles = selectedFiles.length;
+            const uploadedUrls = [];
+
+            for (let i = 0; i < totalFiles; i++) {
+                const file = selectedFiles[i];
+                const pct  = Math.round(((i) / totalFiles) * 85);
+                fill.style.width  = pct + '%';
+                label.textContent = `Uploading image ${i + 1} of ${totalFiles}...`;
+
+                const filePath = `missions/${missionId}/${Date.now()}_${file.name}`;
+                const { data: uploadData, error: uploadError } = await sb.storage
+                    .from('drone-images')
+                    .upload(filePath, file, { upsert: false });
+
+                if (uploadError) throw uploadError;
+
+                const { data: urlData } = sb.storage
+                    .from('drone-images')
+                    .getPublicUrl(filePath);
+
+                uploadedUrls.push(urlData.publicUrl);
+            }
+
+            fill.style.width  = '90%';
+            label.textContent = 'Saving mission data...';
+
+            const { error: reportError } = await sb
+                .from('reports')
+                .insert({
+                    order_id         : missionId,
+                    drone_image_urls : uploadedUrls,
+                    pilot_notes      : pilotNotes,
+                    upload_status    : 'uploaded',
+                    uploaded_at      : new Date().toISOString()
+                });
+
+            if (reportError) throw reportError;
+
+            await sb.from('orders')
+                .update({ status: 'analysing' })
+                .eq('id', missionId);
+
+            fill.style.width  = '100%';
+            label.textContent = 'Upload complete!';
+            setTimeout(() => showSuccess(missionId), 600);
+
+        } catch (err) {
+            console.error('Upload failed:', err);
+            progressWrap.classList.remove('visible');
+            document.getElementById('submitBar').style.display = '';
+            alert('Upload failed: ' + (err.message || 'Please try again.'));
+        }
     }
 
     function showSuccess(missionId) {
@@ -1480,8 +1549,17 @@
     }
 </script>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="lang.js"></script>
 <script>
+    // ── SUPABASE SETUP ────────────────────────────────────────────
+    // Step 1: Go to supabase.com and create a free project
+    // Step 2: Go to Project Settings → API
+    // Step 3: Copy your Project URL and anon/public key below
+    const SUPABASE_URL  = 'https://YOUR_PROJECT_ID.supabase.co';
+    const SUPABASE_ANON = 'YOUR_ANON_PUBLIC_KEY';
+    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
     function toggleMenu() {
         document.getElementById('navLinks').classList.toggle('open');
     }
