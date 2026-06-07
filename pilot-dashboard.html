@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pilot Dashboard — Sunlytics</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<meta name="theme-color" content="#f7971e">
+<style>
+:root{
+  --orange:#f7971e;--orange-dark:#ff4e00;
+  --navy:#1a1a1a;--gray:#6b7280;
+  --white:#fff;--off:#f5f5f5;--border:#e8e8e8;
+  --green:#22c55e;--green-bg:#f0fdf4;--green-dark:#16a34a;
+  --red:#ef4444;--red-bg:#fef2f2;
+  --blue:#3b82f6;--blue-bg:#eff6ff;
+  --yellow:#f59e0b;--yellow-bg:#fffbeb;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  background:var(--off);color:var(--navy);min-height:100vh;
+}
+
+/* NAV */
+nav{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:12px 4%;background:white;
+  box-shadow:0 1px 20px rgba(0,0,0,0.08);
+  position:sticky;top:0;z-index:200;
+  gap:8px;flex-wrap:wrap;
+}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo img{width:32px;height:32px;object-fit:contain;}
+.logo-text{
+  font-size:18px;font-weight:800;letter-spacing:1px;
+  background:linear-gradient(135deg,var(--orange),var(--orange-dark));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.nav-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.pilot-badge{
+  display:flex;align-items:center;gap:8px;
+  background:var(--off);border-radius:50px;
+  padding:6px 14px 6px 6px;font-size:13px;font-weight:600;
+}
+.pilot-avatar{
+  width:28px;height:28px;border-radius:50%;
+  background:linear-gradient(135deg,var(--orange),var(--orange-dark));
+  display:flex;align-items:center;justify-content:center;
+  color:white;font-size:12px;font-weight:700;
+}
+.notif-bell{
+  position:relative;cursor:pointer;
+  background:none;border:none;padding:6px;
+  color:var(--gray);transition:color .2s;
+}
+.notif-bell:hover{color:var(--orange);}
+.notif-count{
+  position:absolute;top:2px;right:2px;
+  background:var(--red);color:white;
+  width:16px;height:16px;border-radius:50%;
+  font-size:10px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  display:none;
+}
+.logout-btn{
+  background:none;border:1.5px solid var(--border);
+  border-radius:8px;padding:7px 12px;
+  font-size:13px;font-weight:600;color:var(--gray);
+  cursor:pointer;font-family:inherit;transition:all .2s;
+  white-space:nowrap;
+}
+.logout-btn:hover{border-color:var(--red);color:var(--red);}
+
+/* LANG */
+.lang-switcher{display:flex;align-items:center;gap:4px;background:var(--off);border-radius:10px;padding:4px;}
+.lang-btn{display:flex;align-items:center;gap:5px;background:none;border:none;border-radius:7px;padding:5px 9px;cursor:pointer;font-size:11px;font-weight:700;color:var(--gray);font-family:inherit;transition:all .18s;}
+.lang-btn.active{color:var(--orange-dark);background:white;box-shadow:0 1px 8px rgba(247,151,30,0.2);}
+.lang-btn img{width:18px;height:12px;object-fit:cover;border-radius:2px;}
+
+/* LAYOUT */
+.page-wrap{max-width:1100px;margin:0 auto;padding:20px 16px;}
+
+/* STATS ROW */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;}
+.stat-card{
+  background:white;border-radius:14px;padding:18px 16px;
+  box-shadow:0 2px 12px rgba(0,0,0,0.06);
+  display:flex;flex-direction:column;gap:5px;
+}
+.stat-label{font-size:12px;color:var(--gray);font-weight:500;}
+.stat-value{font-size:24px;font-weight:800;color:var(--navy);}
+.stat-sub{font-size:11px;color:var(--gray);}
+.stat-icon{
+  width:36px;height:36px;border-radius:10px;
+  background:var(--off);display:flex;align-items:center;justify-content:center;
+  margin-bottom:4px;color:var(--orange);
+}
+
+/* SECTION HEADER */
+.section-header{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:14px;flex-wrap:wrap;gap:8px;
+}
+.section-title{
+  font-size:16px;font-weight:700;color:var(--navy);
+  display:flex;align-items:center;gap:8px;
+}
+.section-badge{
+  background:linear-gradient(135deg,var(--orange),var(--orange-dark));
+  color:white;font-size:11px;font-weight:700;
+  padding:3px 10px;border-radius:50px;
+}
+
+/* MISSION CARD */
+.missions-grid{display:flex;flex-direction:column;gap:12px;margin-bottom:28px;}
+.mission-card{
+  background:white;border-radius:16px;
+  box-shadow:0 2px 12px rgba(0,0,0,0.06);
+  overflow:hidden;border:2px solid transparent;
+  transition:border-color .2s,box-shadow .2s;
+  animation:slideIn .3s ease;
+}
+@keyframes slideIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+.mission-card.new-mission{border-color:var(--orange);box-shadow:0 4px 20px rgba(247,151,30,0.25);}
+.mission-card.assigned{border-color:var(--green);box-shadow:0 4px 20px rgba(34,197,94,0.15);}
+
+.mission-top{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  padding:16px 18px 12px;gap:12px;
+}
+.mission-info{flex:1;min-width:0;}
+.mission-id{font-size:11px;color:var(--gray);font-weight:500;margin-bottom:4px;}
+.mission-address{
+  font-size:15px;font-weight:700;color:var(--navy);margin-bottom:6px;
+  display:flex;align-items:center;gap:5px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.mission-meta{display:flex;gap:10px;flex-wrap:wrap;}
+.meta-tag{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:12px;color:var(--gray);font-weight:500;
+}
+
+.mission-status{text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;}
+.status-pill{font-size:11px;font-weight:700;padding:4px 12px;border-radius:50px;}
+.status-open{background:var(--yellow-bg);color:var(--yellow);}
+.status-assigned{background:var(--green-bg);color:var(--green-dark);}
+.status-flying{background:var(--blue-bg);color:var(--blue);}
+.status-uploaded{background:#f3e8ff;color:#7c3aed;}
+.mission-price{font-size:18px;font-weight:800;color:var(--orange);}
+
+.mission-bottom{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:12px 18px;background:var(--off);border-top:1px solid var(--border);
+  gap:10px;flex-wrap:wrap;
+}
+.mission-deadline{font-size:12px;color:var(--gray);}
+.mission-deadline span{color:var(--red);font-weight:600;}
+.mission-actions{display:flex;gap:10px;flex-wrap:wrap;}
+
+.btn-accept{
+  background:linear-gradient(135deg,var(--orange),var(--orange-dark));
+  color:white;border:none;border-radius:10px;
+  padding:10px 20px;font-size:14px;font-weight:700;
+  cursor:pointer;font-family:inherit;transition:all .2s;
+  box-shadow:0 4px 12px rgba(247,151,30,0.35);
+  display:flex;align-items:center;gap:6px;
+  min-height:44px;
+}
+.btn-accept:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(247,151,30,0.45);}
+.btn-accept:active{transform:translateY(0);}
+.btn-accept:disabled{opacity:0.6;cursor:not-allowed;transform:none;}
+
+.btn-upload{
+  background:var(--green);color:white;border:none;border-radius:10px;
+  padding:10px 20px;font-size:14px;font-weight:700;
+  cursor:pointer;font-family:inherit;transition:all .2s;
+  display:flex;align-items:center;gap:6px;min-height:44px;
+}
+.btn-upload:hover{background:var(--green-dark);}
+
+.btn-secondary{
+  background:white;color:var(--navy);border:1.5px solid var(--border);
+  border-radius:10px;padding:10px 16px;font-size:14px;font-weight:600;
+  cursor:pointer;font-family:inherit;transition:all .2s;min-height:44px;
+}
+.btn-secondary:hover{border-color:var(--orange);color:var(--orange);}
+
+/* PULSE animation for new missions */
+@keyframes pulse-orange{0%,100%{box-shadow:0 4px 20px rgba(247,151,30,0.25);}50%{box-shadow:0 4px 30px rgba(247,151,30,0.55);}}
+.mission-card.new-mission{animation:slideIn .3s ease, pulse-orange 2s ease-in-out 0.3s 3;}
+
+/* NOTIFICATION PANEL */
+.notif-panel{
+  position:fixed;top:70px;right:16px;width:300px;
+  background:white;border-radius:16px;
+  box-shadow:0 8px 40px rgba(0,0,0,0.15);
+  z-index:300;display:none;overflow:hidden;
+  border:1px solid var(--border);
+}
+.notif-panel.open{display:block;}
+.notif-header{
+  padding:14px 16px;border-bottom:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+}
+.notif-header h3{font-size:15px;font-weight:700;}
+.notif-clear{font-size:12px;color:var(--orange);cursor:pointer;background:none;border:none;font-family:inherit;font-weight:600;}
+.notif-list{max-height:360px;overflow-y:auto;}
+.notif-item{padding:12px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s;}
+.notif-item:hover{background:var(--off);}
+.notif-item.unread{background:#fffbf5;border-left:3px solid var(--orange);}
+.notif-item-title{font-size:13px;font-weight:700;margin-bottom:3px;}
+.notif-item-msg{font-size:12px;color:var(--gray);line-height:1.5;}
+.notif-item-time{font-size:11px;color:var(--gray);margin-top:4px;}
+.notif-empty{padding:28px;text-align:center;color:var(--gray);font-size:13px;}
+
+/* EMPTY STATE */
+.empty-state{
+  text-align:center;padding:48px 20px;
+  background:white;border-radius:16px;
+  box-shadow:0 2px 12px rgba(0,0,0,0.06);
+}
+.empty-icon{
+  width:56px;height:56px;margin:0 auto 16px;
+  border-radius:16px;background:var(--off);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--gray);
+}
+.empty-state h3{font-size:16px;font-weight:700;margin-bottom:8px;}
+.empty-state p{font-size:13px;color:var(--gray);}
+
+/* TOAST */
+.toast{
+  position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(80px);
+  background:var(--navy);color:white;
+  padding:12px 20px;border-radius:12px;font-size:14px;font-weight:600;
+  box-shadow:0 8px 30px rgba(0,0,0,0.25);
+  transition:transform .3s ease;z-index:400;
+  display:flex;align-items:center;gap:10px;
+  white-space:nowrap;max-width:90vw;
+}
+.toast.show{transform:translateX(-50%) translateY(0);}
+.toast.success{background:var(--green-dark);}
+.toast.error{background:var(--red);}
+.toast.warning{background:var(--yellow);}
+
+/* MODAL */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,0.5);
+  z-index:350;display:none;align-items:center;justify-content:center;padding:16px;
+}
+.modal-overlay.open{display:flex;}
+.modal{
+  background:white;border-radius:20px;padding:28px 24px;
+  max-width:460px;width:100%;
+  box-shadow:0 20px 60px rgba(0,0,0,0.2);
+}
+.modal h2{font-size:18px;font-weight:800;margin-bottom:8px;}
+.modal p{font-size:14px;color:var(--gray);margin-bottom:24px;line-height:1.6;}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .stats-row{grid-template-columns:repeat(2,1fr);}
+  .mission-top{flex-direction:column;gap:10px;}
+  .mission-status{align-items:flex-start;flex-direction:row;justify-content:space-between;width:100%;}
+  .notif-panel{width:calc(100vw - 32px);right:16px;}
+  .mission-address{white-space:normal;}
+}
+@media(max-width:480px){
+  .stats-row{grid-template-columns:1fr 1fr;}
+  .page-wrap{padding:16px 12px;}
+  .stat-value{font-size:20px;}
+  .mission-actions{width:100%;}
+  .btn-accept,.btn-upload,.btn-secondary{flex:1;justify-content:center;}
+  /* Hide pilot name on very small screens */
+  #pilotName{display:none;}
+}
+
+@keyframes spin{to{transform:rotate(360deg);}}
+.spinner-sm{width:14px;height:14px;border:2px solid rgba(255,255,255,0.4);border-top-color:white;border-radius:50%;animation:spin .7s linear infinite;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="index.html">
+    <img src="sunlytics-logo.png" alt="Sunlytics" onerror="this.style.display='none'">
+    <span class="logo-text">SUNLYTICS</span>
+  </a>
+  <div class="nav-right">
+    <div class="lang-switcher">
+      <button class="lang-btn active" id="btnEN" onclick="setLang('en')">
+        <img src="https://flagcdn.com/w40/gb.png" alt="EN"> EN
+      </button>
+      <button class="lang-btn" id="btnLV" onclick="setLang('lv')">
+        <img src="https://flagcdn.com/w40/lv.png" alt="LV"> LV
+      </button>
+    </div>
+    <button class="notif-bell" onclick="toggleNotifPanel()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <span class="notif-count" id="notifCount">0</span>
+    </button>
+    <div class="pilot-badge">
+      <div class="pilot-avatar" id="pilotAvatar">P</div>
+      <span id="pilotName">Pilot</span>
+    </div>
+    <button class="logout-btn" onclick="doLogout()" data-i18n="btn_logout">Sign Out</button>
+  </div>
+</nav>
+
+<!-- NOTIFICATION PANEL -->
+<div class="notif-panel" id="notifPanel">
+  <div class="notif-header">
+    <h3 data-i18n="notif_title">Notifications</h3>
+    <button class="notif-clear" onclick="markAllRead()" data-i18n="notif_clear">Mark all read</button>
+  </div>
+  <div class="notif-list" id="notifList">
+    <div class="notif-empty" data-i18n="notif_empty">No notifications yet</div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="page-wrap">
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-icon">
+        <!-- Helicopter icon -->
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/><rect x="2" y="10" width="20" height="6" rx="2"/><path d="M12 10V4"/><path d="M8 4h8"/></svg>
+      </div>
+      <div class="stat-label" data-i18n="stat_completed">Missions Completed</div>
+      <div class="stat-value" id="statCompleted">0</div>
+      <div class="stat-sub" data-i18n="stat_alltime">all time</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">
+        <!-- Zap / lightning icon -->
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      </div>
+      <div class="stat-label" data-i18n="stat_open">Open Missions Nearby</div>
+      <div class="stat-value" id="statOpen" style="color:var(--orange)">0</div>
+      <div class="stat-sub" data-i18n="stat_available">available now</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">
+        <!-- Euro / money icon -->
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M14.5 8a4 4 0 1 0 0 8"/><line x1="9" y1="12" x2="16" y2="12"/></svg>
+      </div>
+      <div class="stat-label" data-i18n="stat_earnings">Total Earnings</div>
+      <div class="stat-value" id="statEarnings">€0</div>
+      <div class="stat-sub" data-i18n="stat_estimated">estimated</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">
+        <!-- Star icon -->
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      </div>
+      <div class="stat-label" data-i18n="stat_rating">Your Rating</div>
+      <div class="stat-value" id="statRating">5.0</div>
+      <div class="stat-sub" data-i18n="stat_outof">out of 5.0</div>
+    </div>
+  </div>
+
+  <!-- OPEN MISSIONS -->
+  <div class="section-header">
+    <div class="section-title">
+      <!-- Red dot / live icon -->
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--red)" stroke="none"><circle cx="12" cy="12" r="10"/></svg>
+      <span data-i18n="section_open">Open Missions — Claim First!</span>
+    </div>
+    <div class="section-badge" id="openBadge">0 available</div>
+  </div>
+  <div class="missions-grid" id="openMissions">
+    <div class="empty-state">
+      <div class="empty-icon">
+        <!-- Satellite icon -->
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M6.3 6.3a8 8 0 0 0 0 11.4"/><path d="M17.7 6.3a8 8 0 0 1 0 11.4"/><path d="M3.5 3.5a13 13 0 0 0 0 17"/><path d="M20.5 3.5a13 13 0 0 1 0 17"/></svg>
+      </div>
+      <h3 data-i18n="empty_open_h">No open missions right now</h3>
+      <p data-i18n="empty_open_p">We'll notify you instantly when a new mission appears in your area!</p>
+    </div>
+  </div>
+
+  <!-- MY MISSIONS -->
+  <div class="section-header">
+    <div class="section-title">
+      <!-- Check circle icon -->
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green-dark)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      <span data-i18n="section_mine">My Active Missions</span>
+    </div>
+  </div>
+  <div class="missions-grid" id="myMissions">
+    <div class="empty-state">
+      <div class="empty-icon">
+        <!-- Clipboard icon -->
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+      </div>
+      <h3 data-i18n="empty_mine_h">No active missions</h3>
+      <p data-i18n="empty_mine_p">Accept a mission above to get started!</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ACCEPT CONFIRM MODAL -->
+<div class="modal-overlay" id="acceptModal">
+  <div class="modal">
+    <h2 data-i18n="modal_accept_h">Accept this mission?</h2>
+    <p id="modalMissionDetail">Mission details will appear here.</p>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeModal()" data-i18n="modal_cancel">Cancel</button>
+      <button class="btn-accept" id="modalConfirmBtn" onclick="confirmAccept()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        <span data-i18n="modal_confirm">Yes, I'll fly this!</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = 'https://keeityfejyfqqsvcqfsz.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_A6r_0AtMpEs_KBJIJJXmYg_mq66XazY';
+const { createClient } = supabase;
+const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// ── TRANSLATIONS ──────────────────────────────────────────────────────────────
+const T = {
+  en:{
+    btn_logout:'Sign Out', notif_title:'Notifications', notif_clear:'Mark all read',
+    notif_empty:'No notifications yet',
+    stat_completed:'Missions Completed', stat_alltime:'all time',
+    stat_open:'Open Missions Nearby', stat_available:'available now',
+    stat_earnings:'Total Earnings', stat_estimated:'estimated',
+    stat_rating:'Your Rating', stat_outof:'out of 5.0',
+    section_open:'Open Missions — Claim First!',
+    section_mine:'My Active Missions',
+    empty_open_h:'No open missions right now',
+    empty_open_p:'We\'ll notify you instantly when a new mission appears!',
+    empty_mine_h:'No active missions',
+    empty_mine_p:'Accept a mission above to get started!',
+    modal_accept_h:'Accept this mission?',
+    modal_cancel:'Cancel', modal_confirm:'Yes, I\'ll fly this!',
+    btn_accept:'Accept Mission', btn_upload:'Upload Images',
+    btn_view:'View Details',
+    toast_accepted:'Mission accepted! Check your email for details.',
+    toast_taken:'Sorry! Another pilot just accepted this mission.',
+    toast_error:'Something went wrong. Please try again.',
+    status_open:'Available', status_assigned:'Accepted', status_flying:'Flying',
+    status_uploaded:'Images Uploaded', status_completed:'Completed',
+    deadline_label:'Deadline:',
+    new_mission_notif:'New mission in your area!',
+    open_badge:'available',
+  },
+  lv:{
+    btn_logout:'Iziet', notif_title:'Paziņojumi', notif_clear:'Atzīmēt visus',
+    notif_empty:'Pagaidām nav paziņojumu',
+    stat_completed:'Pabeigtās misijas', stat_alltime:'kopā',
+    stat_open:'Atvērtās misijas', stat_available:'pieejamas tagad',
+    stat_earnings:'Kopējie ienākumi', stat_estimated:'aptuveni',
+    stat_rating:'Jūsu vērtējums', stat_outof:'no 5.0',
+    section_open:'Atvērtās misijas — Pieņem pirmais!',
+    section_mine:'Manas aktīvās misijas',
+    empty_open_h:'Pašlaik nav atvērtu misiju',
+    empty_open_p:'Mēs jūs nekavējoties informēsim, kad parādīsies jauna misija!',
+    empty_mine_h:'Nav aktīvu misiju',
+    empty_mine_p:'Pieņemiet misiju augstāk, lai sāktu!',
+    modal_accept_h:'Pieņemt šo misiju?',
+    modal_cancel:'Atcelt', modal_confirm:'Jā, lidošu!',
+    btn_accept:'Pieņemt misiju', btn_upload:'Augšupielādēt attēlus',
+    btn_view:'Skatīt detaļas',
+    toast_accepted:'Misija pieņemta! Pārbaudiet e-pastu.',
+    toast_taken:'Atvainojiet! Cits pilots tikko pieņēma šo misiju.',
+    toast_error:'Kaut kas nogāja greizi. Lūdzu, mēģiniet vēlreiz.',
+    status_open:'Pieejama', status_assigned:'Pieņemta', status_flying:'Lido',
+    status_uploaded:'Attēli augšupielādēti', status_completed:'Pabeigta',
+    deadline_label:'Termiņš:',
+    new_mission_notif:'Jauna misija jūsu rajonā!',
+    open_badge:'pieejamas',
+  }
+};
+
+let lang = localStorage.getItem('sunlytics_lang') || 'en';
+let currentUser = null;
+let pilotData   = null;
+let pendingAcceptId = null;
+let realtimeSub = null;
+let notifSub    = null;
+
+function t(k){ return T[lang][k] || k; }
+
+function setLang(l){
+  lang = l;
+  localStorage.setItem('sunlytics_lang', l);
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k=el.getAttribute('data-i18n');
+    if(T[l][k]) el.textContent=T[l][k];
+  });
+  document.getElementById('btnEN').classList.toggle('active',l==='en');
+  document.getElementById('btnLV').classList.toggle('active',l==='lv');
+  renderAll();
+}
+
+// ── TOAST ─────────────────────────────────────────────────────────────────────
+function showToast(msg, type='success'){
+  const el=document.getElementById('toast');
+  el.textContent=msg;
+  el.className=`toast ${type} show`;
+  setTimeout(()=>el.classList.remove('show'),3500);
+}
+
+// ── MODAL ─────────────────────────────────────────────────────────────────────
+function closeModal(){ document.getElementById('acceptModal').classList.remove('open'); }
+
+function openAcceptModal(mission){
+  pendingAcceptId = mission.id;
+  document.getElementById('modalMissionDetail').innerHTML =
+    `<strong>${mission.address}</strong><br>${mission.city}<br><br>
+     <strong>€${mission.price || 149}</strong> &middot; ${mission.city}`;
+  document.getElementById('acceptModal').classList.add('open');
+}
+
+// ── AUTH ──────────────────────────────────────────────────────────────────────
+async function init(){
+  const { data:{ session } } = await sb.auth.getSession();
+  if(!session){ window.location.href='pilot-login.html'; return; }
+  currentUser = session.user;
+  await loadPilot();
+  setLang(lang);
+  await loadMissions();
+  subscribeRealtime();
+  subscribeNotifications();
+}
+
+async function loadPilot(){
+  const { data:profile } = await sb.from('pilot_profiles').select('pilot_id').eq('id',currentUser.id).single();
+  if(profile?.pilot_id){
+    const { data:pilot } = await sb.from('pilots').select('*').eq('id',profile.pilot_id).single();
+    pilotData = pilot;
+    if(pilot){
+      document.getElementById('pilotName').textContent = pilot.first_name;
+      document.getElementById('pilotAvatar').textContent = pilot.first_name[0].toUpperCase();
+      document.getElementById('statCompleted').textContent = pilot.missions_completed || 0;
+      document.getElementById('statRating').textContent = parseFloat(pilot.rating||5).toFixed(1);
+      document.getElementById('statEarnings').textContent = '€'+ ((pilot.missions_completed||0)*149*0.7).toFixed(0);
+    }
+  }
+}
+
+async function doLogout(){
+  await sb.auth.signOut();
+  window.location.href='pilot-login.html';
+}
+
+// ── MISSIONS DATA ─────────────────────────────────────────────────────────────
+let openMissionsData=[], myMissionsData=[];
+
+async function loadMissions(){
+  const { data:open } = await sb.from('missions')
+    .select('*').eq('status','open').order('created_at',{ascending:false});
+  openMissionsData = open||[];
+
+  if(pilotData){
+    const { data:mine } = await sb.from('missions')
+      .select('*')
+      .eq('assigned_pilot_id', pilotData.id)
+      .in('status',['assigned','flying','uploaded'])
+      .order('created_at',{ascending:false});
+    myMissionsData = mine||[];
+  }
+
+  document.getElementById('statOpen').textContent = openMissionsData.length;
+  document.getElementById('openBadge').textContent = `${openMissionsData.length} ${t('open_badge')}`;
+  renderAll();
+  loadNotifications();
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+function renderAll(){
+  renderOpenMissions();
+  renderMyMissions();
+}
+
+function statusPill(status){
+  const map={
+    open:`<span class="status-pill status-open">${t('status_open')}</span>`,
+    assigned:`<span class="status-pill status-assigned">${t('status_assigned')}</span>`,
+    flying:`<span class="status-pill status-flying">${t('status_flying')}</span>`,
+    uploaded:`<span class="status-pill status-uploaded">${t('status_uploaded')}</span>`,
+  };
+  return map[status]||`<span class="status-pill">${status}</span>`;
+}
+
+function timeAgo(ts){
+  const diff=(Date.now()-new Date(ts))/1000;
+  if(diff<60) return 'just now';
+  if(diff<3600) return Math.floor(diff/60)+'m ago';
+  if(diff<86400) return Math.floor(diff/3600)+'h ago';
+  return Math.floor(diff/86400)+'d ago';
+}
+
+// SVG icon helpers
+const ICON_PIN = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`;
+const ICON_CITY = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`;
+const ICON_PKG = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>`;
+const ICON_URGENT = `<svg width="13" height="13" viewBox="0 0 24 24" fill="var(--red)" stroke="none"><circle cx="12" cy="12" r="10"/></svg>`;
+const ICON_CHECK = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>`;
+const ICON_UPLOAD = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>`;
+
+function missionCard(m, isNew=false){
+  const cls = isNew ? 'new-mission' : (m.status!=='open' ? 'assigned' : '');
+  const deadline = m.deadline ? `<span class="mission-deadline">${t('deadline_label')} <span>${new Date(m.deadline).toLocaleDateString()}</span></span>` : '';
+
+  let actions='';
+  if(m.status==='open'){
+    actions=`<button class="btn-accept" onclick="openAcceptModal(${JSON.stringify(m).replace(/"/g,'&quot;')})">
+      ${ICON_CHECK}
+      ${t('btn_accept')}
+    </button>`;
+  } else if(m.status==='assigned'||m.status==='flying'){
+    actions=`<button class="btn-upload" onclick="window.location.href='upload-mission.html?mission=${m.id}'">
+      ${ICON_UPLOAD}
+      ${t('btn_upload')}
+    </button>`;
+  } else {
+    actions=`<button class="btn-secondary">${t('btn_view')}</button>`;
+  }
+
+  return `
+  <div class="mission-card ${cls}" id="mission-${m.id}">
+    <div class="mission-top">
+      <div class="mission-info">
+        <div class="mission-id">Mission #${m.id.slice(-6).toUpperCase()} &middot; ${timeAgo(m.created_at)}</div>
+        <div class="mission-address">${ICON_PIN} ${m.address}</div>
+        <div class="mission-meta">
+          <span class="meta-tag">${ICON_CITY} ${m.city}</span>
+          <span class="meta-tag">${ICON_PKG} ${m.package||'Drone Report'}</span>
+          ${m.priority==='urgent'?`<span class="meta-tag" style="color:var(--red)">${ICON_URGENT} Urgent</span>`:''}
+        </div>
+      </div>
+      <div class="mission-status">
+        ${statusPill(m.status)}
+        <div class="mission-price">€${m.price||149}</div>
+      </div>
+    </div>
+    <div class="mission-bottom">
+      ${deadline}
+      <div class="mission-actions">${actions}</div>
+    </div>
+  </div>`;
+}
+
+function renderOpenMissions(){
+  const el = document.getElementById('openMissions');
+  if(!openMissionsData.length){
+    el.innerHTML=`<div class="empty-state">
+      <div class="empty-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M6.3 6.3a8 8 0 0 0 0 11.4"/><path d="M17.7 6.3a8 8 0 0 1 0 11.4"/></svg></div>
+      <h3>${t('empty_open_h')}</h3><p>${t('empty_open_p')}</p>
+    </div>`;
+    return;
+  }
+  el.innerHTML = openMissionsData.map(m=>missionCard(m)).join('');
+}
+
+function renderMyMissions(){
+  const el = document.getElementById('myMissions');
+  if(!myMissionsData.length){
+    el.innerHTML=`<div class="empty-state">
+      <div class="empty-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg></div>
+      <h3>${t('empty_mine_h')}</h3><p>${t('empty_mine_p')}</p>
+    </div>`;
+    return;
+  }
+  el.innerHTML = myMissionsData.map(m=>missionCard(m)).join('');
+}
+
+// ── ACCEPT MISSION (race-safe) ────────────────────────────────────────────────
+async function confirmAccept(){
+  if(!pendingAcceptId||!pilotData) return;
+  const btn = document.getElementById('modalConfirmBtn');
+  btn.disabled=true;
+  btn.innerHTML='<div class="spinner-sm"></div>';
+
+  const { data, error } = await sb.from('missions')
+    .update({
+      status:'assigned',
+      assigned_pilot_id: pilotData.id,
+      assigned_at: new Date().toISOString(),
+      accepted_at: new Date().toISOString(),
+    })
+    .eq('id', pendingAcceptId)
+    .eq('status','open')
+    .select().single();
+
+  closeModal();
+  btn.disabled=false;
+  btn.innerHTML=`${ICON_CHECK}<span>${t('modal_confirm')}</span>`;
+
+  if(error||!data){
+    showToast(t('toast_taken'), 'warning');
+  } else {
+    showToast(t('toast_accepted'), 'success');
+    await loadMissions();
+    if(Notification.permission==='granted'){
+      new Notification('Sunlytics Mission Accepted!',{
+        body:`You accepted the mission at ${data.address}`,
+        icon:'favicon-32.png'
+      });
+    }
+  }
+  pendingAcceptId=null;
+}
+
+// ── REALTIME ──────────────────────────────────────────────────────────────────
+function subscribeRealtime(){
+  realtimeSub = sb.channel('missions-channel')
+    .on('postgres_changes',{event:'INSERT',schema:'public',table:'missions'},(payload)=>{
+      const m = payload.new;
+      if(m.status==='open'){
+        openMissionsData.unshift(m);
+        document.getElementById('statOpen').textContent = openMissionsData.length;
+        document.getElementById('openBadge').textContent = `${openMissionsData.length} ${t('open_badge')}`;
+        const el = document.getElementById('openMissions');
+        const emptyState = el.querySelector('.empty-state');
+        if(emptyState) el.innerHTML='';
+        el.insertAdjacentHTML('afterbegin', missionCard(m, true));
+        if(Notification.permission==='granted'){
+          new Notification(t('new_mission_notif'),{
+            body:`${m.address} — €${m.price||149}`,
+            icon:'favicon-32.png'
+          });
+        }
+        showToast(`New mission: ${m.city}!`, 'success');
+        if(Notification.permission==='default') Notification.requestPermission();
+      }
+    })
+    .on('postgres_changes',{event:'UPDATE',schema:'public',table:'missions'},(payload)=>{
+      const m = payload.new;
+      if(m.status!=='open'){
+        openMissionsData = openMissionsData.filter(x=>x.id!==m.id);
+        const card = document.getElementById(`mission-${m.id}`);
+        if(card && !myMissionsData.find(x=>x.id===m.id)){
+          card.style.opacity='0.4';
+          card.style.pointerEvents='none';
+          setTimeout(()=>{ if(card.parentNode) card.remove(); },1500);
+        }
+        document.getElementById('statOpen').textContent = openMissionsData.length;
+        document.getElementById('openBadge').textContent = `${openMissionsData.length} ${t('open_badge')}`;
+        if(!openMissionsData.length) renderOpenMissions();
+        if(m.assigned_pilot_id===pilotData?.id){
+          const idx = myMissionsData.findIndex(x=>x.id===m.id);
+          if(idx>=0) myMissionsData[idx]=m; else myMissionsData.unshift(m);
+          renderMyMissions();
+        }
+      }
+    })
+    .subscribe();
+}
+
+// ── NOTIFICATIONS ─────────────────────────────────────────────────────────────
+async function loadNotifications(){
+  if(!pilotData) return;
+  const { data } = await sb.from('notifications')
+    .select('*').eq('pilot_id',pilotData.id)
+    .order('created_at',{ascending:false}).limit(20);
+  renderNotifications(data||[]);
+}
+
+function renderNotifications(notifs){
+  const count = notifs.filter(n=>!n.read).length;
+  const countEl = document.getElementById('notifCount');
+  countEl.textContent = count;
+  countEl.style.display = count>0?'flex':'none';
+  const list = document.getElementById('notifList');
+  if(!notifs.length){
+    list.innerHTML=`<div class="notif-empty">${t('notif_empty')}</div>`;
+    return;
+  }
+  list.innerHTML = notifs.map(n=>`
+    <div class="notif-item ${n.read?'':'unread'}" onclick="markRead('${n.id}')">
+      <div class="notif-item-title">${lang==='lv'&&n.title_lv ? n.title_lv : n.title}</div>
+      <div class="notif-item-msg">${lang==='lv'&&n.message_lv ? n.message_lv : n.message}</div>
+      <div class="notif-item-time">${timeAgo(n.created_at)}</div>
+    </div>`).join('');
+}
+
+function subscribeNotifications(){
+  if(!pilotData) return;
+  notifSub = sb.channel('notif-channel')
+    .on('postgres_changes',{event:'INSERT',schema:'public',table:'notifications',
+        filter:`pilot_id=eq.${pilotData.id}`},(payload)=>{
+      loadNotifications();
+    }).subscribe();
+}
+
+async function markRead(id){
+  await sb.from('notifications').update({read:true,read_at:new Date().toISOString()}).eq('id',id);
+  loadNotifications();
+}
+
+async function markAllRead(){
+  if(!pilotData) return;
+  await sb.from('notifications').update({read:true}).eq('pilot_id',pilotData.id).eq('read',false);
+  loadNotifications();
+}
+
+function toggleNotifPanel(){
+  document.getElementById('notifPanel').classList.toggle('open');
+}
+document.addEventListener('click',(e)=>{
+  const panel=document.getElementById('notifPanel');
+  if(!panel.contains(e.target)&&!e.target.closest('.notif-bell')) panel.classList.remove('open');
+});
+
+if('Notification' in window && Notification.permission==='default'){
+  setTimeout(()=>Notification.requestPermission(), 3000);
+}
+
+init();
+</script>
+</body>
+</html>

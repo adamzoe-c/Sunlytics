@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Sunlytics Control Panel</title>
+<meta name="robots" content="noindex">
+<style>
+:root{
+  --orange:#f7971e;--orange-dark:#ff4e00;
+  --navy:#1a1a1a;--gray:#6b7280;
+  --white:#fff;--off:#f5f5f5;--border:#e8e8e8;
+  --green:#22c55e;--green-bg:#f0fdf4;--green-dark:#16a34a;
+  --red:#ef4444;--red-bg:#fef2f2;
+  --blue:#3b82f6;--blue-bg:#eff6ff;
+  --yellow:#f59e0b;--yellow-bg:#fffbeb;
+  --sidebar:#1a1a2e;--sidebar-active:#f7971e;
+  --sidebar-w:220px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--off);color:var(--navy);min-height:100vh;display:flex;}
+
+/* SIDEBAR */
+.sidebar{
+  width:var(--sidebar-w);background:var(--sidebar);min-height:100vh;
+  display:flex;flex-direction:column;padding:20px 0;
+  position:fixed;top:0;left:0;z-index:100;
+  transition:transform .3s;
+}
+.sidebar-logo{
+  padding:0 18px 24px;border-bottom:1px solid rgba(255,255,255,0.08);
+  font-size:17px;font-weight:800;letter-spacing:1px;
+  background:linear-gradient(135deg,var(--orange),var(--orange-dark));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.sidebar-label{
+  font-size:10px;font-weight:700;color:rgba(255,255,255,0.3);
+  letter-spacing:1.5px;padding:18px 18px 7px;text-transform:uppercase;
+}
+.sidebar-link{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 18px;color:rgba(255,255,255,0.6);
+  text-decoration:none;font-size:14px;font-weight:500;
+  transition:all .2s;cursor:pointer;border:none;background:none;
+  font-family:inherit;width:100%;text-align:left;
+}
+.sidebar-link:hover,.sidebar-link.active{
+  color:white;background:rgba(247,151,30,0.12);
+  border-right:3px solid var(--orange);
+}
+.sidebar-link svg{opacity:0.7;flex-shrink:0;}
+.sidebar-link:hover svg,.sidebar-link.active svg{opacity:1;}
+
+/* MOBILE SIDEBAR TOGGLE */
+.sidebar-toggle{
+  display:none;
+  position:fixed;top:14px;left:14px;z-index:200;
+  background:var(--sidebar);border:none;border-radius:8px;
+  padding:8px;cursor:pointer;color:white;
+}
+
+/* MAIN */
+.main{margin-left:var(--sidebar-w);flex:1;display:flex;flex-direction:column;min-width:0;}
+.topbar{
+  background:white;padding:14px 22px;
+  border-bottom:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+  position:sticky;top:0;z-index:50;flex-wrap:wrap;gap:8px;
+}
+.topbar-title{font-size:17px;font-weight:700;display:flex;align-items:center;gap:8px;}
+.topbar-right{display:flex;align-items:center;gap:12px;}
+.admin-badge{
+  background:linear-gradient(135deg,var(--orange),var(--orange-dark));
+  color:white;font-size:11px;font-weight:700;
+  padding:4px 12px;border-radius:50px;
+}
+
+.content{padding:20px;}
+
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;}
+.stat-card{background:white;border-radius:14px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,0.06);}
+.stat-label{font-size:12px;color:var(--gray);font-weight:500;margin-bottom:8px;}
+.stat-value{font-size:26px;font-weight:800;color:var(--navy);}
+.stat-change{font-size:11px;color:var(--green);margin-top:4px;font-weight:600;}
+
+/* SECTION */
+.section{background:white;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,0.06);margin-bottom:24px;overflow:hidden;}
+.section-head{
+  padding:16px 20px;border-bottom:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;
+}
+.section-head h2{font-size:15px;font-weight:700;display:flex;align-items:center;gap:8px;}
+
+/* BUTTONS */
+.btn-primary{
+  background:linear-gradient(135deg,var(--orange),var(--orange-dark));
+  color:white;border:none;border-radius:10px;padding:10px 18px;
+  font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;
+  display:flex;align-items:center;gap:6px;transition:all .2s;
+  box-shadow:0 3px 10px rgba(247,151,30,0.3);white-space:nowrap;
+  min-height:40px;
+}
+.btn-primary:hover{transform:translateY(-1px);}
+.btn-sm{padding:7px 12px;font-size:12px;min-height:34px;}
+.btn-green{background:var(--green);box-shadow:0 3px 10px rgba(34,197,94,0.3);}
+.btn-green:hover{background:var(--green-dark);}
+.btn-red{background:var(--red);box-shadow:none;}
+.btn-ghost{background:none;color:var(--gray);border:1.5px solid var(--border);box-shadow:none;}
+.btn-ghost:hover{border-color:var(--orange);color:var(--orange);}
+
+/* TABLE */
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+table{width:100%;border-collapse:collapse;min-width:600px;}
+th{
+  text-align:left;padding:10px 14px;font-size:11px;font-weight:700;
+  color:var(--gray);text-transform:uppercase;letter-spacing:0.5px;
+  background:var(--off);border-bottom:1px solid var(--border);
+  white-space:nowrap;
+}
+td{
+  padding:12px 14px;font-size:13px;border-bottom:1px solid var(--border);
+  vertical-align:middle;
+}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:#fafafa;}
+
+.pill{font-size:11px;font-weight:700;padding:3px 10px;border-radius:50px;white-space:nowrap;}
+.pill-open{background:var(--yellow-bg);color:var(--yellow);}
+.pill-assigned{background:var(--green-bg);color:var(--green-dark);}
+.pill-flying{background:var(--blue-bg);color:var(--blue);}
+.pill-uploaded{background:#f3e8ff;color:#7c3aed;}
+.pill-completed{background:#f0fdf4;color:#166534;}
+.pill-cancelled{background:var(--red-bg);color:var(--red);}
+.pill-active{background:var(--green-bg);color:var(--green-dark);}
+.pill-pending{background:var(--yellow-bg);color:var(--yellow);}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:400;display:none;align-items:center;justify-content:center;padding:16px;}
+.modal-overlay.open{display:flex;}
+.modal{background:white;border-radius:20px;padding:28px 24px;max-width:520px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.2);max-height:90vh;overflow-y:auto;}
+.modal h2{font-size:18px;font-weight:800;margin-bottom:18px;display:flex;align-items:center;gap:8px;}
+.form-group{margin-bottom:14px;}
+.form-group label{display:block;font-size:12px;font-weight:700;color:var(--navy);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px;}
+.form-group input,.form-group select,.form-group textarea{
+  width:100%;padding:11px 14px;border:1.5px solid var(--border);
+  border-radius:10px;font-size:14px;font-family:inherit;
+  /* Prevent iOS zoom */
+  font-size:16px;
+  background:var(--off);outline:none;transition:border-color .2s;
+}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--orange);background:white;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px;flex-wrap:wrap;}
+
+/* TOAST */
+.toast{position:fixed;bottom:20px;right:16px;background:var(--navy);color:white;padding:12px 20px;border-radius:12px;font-size:14px;font-weight:600;box-shadow:0 8px 30px rgba(0,0,0,0.2);transform:translateY(80px);transition:transform .3s;z-index:500;max-width:calc(100vw - 32px);}
+.toast.show{transform:translateY(0);}
+.toast.success{background:var(--green-dark);}
+.toast.error{background:var(--red);}
+
+@keyframes spin{to{transform:rotate(360deg);}}
+.spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,0.4);border-top-color:white;border-radius:50%;animation:spin .7s linear infinite;}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .sidebar{transform:translateX(-100%);}
+  .sidebar.open{transform:translateX(0);}
+  .sidebar-toggle{display:flex;}
+  .main{margin-left:0;}
+  .stats-grid{grid-template-columns:repeat(2,1fr);}
+  .topbar{padding:14px 14px 14px 56px;}
+  .content{padding:14px;}
+}
+@media(max-width:480px){
+  .stats-grid{grid-template-columns:1fr 1fr;}
+  .stat-value{font-size:22px;}
+  .form-row{grid-template-columns:1fr;}
+  .modal-actions{flex-direction:column-reverse;}
+  .modal-actions .btn-primary,.modal-actions .btn-ghost{width:100%;justify-content:center;}
+}
+
+/* SIDEBAR OVERLAY for mobile */
+.sidebar-overlay{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);
+  z-index:99;
+}
+.sidebar-overlay.open{display:block;}
+</style>
+</head>
+<body>
+
+<!-- MOBILE SIDEBAR TOGGLE -->
+<button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Menu">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+</button>
+
+<!-- SIDEBAR OVERLAY -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">SUNLYTICS</div>
+
+  <div class="sidebar-label">Control Panel</div>
+  <button class="sidebar-link active" onclick="showSection('missions')">
+    <!-- Send/missions icon -->
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+    Missions
+  </button>
+  <button class="sidebar-link" onclick="showSection('pilots')">
+    <!-- Plane/pilot icon -->
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21 4 19 2c-2-2-4-2-5.5-.5L10 5 1.8 6.2c-.5.1-.9.6-.6 1.1l1.5 2.5 5.5-1L6 13l-2 1 1 2 2-1 3.5-2.5-1 5.5 2.5 1.5c.5.3 1 0 1.1-.6z"/></svg>
+    Pilots
+  </button>
+  <button class="sidebar-link" onclick="showSection('images')">
+    <!-- Image icon -->
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+    Drone Images
+  </button>
+
+  <div class="sidebar-label">Admin</div>
+  <button class="sidebar-link" onclick="doLogout()">
+    <!-- Log-out icon -->
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+    Sign Out
+  </button>
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-title" id="pageTitle">
+      <!-- Clipboard icon -->
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>
+      Missions
+    </div>
+    <div class="topbar-right">
+      <span class="admin-badge">ADMIN</span>
+      <span id="adminEmail" style="font-size:13px;color:var(--gray);"></span>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- STATS -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Total Missions</div>
+        <div class="stat-value" id="statTotal">0</div>
+        <div class="stat-change" id="statOpen2">0 open</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Active Pilots</div>
+        <div class="stat-value" id="statPilots">0</div>
+        <div class="stat-change" id="statPending">0 pending approval</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Revenue (est.)</div>
+        <div class="stat-value" id="statRevenue">€0</div>
+        <div class="stat-change">from completed missions</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Images Uploaded</div>
+        <div class="stat-value" id="statImages">0</div>
+        <div class="stat-change">across all missions</div>
+      </div>
+    </div>
+
+    <!-- MISSIONS SECTION -->
+    <div id="sectionMissions" class="section">
+      <div class="section-head">
+        <h2>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+          All Missions
+        </h2>
+        <button class="btn-primary" onclick="openNewMission()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          New Mission
+        </button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th><th>Customer</th><th>Address</th>
+              <th>Status</th><th>Pilot</th><th>Price</th><th>Created</th><th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="missionsTable"><tr><td colspan="8" style="text-align:center;padding:40px;color:var(--gray);">Loading...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PILOTS SECTION -->
+    <div id="sectionPilots" class="section" style="display:none;">
+      <div class="section-head">
+        <h2>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21 4 19 2c-2-2-4-2-5.5-.5L10 5 1.8 6.2c-.5.1-.9.6-.6 1.1l1.5 2.5 5.5-1L6 13l-2 1 1 2 2-1 3.5-2.5-1 5.5 2.5 1.5c.5.3 1 0 1.1-.6z"/></svg>
+          All Pilots
+        </h2>
+        <span style="font-size:13px;color:var(--gray);">Manage pilot accounts &amp; approvals</span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Name</th><th>Email</th><th>Region</th><th>Drone</th><th>License</th><th>Status</th><th>Missions</th><th>Actions</th></tr>
+          </thead>
+          <tbody id="pilotsTable"><tr><td colspan="8" style="text-align:center;padding:40px;color:var(--gray);">Loading...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- IMAGES SECTION -->
+    <div id="sectionImages" class="section" style="display:none;">
+      <div class="section-head">
+        <h2>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Drone Images
+        </h2>
+        <span style="font-size:13px;color:var(--gray);">Review uploaded mission images</span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Mission</th><th>Pilot</th><th>Image</th><th>Type</th><th>Uploaded</th><th>Actions</th></tr>
+          </thead>
+          <tbody id="imagesTable"><tr><td colspan="6" style="text-align:center;padding:40px;color:var(--gray);">Loading...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- NEW MISSION MODAL -->
+<div class="modal-overlay" id="newMissionModal">
+  <div class="modal">
+    <h2>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Create New Mission
+    </h2>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Customer Name *</label>
+        <input type="text" id="mCustomerName" placeholder="Jānis Bērziņš">
+      </div>
+      <div class="form-group">
+        <label>Customer Email *</label>
+        <input type="email" id="mCustomerEmail" placeholder="customer@email.com">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Customer Phone</label>
+        <input type="tel" id="mCustomerPhone" placeholder="+371 20000000">
+      </div>
+      <div class="form-group">
+        <label>Price (€)</label>
+        <input type="number" id="mPrice" value="149">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Full Address *</label>
+      <input type="text" id="mAddress" placeholder="Brīvības iela 1, Riga">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>City *</label>
+        <select id="mCity">
+          <option>Riga</option><option>Liepāja</option><option>Daugavpils</option>
+          <option>Jelgava</option><option>Jūrmala</option><option>Ventspils</option>
+          <option>Rēzekne</option><option>Valmiera</option><option>Jēkabpils</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Priority</label>
+        <select id="mPriority">
+          <option value="normal">Normal</option>
+          <option value="urgent">Urgent</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Package</label>
+        <select id="mPackage">
+          <option value="drone">Drone Report — €149</option>
+          <option value="premium">Premium Report — €249</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Deadline</label>
+        <input type="date" id="mDeadline">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Notes (optional)</label>
+      <textarea id="mNotes" rows="2" placeholder="Special instructions for the pilot..."></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-primary btn-ghost" onclick="closeNewMission()" style="color:var(--gray);">Cancel</button>
+      <button class="btn-primary" id="createMissionBtn" onclick="createMission()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        Create &amp; Notify Pilots
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = 'https://keeityfejyfqqsvcqfsz.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_A6r_0AtMpEs_KBJIJJXmYg_mq66XazY';
+const ADMIN_EMAIL  = 'info@sunlytics.lv';
+const { createClient } = supabase;
+const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+let allMissions=[], allPilots=[], allImages=[];
+
+// MOBILE SIDEBAR
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('open');
+}
+
+function showToast(msg, type='success'){
+  const el=document.getElementById('toast');
+  el.textContent=msg; el.className=`toast ${type} show`;
+  setTimeout(()=>el.classList.remove('show'),3500);
+}
+
+// Section icons map
+const sectionIcons = {
+  missions: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>`,
+  pilots:   `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21 4 19 2c-2-2-4-2-5.5-.5L10 5 1.8 6.2c-.5.1-.9.6-.6 1.1l1.5 2.5 5.5-1L6 13l-2 1 1 2 2-1 3.5-2.5-1 5.5 2.5 1.5c.5.3 1 0 1.1-.6z"/></svg>`,
+  images:   `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>`,
+};
+
+function showSection(s){
+  ['missions','pilots','images'].forEach(x=>{
+    document.getElementById(`section${x.charAt(0).toUpperCase()+x.slice(1)}`).style.display = x===s?'block':'none';
+  });
+  document.querySelectorAll('.sidebar-link').forEach(el=>el.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  const titles={missions:'Missions',pilots:'Pilots',images:'Drone Images'};
+  document.getElementById('pageTitle').innerHTML = sectionIcons[s] + ' ' + titles[s];
+  if(s==='pilots') loadPilots();
+  if(s==='images') loadImages();
+  // close sidebar on mobile after selection
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('open');
+}
+
+// ── AUTH ──────────────────────────────────────────────────────────────────────
+async function init(){
+  const { data:{ session } } = await sb.auth.getSession();
+  if(!session){ window.location.href='pilot-login.html'; return; }
+  document.getElementById('adminEmail').textContent=session.user.email;
+  await loadAll();
+  subscribeRealtime();
+}
+
+async function doLogout(){ await sb.auth.signOut(); window.location.href='pilot-login.html'; }
+
+// ── LOAD DATA ─────────────────────────────────────────────────────────────────
+async function loadAll(){
+  await Promise.all([loadMissions(), loadPilots(), loadStats()]);
+}
+
+async function loadMissions(){
+  const { data } = await sb.from('missions').select('*, pilots(first_name,last_name)').order('created_at',{ascending:false});
+  allMissions = data||[];
+  renderMissions();
+}
+
+async function loadPilots(){
+  const { data } = await sb.from('pilots').select('*').order('created_at',{ascending:false});
+  allPilots = data||[];
+  renderPilots();
+}
+
+async function loadImages(){
+  const { data } = await sb.from('mission_images').select('*, missions(address), pilots(first_name,last_name)').order('created_at',{ascending:false}).limit(50);
+  allImages = data||[];
+  renderImages();
+}
+
+async function loadStats(){
+  const open = allMissions.filter(m=>m.status==='open').length;
+  const completed = allMissions.filter(m=>m.status==='completed').length;
+  const activePilots = allPilots.filter(p=>p.status==='active').length;
+  const pendingPilots = allPilots.filter(p=>p.status==='pending').length;
+  const { count } = await sb.from('mission_images').select('id',{count:'exact',head:true});
+  document.getElementById('statTotal').textContent = allMissions.length;
+  document.getElementById('statOpen2').textContent = `${open} open`;
+  document.getElementById('statPilots').textContent = activePilots;
+  document.getElementById('statPending').textContent = `${pendingPilots} pending approval`;
+  document.getElementById('statRevenue').textContent = `€${(completed*149).toLocaleString()}`;
+  document.getElementById('statImages').textContent = count||0;
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+function pillClass(status){ return `pill pill-${status}`; }
+function timeAgo(ts){ const d=(Date.now()-new Date(ts))/1000; if(d<3600) return Math.floor(d/60)+'m ago'; if(d<86400) return Math.floor(d/3600)+'h ago'; return new Date(ts).toLocaleDateString(); }
+
+function renderMissions(){
+  const tbody = document.getElementById('missionsTable');
+  if(!allMissions.length){ tbody.innerHTML='<tr><td colspan="8" style="text-align:center;padding:40px;color:var(--gray);">No missions yet. Create your first one!</td></tr>'; return; }
+  tbody.innerHTML = allMissions.map(m=>`
+    <tr>
+      <td><code style="font-size:11px;background:var(--off);padding:2px 6px;border-radius:4px;">#${m.id.slice(-6).toUpperCase()}</code></td>
+      <td><div style="font-weight:600;">${m.customer_name}</div><div style="font-size:11px;color:var(--gray);">${m.customer_email}</div></td>
+      <td><div style="font-weight:500;">${m.address}</div><div style="font-size:11px;color:var(--gray);">${m.city}</div></td>
+      <td><span class="${pillClass(m.status)}">${m.status}</span>${m.priority==='urgent'?'<span class="pill" style="background:#fef2f2;color:#dc2626;margin-left:4px;">URGENT</span>':''}</td>
+      <td>${m.pilots ? `${m.pilots.first_name} ${m.pilots.last_name}` : '<span style="color:var(--gray)">Unassigned</span>'}</td>
+      <td style="font-weight:700;color:var(--orange);">€${m.price||149}</td>
+      <td style="color:var(--gray);font-size:12px;">${timeAgo(m.created_at)}</td>
+      <td>
+        <div style="display:flex;gap:6px;">
+          ${m.status==='open'?`<button class="btn-primary btn-sm btn-red" onclick="cancelMission('${m.id}')">Cancel</button>`:''}
+          ${m.status==='uploaded'?`<button class="btn-primary btn-sm btn-green" onclick="completeMission('${m.id}')">Complete</button>`:''}
+        </div>
+      </td>
+    </tr>`).join('');
+}
+
+function renderPilots(){
+  const tbody = document.getElementById('pilotsTable');
+  if(!allPilots.length){ tbody.innerHTML='<tr><td colspan="8" style="text-align:center;padding:40px;color:var(--gray);">No pilot applications yet.</td></tr>'; return; }
+  tbody.innerHTML = allPilots.map(p=>`
+    <tr>
+      <td style="font-weight:600;">${p.first_name} ${p.last_name}</td>
+      <td style="color:var(--gray);font-size:12px;">${p.email}</td>
+      <td>${p.region}</td>
+      <td style="font-size:12px;">${p.drone_model}</td>
+      <td style="font-size:11px;color:var(--gray);">${p.license_number}</td>
+      <td><span class="pill ${p.status==='active'?'pill-active':'pill-pending'}">${p.status}</span></td>
+      <td style="font-weight:700;">${p.missions_completed||0}</td>
+      <td>
+        <div style="display:flex;gap:6px;">
+          ${p.status==='pending'?`<button class="btn-primary btn-sm btn-green" onclick="approvePilot('${p.id}')">Approve</button>`:''}
+          ${p.status==='active'?`<button class="btn-primary btn-sm btn-red" onclick="suspendPilot('${p.id}')">Suspend</button>`:''}
+        </div>
+      </td>
+    </tr>`).join('');
+}
+
+function renderImages(){
+  const tbody = document.getElementById('imagesTable');
+  if(!allImages.length){ tbody.innerHTML='<tr><td colspan="6" style="text-align:center;padding:40px;color:var(--gray);">No images uploaded yet.</td></tr>'; return; }
+  tbody.innerHTML = allImages.map(img=>`
+    <tr>
+      <td style="font-size:12px;">${img.missions?.address||'Unknown'}</td>
+      <td>${img.pilots ? `${img.pilots.first_name} ${img.pilots.last_name}` : 'Unknown'}</td>
+      <td><a href="${img.file_url}" target="_blank" style="color:var(--orange);font-weight:600;">View Image &#8599;</a></td>
+      <td><span class="pill" style="background:var(--off);color:var(--gray);">${img.image_type||'general'}</span></td>
+      <td style="color:var(--gray);font-size:12px;">${timeAgo(img.created_at)}</td>
+      <td><a href="${img.file_url}" download class="btn-primary btn-sm" style="text-decoration:none;">Download</a></td>
+    </tr>`).join('');
+}
+
+// ── ACTIONS ───────────────────────────────────────────────────────────────────
+async function approvePilot(id){
+  const { error } = await sb.from('pilots').update({status:'active'}).eq('id',id);
+  if(error){ showToast('Error approving pilot','error'); return; }
+  showToast('Pilot approved! They can now log in.');
+  await loadPilots(); loadStats();
+}
+
+async function suspendPilot(id){
+  if(!confirm('Suspend this pilot?')) return;
+  await sb.from('pilots').update({status:'suspended'}).eq('id',id);
+  showToast('Pilot suspended.','warning');
+  await loadPilots(); loadStats();
+}
+
+async function cancelMission(id){
+  if(!confirm('Cancel this mission?')) return;
+  await sb.from('missions').update({status:'cancelled'}).eq('id',id);
+  showToast('Mission cancelled.','error');
+  await loadMissions(); loadStats();
+}
+
+async function completeMission(id){
+  await sb.from('missions').update({status:'completed',completed_at:new Date().toISOString()}).eq('id',id);
+  const mission = allMissions.find(m=>m.id===id);
+  if(mission?.assigned_pilot_id){
+    const { data:pilot } = await sb.from('pilots').select('missions_completed').eq('id',mission.assigned_pilot_id).single();
+    if(pilot) await sb.from('pilots').update({missions_completed:(pilot.missions_completed||0)+1}).eq('id',mission.assigned_pilot_id);
+  }
+  showToast('Mission marked complete!');
+  await loadMissions(); loadStats();
+}
+
+// ── NEW MISSION ───────────────────────────────────────────────────────────────
+function openNewMission(){ document.getElementById('newMissionModal').classList.add('open'); }
+function closeNewMission(){ document.getElementById('newMissionModal').classList.remove('open'); }
+
+async function createMission(){
+  const name    = document.getElementById('mCustomerName').value.trim();
+  const email   = document.getElementById('mCustomerEmail').value.trim();
+  const phone   = document.getElementById('mCustomerPhone').value.trim();
+  const address = document.getElementById('mAddress').value.trim();
+  const city    = document.getElementById('mCity').value;
+  const priority= document.getElementById('mPriority').value;
+  const pkg     = document.getElementById('mPackage').value;
+  const price   = parseFloat(document.getElementById('mPrice').value)||149;
+  const deadline= document.getElementById('mDeadline').value;
+  const notes   = document.getElementById('mNotes').value.trim();
+
+  if(!name||!email||!address){ showToast('Please fill required fields','error'); return; }
+
+  const btn = document.getElementById('createMissionBtn');
+  btn.disabled=true; btn.innerHTML='<div class="spinner"></div> Creating...';
+
+  const { data, error } = await sb.from('missions').insert({
+    customer_name:name, customer_email:email, customer_phone:phone||null,
+    address, city, priority, package:pkg, price,
+    deadline: deadline ? new Date(deadline).toISOString() : null,
+    notes:notes||null, status:'open',
+  }).select().single();
+
+  btn.disabled=false;
+  btn.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Create &amp; Notify Pilots';
+
+  if(error){ showToast('Error creating mission: '+error.message,'error'); return; }
+
+  closeNewMission();
+  showToast('Mission created! All pilots in '+city+' notified instantly.');
+  await loadMissions(); loadStats();
+  ['mCustomerName','mCustomerEmail','mCustomerPhone','mAddress','mNotes'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('mPrice').value='149';
+}
+
+// ── REALTIME ──────────────────────────────────────────────────────────────────
+function subscribeRealtime(){
+  sb.channel('admin-channel')
+    .on('postgres_changes',{event:'UPDATE',schema:'public',table:'missions'},(p)=>{
+      const idx=allMissions.findIndex(m=>m.id===p.new.id);
+      if(idx>=0) allMissions[idx]=p.new; else allMissions.unshift(p.new);
+      renderMissions(); loadStats();
+      if(p.new.status==='uploaded') showToast(`Images uploaded for mission #${p.new.id.slice(-6).toUpperCase()}!`);
+    })
+    .on('postgres_changes',{event:'INSERT',schema:'public',table:'mission_images'},(p)=>{
+      showToast('New drone image uploaded!');
+    })
+    .subscribe();
+}
+
+init();
+</script>
+</body>
+</html>
