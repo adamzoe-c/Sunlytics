@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pilot Login — Sunlytics</title>
 <meta name="robots" content="noindex">
+<meta name="description" content="Sunlytics pilot portal — sign in to access your drone mission dashboard.">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <meta name="theme-color" content="#f7971e">
 <style>
@@ -166,10 +167,10 @@ footer a{color:var(--orange);text-decoration:none;}
     </ul>
     <div class="nav-right">
         <div class="lang-switcher">
-            <button class="lang-btn active" id="btnEN" onclick="setLang('en')">
+            <button class="lang-btn active" id="langEN" onclick="setLang('en')">
                 <img src="united-kingdom.png" alt="English"> EN
             </button>
-            <button class="lang-btn" id="btnLV" onclick="setLang('lv')">
+            <button class="lang-btn" id="langLV" onclick="setLang('lv')">
                 <img src="latvia.png" alt="Latviešu"> LV
             </button>
         </div>
@@ -240,13 +241,6 @@ const T={
 };
 let lang=localStorage.getItem('sunlytics_lang')||'en';
 
-function setLang(l){
-  lang=l;localStorage.setItem('sunlytics_lang',l);
-  document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(T[l][k])el.textContent=T[l][k];});
-  document.getElementById('btnEN').classList.toggle('active',l==='en');
-  document.getElementById('btnLV').classList.toggle('active',l==='lv');
-}
-
 function showError(msg){document.getElementById('errorMsg').textContent=msg;document.getElementById('alertError').classList.add('show');document.getElementById('alertSuccess').classList.remove('show');}
 function showSuccess(){document.getElementById('alertSuccess').classList.add('show');document.getElementById('alertError').classList.remove('show');}
 
@@ -270,7 +264,7 @@ async function doLogin(){
 }
 
 sb.auth.getSession().then(({data})=>{if(data.session)window.location.href='pilot-dashboard.html';});
-document.addEventListener('DOMContentLoaded',()=>setLang(lang));
+
 </script>
 </body>
 </html>
