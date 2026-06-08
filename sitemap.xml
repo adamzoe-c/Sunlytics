@@ -5,43 +5,53 @@
   <url>
     <loc>https://sunlytics.eu/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://sunlytics.eu/"/>
-    <xhtml:link rel="alternate" hreflang="lv" href="https://sunlytics.eu/lv/"/>
-    <lastmod>2026-05-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://sunlytics.eu/"/>
+    <lastmod>2026-06-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
     <loc>https://sunlytics.eu/about.html</loc>
-    <lastmod>2026-05-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sunlytics.eu/about.html"/>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://sunlytics.eu/about.html"/>
+    <lastmod>2026-06-08</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://sunlytics.eu/contact.html</loc>
-    <lastmod>2026-05-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sunlytics.eu/contact.html"/>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://sunlytics.eu/contact.html"/>
+    <lastmod>2026-06-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://sunlytics.eu/fly-for-us.html</loc>
-    <lastmod>2026-05-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sunlytics.eu/fly-for-us.html"/>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://sunlytics.eu/fly-for-us.html"/>
+    <lastmod>2026-06-08</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://sunlytics.eu/privacy.html</loc>
-    <lastmod>2026-05-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sunlytics.eu/privacy.html"/>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://sunlytics.eu/privacy.html"/>
+    <lastmod>2026-06-08</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <url>
     <loc>https://sunlytics.eu/terms.html</loc>
-    <lastmod>2026-05-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sunlytics.eu/terms.html"/>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://sunlytics.eu/terms.html"/>
+    <lastmod>2026-06-08</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
