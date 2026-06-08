@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page Not Found — Sunlytics</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<meta name="theme-color" content="#f7971e">
+<style>
+:root{
+  --orange:#f7971e;--orange-dark:#ff4e00;
+  --navy:#1a1a1a;--gray:#6b7280;
+  --white:#fff;--off:#f5f5f5;--border:#e8e8e8;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--white);color:var(--navy);min-height:100vh;display:flex;flex-direction:column;}
+
+nav{display:flex;justify-content:space-between;align-items:center;padding:14px 5%;background:white;box-shadow:0 1px 20px rgba(0,0,0,0.07);position:sticky;top:0;z-index:200;}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo img{width:34px;height:34px;object-fit:contain;}
+.logo-text{font-size:18px;font-weight:800;letter-spacing:1px;background:linear-gradient(135deg,var(--orange),var(--orange-dark));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+
+main{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 20px;text-align:center;}
+.wrap{max-width:560px;width:100%;}
+
+/* Big 404 graphic */
+.graphic{position:relative;margin:0 auto 40px;width:240px;height:160px;}
+.num-4-left,.num-4-right,.num-0{
+  position:absolute;font-size:100px;font-weight:900;line-height:1;
+  background:linear-gradient(135deg,var(--orange),var(--orange-dark));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  user-select:none;
+}
+.num-4-left{left:0;top:0;}
+.num-0{left:50%;transform:translateX(-50%);top:0;}
+.num-4-right{right:0;top:0;}
+
+/* drone SVG inside the 0 */
+.drone-wrap{
+  position:absolute;left:50%;top:50%;
+  transform:translate(-50%,-52%);
+  animation:hover 3s ease-in-out infinite;
+}
+@keyframes hover{0%,100%{transform:translate(-50%,-52%);}50%{transform:translate(-50%,-60%);}}
+
+.wrap h1{font-size:28px;font-weight:800;margin-bottom:12px;color:var(--navy);}
+.wrap p{font-size:15px;color:var(--gray);line-height:1.7;margin-bottom:32px;}
+
+.links{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(135deg,var(--orange),var(--orange-dark));
+  color:white;text-decoration:none;padding:13px 28px;
+  border-radius:50px;font-size:15px;font-weight:700;
+  box-shadow:0 4px 15px rgba(247,151,30,0.35);
+  transition:all .2s;
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(247,151,30,0.45);}
+.btn-secondary{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--off);color:var(--navy);text-decoration:none;
+  padding:13px 28px;border-radius:50px;font-size:15px;font-weight:600;
+  border:1.5px solid var(--border);transition:all .2s;
+}
+.btn-secondary:hover{border-color:var(--orange);color:var(--orange);}
+
+/* quick links */
+.quick-links{margin-top:40px;padding-top:32px;border-top:1px solid var(--border);}
+.quick-links p{font-size:13px;color:var(--gray);margin-bottom:16px;font-weight:500;}
+.quick-grid{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+.quick-link{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 16px;border-radius:10px;
+  background:var(--off);color:var(--navy);text-decoration:none;
+  font-size:13px;font-weight:500;border:1px solid var(--border);
+  transition:all .2s;
+}
+.quick-link:hover{background:white;border-color:var(--orange);color:var(--orange);}
+
+@media(max-width:480px){
+  .graphic{width:190px;height:120px;}
+  .num-4-left,.num-4-right,.num-0{font-size:78px;}
+  .wrap h1{font-size:22px;}
+  .links{flex-direction:column;align-items:center;}
+  .btn-primary,.btn-secondary{width:100%;justify-content:center;}
+}
+
+footer{text-align:center;padding:20px;font-size:12px;color:var(--gray);}
+footer a{color:var(--orange);text-decoration:none;}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="index.html">
+    <img src="sunlytics-logo.png" alt="Sunlytics" onerror="this.style.display='none'">
+    <span class="logo-text">SUNLYTICS</span>
+  </a>
+  <a href="index.html" style="display:flex;align-items:center;gap:5px;text-decoration:none;color:var(--gray);font-size:13px;font-weight:500;">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    Back to Home
+  </a>
+</nav>
+
+<main>
+  <div class="wrap">
+
+    <!-- 404 graphic with hovering drone -->
+    <div class="graphic">
+      <span class="num-4-left">4</span>
+      <span class="num-0">0</span>
+      <span class="num-4-right">4</span>
+      <div class="drone-wrap">
+        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#f7971e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21 4 19 2c-2-2-4-2-5.5-.5L10 5 1.8 6.2c-.5.1-.9.6-.6 1.1l1.5 2.5 5.5-1L6 13l-2 1 1 2 2-1 3.5-2.5-1 5.5 2.5 1.5c.5.3 1 0 1.1-.6z"/>
+        </svg>
+      </div>
+    </div>
+
+    <h1>This page flew away!</h1>
+    <p>The page you're looking for doesn't exist or has been moved.<br>Let's get you back on track.</p>
+
+    <div class="links">
+      <a class="btn-primary" href="index.html">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Go to Homepage
+      </a>
+      <a class="btn-secondary" href="contact.html">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Contact Support
+      </a>
+    </div>
+
+    <div class="quick-links">
+      <p>Or go directly to:</p>
+      <div class="quick-grid">
+        <a class="quick-link" href="index.html#solar-calculator">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          Solar Calculator
+        </a>
+        <a class="quick-link" href="fly-for-us.html">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21 4 19 2c-2-2-4-2-5.5-.5L10 5 1.8 6.2c-.5.1-.9.6-.6 1.1l1.5 2.5 5.5-1L6 13l-2 1 1 2 2-1 3.5-2.5-1 5.5 2.5 1.5c.5.3 1 0 1.1-.6z"/></svg>
+          Fly For Us
+        </a>
+        <a class="quick-link" href="about.html">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          About Us
+        </a>
+        <a class="quick-link" href="pilot-login.html">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+          Pilot Login
+        </a>
+        <a class="quick-link" href="contact.html">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Contact
+        </a>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <p>&copy; 2026 Sunlytics &nbsp;&bull;&nbsp; <a href="privacy.html">Privacy</a> &nbsp;&bull;&nbsp; <a href="terms.html">Terms</a></p>
+</footer>
+
+</body>
+</html>
