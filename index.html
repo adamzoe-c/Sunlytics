@@ -1652,20 +1652,18 @@ function toggleFaq(i) {
                 <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
             <h2 style="font-size:24px; font-weight:800; color:#1a1a1a; margin-bottom:10px;">Order Received!</h2>
-            <p style="color:#6b7280; font-size:15px; line-height:1.7; margin-bottom:8px;">Thank you! We've received your drone report request.</p>
+            <p style="color:#6b7280; font-size:15px; line-height:1.7; margin-bottom:8px;">Thank you! We have received your drone report request.</p>
             <p style="color:#6b7280; font-size:14px; line-height:1.7; margin-bottom:28px;">We will contact you at <strong id="successEmail"></strong> within a few hours to confirm your appointment and arrange payment.</p>
-            <div style="background:#f0fdf4; border-radius:16px; padding:20px; margin-bottom:28px; border:1px solid #bbf7d0;">
-                <div style="font-size:13px; color:#16a34a; font-weight:700; margin-bottom:6px;">What happens next?</div>
-                <div style="font-size:13px; color:#374151; line-height:1.8; text-align:left;">
-                    ✓ We review your address &amp; schedule a local pilot<br>
-                    ✓ You confirm the appointment by phone or email<br>
-                    ✓ Drone inspection at your property<br>
-                    ✓ PDF report delivered within 24 hours
+            <div style="background:#f0fdf4; border-radius:16px; padding:20px; margin-bottom:28px; border:1px solid #bbf7d0; text-align:left;">
+                <div style="font-size:13px; color:#16a34a; font-weight:700; margin-bottom:8px;">What happens next?</div>
+                <div style="font-size:13px; color:#374151; line-height:2;">
+                    &#10003; We review your address &amp; schedule a local pilot<br>
+                    &#10003; You confirm the appointment by phone or email<br>
+                    &#10003; Drone inspection at your property<br>
+                    &#10003; PDF report delivered within 24 hours
                 </div>
             </div>
-            <button onclick="closeModal()" style="background:linear-gradient(135deg,#f7971e,#ff4e00); color:white; border:none; padding:14px 36px; border-radius:50px; font-size:15px; font-weight:700; cursor:pointer; font-family:inherit; box-shadow:0 6px 20px rgba(247,151,30,0.35);">
-                Close
-            </button>
+            <button onclick="closeModal()" style="background:linear-gradient(135deg,#f7971e,#ff4e00); color:white; border:none; padding:14px 36px; border-radius:50px; font-size:15px; font-weight:700; cursor:pointer; font-family:inherit; box-shadow:0 6px 20px rgba(247,151,30,0.35);">Close</button>
         </div>
 
     </div>
@@ -1845,47 +1843,37 @@ function toggleFaq(i) {
         document.getElementById('resultsModal').scrollTop = 0;
     }
 
-    function referToPartner() {
-        alert('Redirecting to SolarPro Latvia \u2014 replace this with the real partner URL!');
-        // window.open('https://solarprolatvia.lv?ref=sunlytics', '_blank');
-    }
-
-    // ── DRONE ORDER SUBMISSION ────────────────────────────────────
     async function submitDroneOrder() {
         const name    = document.getElementById('droneName').value.trim();
         const email   = document.getElementById('droneEmail').value.trim();
         const phone   = document.getElementById('dronePhone').value.trim();
         const address = document.getElementById('droneAddress').value.trim();
 
-        if (!name || !email || !address) {
-            ['droneName','droneEmail','droneAddress'].forEach(id => {
-                const el = document.getElementById(id);
-                if (!el.value.trim()) el.style.borderColor = '#ef4444';
-            });
-            return;
-        }
+        // Validate
+        let valid = true;
+        ['droneName','droneEmail','droneAddress'].forEach(id => {
+            const el = document.getElementById(id);
+            if (!el.value.trim()) { el.style.borderColor = '#ef4444'; valid = false; }
+            else el.style.borderColor = '#e8e8e8';
+        });
+        if (!valid) return;
 
         const btn = document.getElementById('droneSubmitBtn');
         btn.disabled = true;
-        btn.innerHTML = '<svg style="animation:spin .7s linear infinite;width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="10" stroke-opacity=".3"/><path d="M12 2a10 10 0 0 1 10 10"/></svg> Submitting...';
+        btn.innerHTML = '<svg style="animation:spin .7s linear infinite;flex-shrink:0;" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>&nbsp; Submitting...';
 
-        const solarScore = document.getElementById('resScore')?.textContent || '';
-        const profit25   = document.getElementById('resProfit')?.textContent || '';
-        const payback    = document.getElementById('resPayback')?.textContent || '';
+        const solarScore = document.getElementById('resScore') ? document.getElementById('resScore').textContent : '';
+        const profit25   = document.getElementById('resProfit') ? document.getElementById('resProfit').textContent : '';
+        const payback    = document.getElementById('resPayback') ? document.getElementById('resPayback').textContent : '';
 
         try {
-            // 1. Save to Supabase missions table
+            // Save to Supabase
             const { createClient } = supabase;
-            const sb = createClient(
-                'https://keeityfejyfqqsvcqfsz.supabase.co',
-                'sb_publishable_A6r_0AtMpEs_KBJIJJXmYg_mq66XazY'
-            );
+            const sb = createClient('https://keeityfejyfqqsvcqfsz.supabase.co', 'sb_publishable_A6r_0AtMpEs_KBJIJJXmYg_mq66XazY');
 
-            const city = (() => {
-                const a = address.toLowerCase();
-                const cities = ['riga','liepāja','daugavpils','jelgava','jūrmala','ventspils','rēzekne','valmiera','jēkabpils'];
-                return cities.find(c => a.includes(c.toLowerCase())) || 'Latvia';
-            })();
+            const cityList = ['riga','liepāja','daugavpils','jelgava','jūrmala','ventspils','rēzekne','valmiera','jēkabpils'];
+            const addrLow  = address.toLowerCase();
+            const city     = cityList.find(c => addrLow.includes(c)) || 'latvia';
 
             await sb.from('missions').insert({
                 customer_name:  name,
@@ -1896,42 +1884,44 @@ function toggleFaq(i) {
                 price:          149,
                 status:         'open',
                 package:        'drone',
-                notes:          `Solar score: ${solarScore} | 25yr profit: ${profit25} | Payback: ${payback}`,
+                notes:          'Solar score: ' + solarScore + ' | 25yr profit: ' + profit25 + ' | Payback: ' + payback,
             });
 
-            // 2. Send email notification via Formspree
+            // Send email via Formspree
             await fetch('https://formspree.io/f/meewaldd', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
                 body: JSON.stringify({
-                    _subject: `New Drone Report Order — ${address}`,
-                    name, email, phone,
-                    address,
+                    _subject: 'New Drone Report Order — ' + address,
+                    name, email, phone, address,
                     solar_score: solarScore,
                     profit_25yr: profit25,
                     payback,
-                    source: 'Solar Calculator — index.html',
+                    source: 'Solar Calculator',
                 })
             });
-
         } catch(e) {
-            console.warn('Submission warning:', e);
-            // Still show success to user — Formspree or Supabase may have partial success
+            console.warn('Submit error:', e);
         }
 
-        // Show success state
+        // Show success
         document.getElementById('successEmail').textContent = email;
         document.getElementById('droneFormState').style.display = 'none';
         document.getElementById('droneSuccessState').style.display = 'block';
         document.getElementById('resultsModal').scrollTop = 0;
 
-        // Reset form
+        // Reset
         ['droneName','droneEmail','dronePhone','droneAddress'].forEach(id => {
             const el = document.getElementById(id);
             if (el) { el.value = ''; el.style.borderColor = '#e8e8e8'; }
         });
         btn.disabled = false;
-        btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Confirm Order — &#8364;149';
+        btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Confirm Order — €149';
+    }
+
+    function referToPartner() {
+        alert('Redirecting to SolarPro Latvia \u2014 replace this with the real partner URL!');
+        // window.open('https://solarprolatvia.lv?ref=sunlytics', '_blank');
     }
 
     // ── COOKIES ───────────────────────────────────────────────────
@@ -1959,6 +1949,7 @@ function toggleFaq(i) {
         buildFaq();
     });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="lang.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
