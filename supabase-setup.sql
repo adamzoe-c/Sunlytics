@@ -141,3 +141,30 @@ create index if not exists idx_mission_images_mission on mission_images(mission_
 
 -- Done!
 select 'Sunlytics database setup complete ✅' as result;
+
+-- ============================================================
+-- UPDATE: Auto-link pilot_profiles when auth user is created
+-- Run this after the initial setup
+-- ============================================================
+
+-- Function to auto-link auth user to pilot profile on signup
+create or replace function public.handle_new_pilot_user()
+returns trigger as $$
+begin
+  -- When a new auth user signs up with pilot role metadata, link them
+  if new.raw_user_meta_data->>'pilot_id' is not null then
+    insert into public.pilot_profiles (id, pilot_id)
+    values (new.id, (new.raw_user_meta_data->>'pilot_id')::uuid)
+    on conflict (id) do update set pilot_id = (new.raw_user_meta_data->>'pilot_id')::uuid;
+  end if;
+  return new;
+end;
+$$ language plpgsql security definer;
+
+-- Trigger that fires when a new auth user is created
+drop trigger if exists on_auth_user_created on auth.users;
+create trigger on_auth_user_created
+  after insert on auth.users
+  for each row execute procedure public.handle_new_pilot_user();
+
+select 'Pilot auto-link trigger created ✅' as result;

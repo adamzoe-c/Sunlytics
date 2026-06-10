@@ -409,6 +409,18 @@ tr:hover td{background:#fafafa;}
   </div>
 </div>
 
+<!-- CONFIRM MODAL -->
+<div class="modal-overlay" id="confirmModal">
+  <div class="modal" style="max-width:380px;">
+    <h2 id="confirmTitle" style="font-size:18px;margin-bottom:8px;"></h2>
+    <p id="confirmMsg" style="font-size:14px;color:var(--gray);margin-bottom:24px;line-height:1.6;"></p>
+    <div class="modal-actions">
+      <button class="btn-primary btn-ghost" onclick="document.getElementById('confirmModal').classList.remove('open')" style="color:var(--gray);">Cancel</button>
+      <button class="btn-primary btn-red" id="confirmOkBtn">Confirm</button>
+    </div>
+  </div>
+</div>
+
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
@@ -432,6 +444,17 @@ function showToast(msg, type='success'){
   const el=document.getElementById('toast');
   el.textContent=msg; el.className=`toast ${type} show`;
   setTimeout(()=>el.classList.remove('show'),3500);
+}
+
+function showConfirm(title, msg, onConfirm){
+  document.getElementById('confirmTitle').textContent=title;
+  document.getElementById('confirmMsg').textContent=msg;
+  const btn=document.getElementById('confirmOkBtn');
+  btn.onclick=()=>{
+    document.getElementById('confirmModal').classList.remove('open');
+    onConfirm();
+  };
+  document.getElementById('confirmModal').classList.add('open');
 }
 
 // Section icons map
@@ -557,33 +580,112 @@ function renderImages(){
     <tr>
       <td style="font-size:12px;">${img.missions?.address||'Unknown'}</td>
       <td>${img.pilots ? `${img.pilots.first_name} ${img.pilots.last_name}` : 'Unknown'}</td>
-      <td><a href="${img.file_url}" target="_blank" style="color:var(--orange);font-weight:600;">View Image &#8599;</a></td>
+      <td>
+        <a href="${img.file_url}" target="_blank">
+          <img src="${img.file_url}" alt="drone image"
+               style="width:60px;height:44px;object-fit:cover;border-radius:6px;border:1px solid var(--border);cursor:pointer;transition:transform .2s;"
+               onmouseover="this.style.transform='scale(1.8)'"
+               onmouseout="this.style.transform='scale(1)'"
+               onerror="this.style.display='none'">
+        </a>
+      </td>
       <td><span class="pill" style="background:var(--off);color:var(--gray);">${img.image_type||'general'}</span></td>
       <td style="color:var(--gray);font-size:12px;">${timeAgo(img.created_at)}</td>
-      <td><a href="${img.file_url}" download class="btn-primary btn-sm" style="text-decoration:none;">Download</a></td>
+      <td style="display:flex;gap:6px;">
+        <a href="${img.file_url}" target="_blank" class="btn-primary btn-sm" style="text-decoration:none;">View</a>
+        <a href="${img.file_url}" download class="btn-primary btn-sm btn-green" style="text-decoration:none;">Download</a>
+      </td>
     </tr>`).join('');
 }
 
 // ── ACTIONS ───────────────────────────────────────────────────────────────────
 async function approvePilot(id){
+  // Find the pilot's email
+  const pilot = allPilots.find(p=>p.id===id);
+  if(!pilot){ showToast('Pilot not found','error'); return; }
+
+  const btn = event.currentTarget;
+  btn.disabled=true;
+  btn.innerHTML='<div class="spinner"></div>';
+
+  // 1. Update pilot status to active
   const { error } = await sb.from('pilots').update({status:'active'}).eq('id',id);
-  if(error){ showToast('Error approving pilot','error'); return; }
-  showToast('Pilot approved! They can now log in.');
+  if(error){
+    showToast('Error approving pilot: '+error.message,'error');
+    btn.disabled=false; btn.innerHTML='Approve';
+    return;
+  }
+
+  // 2. Send welcome email with password setup link via Supabase Auth invite
+  try {
+    const res = await fetch(`${SUPABASE_URL}/auth/v1/invite`, {
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`
+      },
+      body: JSON.stringify({
+        email: pilot.email,
+        data: {
+          first_name: pilot.first_name,
+          last_name:  pilot.last_name,
+          pilot_id:   pilot.id,
+          role:       'pilot'
+        },
+        redirect_to: window.location.origin+'/pilot-reset-confirm.html'
+      })
+    });
+    const inviteData = await res.json();
+
+    if(inviteData.id || inviteData.user){
+      // Link the auth user to pilot profile
+      const authUserId = inviteData.id || inviteData.user?.id;
+      if(authUserId){
+        await sb.from('pilot_profiles').upsert({
+          id: authUserId,
+          pilot_id: pilot.id
+        });
+      }
+      showToast(`Approved! Welcome email sent to ${pilot.email}`);
+    } else {
+      // Auth invite may have failed (e.g. user already exists) — still approved
+      showToast(`Approved! Note: could not send invite email — pilot may already have an account.`,'warning');
+    }
+  } catch(e) {
+    // Still approved even if email fails
+    showToast(`Approved! (Email notification failed — check Supabase email settings)`,'warning');
+  }
+
+  btn.disabled=false; btn.innerHTML='Approve';
   await loadPilots(); loadStats();
 }
 
 async function suspendPilot(id){
-  if(!confirm('Suspend this pilot?')) return;
-  await sb.from('pilots').update({status:'suspended'}).eq('id',id);
-  showToast('Pilot suspended.','warning');
-  await loadPilots(); loadStats();
+  const pilot = allPilots.find(p=>p.id===id);
+  if(!pilot) return;
+  showConfirm(
+    `Suspend ${pilot.first_name} ${pilot.last_name}?`,
+    'They will lose access to the dashboard immediately.',
+    async ()=>{
+      await sb.from('pilots').update({status:'suspended'}).eq('id',id);
+      showToast('Pilot suspended.','warning');
+      await loadPilots(); loadStats();
+    }
+  );
 }
 
 async function cancelMission(id){
-  if(!confirm('Cancel this mission?')) return;
-  await sb.from('missions').update({status:'cancelled'}).eq('id',id);
-  showToast('Mission cancelled.','error');
-  await loadMissions(); loadStats();
+  const mission = allMissions.find(m=>m.id===id);
+  showConfirm(
+    `Cancel mission #${id.slice(-6).toUpperCase()}?`,
+    `This will notify the assigned pilot and cannot be undone.`,
+    async ()=>{
+      await sb.from('missions').update({status:'cancelled'}).eq('id',id);
+      showToast('Mission cancelled.','error');
+      await loadMissions(); loadStats();
+    }
+  );
 }
 
 async function completeMission(id){
@@ -648,6 +750,15 @@ function subscribeRealtime(){
     })
     .on('postgres_changes',{event:'INSERT',schema:'public',table:'mission_images'},(p)=>{
       showToast('New drone image uploaded!');
+      // Browser notification for admin
+      if(Notification.permission==='granted'){
+        new Notification('Sunlytics — New Drone Images!',{
+          body:'A pilot just uploaded images. Check the Images section.',
+          icon:'favicon-32.png'
+        });
+      }
+      if(Notification.permission==='default') Notification.requestPermission();
+      loadImages();
     })
     .subscribe();
 }
