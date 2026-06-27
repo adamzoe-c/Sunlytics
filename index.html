@@ -855,6 +855,7 @@
             .nav-links.open {
                 display: flex;
                 flex-direction: column;
+                align-items: flex-start;
                 position: fixed;
                 top: 68px;
                 left: 0;
@@ -1473,11 +1474,6 @@
             <div class="country">Coming Soon EU</div>
             <div class="status">Coming Soon</div>
         </div>
-        <div class="flag-card">
-            <img src="eu.png" alt="EU">
-            <div class="country">Coming Soon EU</div>
-            <div class="status">Coming Soon</div>
-        </div>
     </div>
 </section>
 
@@ -1729,7 +1725,7 @@ function toggleFaq(i) {
     </div>
     <div class="footer-bottom" style="flex-direction:column; align-items:center; text-align:center; gap:8px;">
         <p>&copy; 2026 Sunlytics. All rights reserved.</p>
-        <p style="display:flex; align-items:center; justify-content:center; gap:16px; flex-wrap:wrap;"><a href="privacy.html">Privacy Policy</a> <span style="opacity:0.4;">·</span> <a href="terms.html" onclick="alert('Terms page coming soon!'); return false;">Terms of Service</a> <span style="opacity:0.3;">·</span> <a href="admin-dashboard.html" style="color:rgba(255,255,255,0.2);font-size:11px;">Admin</a></p>
+        <p style="display:flex; align-items:center; justify-content:center; gap:16px; flex-wrap:wrap; margin:0;"><a href="privacy.html" style="color:var(--orange-dark); text-decoration:none; font-size:13px;">Privacy Policy</a> <span style="opacity:0.4; color:#666;">·</span> <a href="terms.html" style="color:var(--orange-dark); text-decoration:none; font-size:13px;">Terms of Service</a></p>
     </div>
 </footer>
 
@@ -1757,7 +1753,6 @@ function toggleFaq(i) {
             <!-- Header -->
             <div style="background:linear-gradient(135deg,#222222,#333333); border-radius:28px 28px 0 0; padding:32px 36px;">
                 <div style="display:flex; align-items:center; gap:10px; margin-bottom:6px;">
-                    <img src="logo.png" style="width:28px; height:28px; object-fit:contain;">
                     <span style="color:rgba(255,255,255,0.6); font-size:13px; font-weight:600; letter-spacing:1px;">SUNLYTICS ANALYSIS</span>
                 </div>
                 <h2 style="color:white; font-size:22px; font-weight:800; margin-bottom:4px;">Solar Feasibility Report</h2>
@@ -1970,7 +1965,7 @@ function toggleFaq(i) {
             function weatherLabel(code) {
                 if (code === 0) return 'Clear sky \u2600\uFE0F';
                 if (code <= 2) return 'Partly cloudy \u26C5';
-                if (code === 3) return 'Overcast \u2601\uFE0F';
+                if (code === 3) return 'Overcast <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>';
                 if (code <= 49) return 'Foggy \uD83C\uDF2B\uFE0F';
                 if (code <= 59) return 'Drizzle \uD83C\uDF26\uFE0F';
                 if (code <= 69) return 'Rain \uD83C\uDF27\uFE0F';
@@ -1990,10 +1985,10 @@ function toggleFaq(i) {
             const canFly = parseFloat(windMs) < 10 && rain < 50 && temp > 0;
             const status = document.getElementById('droneStatus');
             if (canFly) {
-                status.textContent = '\u2705 Drone Can Fly Today';
+                status.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" style="vertical-align:middle;margin-right:6px;"><polyline points="20 6 9 17 4 12"/></svg> Drone Can Fly Today';
                 status.className = 'drone-status status-good';
             } else {
-                status.textContent = '\u274c Drone Flight Not Recommended';
+                status.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="3" style="vertical-align:middle;margin-right:6px;"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Drone Flight Not Recommended';
                 status.className = 'drone-status status-bad';
             }
         } catch(e) {
