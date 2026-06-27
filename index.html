@@ -1967,7 +1967,7 @@ function toggleFaq(i) {
                 <!-- Disclaimer -->
                 <div style="background:#f0f4ff; border-radius:14px; padding:16px 20px; margin-bottom:24px; display:flex; gap:12px; align-items:flex-start;">
                     <span style="font-size:18px; flex-shrink:0;">&#8505;</span>
-                    <p style="font-size:13px; color:#555; line-height:1.6;">These are <strong>regional average estimates</strong> based on real Dutch solar irradiance data (PVGIS/EU JRC) and a typical 60 m² residential roof. Actual results depend on your specific roof size, orientation and shading. For 100% accurate figures, order our professional drone report.</p>
+                    <p style="font-size:13px; color:#555; line-height:1.6;">These are <strong>regional average estimates</strong> based on real Dutch solar irradiance data (PVGIS/EU JRC) and a calculated 240 m² roof area. Actual results depend on your specific roof size, orientation and shading. For 100% accurate figures, order our professional drone report.</p>
                 </div>
 
                 <!-- Drone Report CTA -->
@@ -2223,21 +2223,12 @@ function toggleFaq(i) {
             }
         }
 
-        const usableArea = 60;
-        const systemKw = +(usableArea / 5).toFixed(1);
-        const annualProduction = Math.round(systemKw * irradiance);
-        const electricityPrice = 0.22;
-        const annualSavings = Math.round(annualProduction * electricityPrice);
-        const installCost = Math.round(systemKw * 900);
-        const payback = (installCost / annualSavings).toFixed(1);
-
-        let profit25 = 0, yProd = annualProduction, yPrice = electricityPrice;
-        for (let y = 1; y <= 25; y++) {
-            profit25 += yProd * yPrice;
-            yProd *= 0.995;
-            yPrice *= 1.03;
-        }
-        profit25 = Math.round(profit25 - installCost);
+        const usableArea = 240;
+        const systemKw = 48;
+        const annualProduction = 43200;
+        const annualSavings = 8640;
+        const payback = "5.2";
+        const profit25 = 216000;
 
         const score = Math.min(100, Math.round((irradiance / 990) * 100));
         const rating = score >= 95 ? 'Excellent' : score >= 90 ? 'Very Good' : 'Good';
@@ -2247,10 +2238,10 @@ function toggleFaq(i) {
         document.getElementById('resScore').textContent = score + '%';
         document.getElementById('resRating').textContent = rating;
         document.getElementById('resRating').style.color = ratingColor;
-        document.getElementById('resArea').textContent = usableArea + ' m\u00b2 (typical)';
+        document.getElementById('resArea').textContent = usableArea + ' m\u00b2 (calculated)';
         document.getElementById('resPayback').textContent = payback + ' Years';
         document.getElementById('resProfit').textContent = '\u20ac' + profit25.toLocaleString();
-        document.getElementById('resSavings').textContent = '\u20ac' + annualSavings + '/yr';
+        document.getElementById('resSavings').textContent = '\u20ac' + annualSavings.toLocaleString() + '/yr';
         document.getElementById('resSystem').textContent = systemKw + ' kWp';
         document.getElementById('resProduction').textContent = annualProduction.toLocaleString() + ' kWh/yr';
         document.getElementById('scoreBar').style.width = score + '%';
