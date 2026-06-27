@@ -13,6 +13,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
     <meta name="description" content="Sunlytics — AI-powered solar roof analysis and certified drone inspection service in the Netherlands. Get your free solar analysis today.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://sunlytics.eu/">
     <title>Sunlytics - Solar Roof Analysis</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
     <style>
@@ -1275,17 +1276,17 @@
         <li><a href="index.html#calculator" class="nav-cta"><span data-i18n="nav_cta">Free Analysis</span></a></li>
     </ul>
     <div class="nav-right">
-        <div class="lang-switcher">
-            <button class="lang-btn active" id="langEN" onclick="setLang('en')">
+        <div class="lang-switcher" role="group" aria-label="Language switcher">
+            <button class="lang-btn active" id="langEN" onclick="setLang('en')" aria-label="Switch to English" aria-pressed="true">
                 <img src="united-kingdom.png" alt="English">
                 EN
             </button>
-            <button class="lang-btn" id="langNL" onclick="setLang('nl')">
+            <button class="lang-btn" id="langNL" onclick="setLang('nl')" aria-label="Switch to Dutch" aria-pressed="false">
                 <img src="netherlands.png" alt="Nederlands">
                 NL
             </button>
         </div>
-        <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+        <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle navigation menu" aria-expanded="false" id="hamburgerBtn"><span></span><span></span><span></span></button>
     </div>
 </nav>
 
@@ -1357,7 +1358,8 @@
             </button>
 
             <div class="map-free-note">
-                ✓ 100% Free &nbsp;·&nbsp; No signup required &nbsp;·&nbsp; Instant results
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                100% Free &nbsp;·&nbsp; No signup required &nbsp;·&nbsp; Instant results
             </div>
         </div>
     </div>
@@ -1620,7 +1622,7 @@ const faqData = [
 ];
 
 function buildFaq() {
-    const lang = localStorage.getItem('sunlytics-lang') || 'en';
+    const lang = localStorage.getItem('lang') || 'en';
     const container = document.getElementById('faqList');
     if (!container) return;
     container.innerHTML = '';
@@ -1751,7 +1753,7 @@ function toggleFaq(i) {
                 <li><a href="contact.html"><span data-i18n="nav_contact">Contact Us</span></a></li>
                 <li><a href="mailto:info@sunlytics.nl">info@sunlytics.nl</a></li>
                 <li><a href="https://sunlytics.nl" target="_blank">sunlytics.nl</a></li>
-                <li><a href="#">Amsterdam, Netherlands</a></li>
+                <li><a href="https://maps.google.com/?q=Amsterdam,Netherlands" target="_blank" rel="noopener">Amsterdam, Netherlands</a></li>
             </ul>
         </div>
     </div>
@@ -1762,15 +1764,19 @@ function toggleFaq(i) {
 </footer>
 
 <!-- RESULTS MODAL -->
-<div id="resultsModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.7); z-index:1000; align-items:center; justify-content:center; padding:20px; overflow-y:auto;">
-    <div style="background:white; border-radius:28px; max-width:680px; width:100%; max-height:90vh; overflow-y:auto; position:relative; box-shadow:0 24px 80px rgba(0,0,0,0.3);">
+<div id="resultsModal" role="dialog" aria-modal="true" aria-label="Solar analysis results" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.7); z-index:1000; align-items:center; justify-content:center; padding:20px; overflow-y:auto;" onclick="handleModalBackdrop(event)">
+    <div style="background:white; border-radius:28px; max-width:680px; width:100%; max-height:90vh; overflow-y:auto; position:relative; box-shadow:0 24px 80px rgba(0,0,0,0.3);" onclick="event.stopPropagation()">
 
         <!-- Close button -->
-        <button onclick="closeModal()" style="position:absolute; top:16px; right:16px; background:#f5f5f5; border:none; width:36px; height:36px; border-radius:50%; font-size:18px; cursor:pointer; color:#666; z-index:10;">&#10005;</button>
+        <button onclick="closeModal()" aria-label="Close modal" style="position:absolute; top:16px; right:16px; background:#f5f5f5; border:none; width:36px; height:36px; border-radius:50%; cursor:pointer; color:#666; z-index:10; display:flex; align-items:center; justify-content:center;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
 
         <!-- Loading State -->
         <div id="loadingState" style="padding:60px 40px; text-align:center;">
-            <div style="width:70px; height:70px; background:linear-gradient(135deg,#f7971e,#ff4e00); border-radius:50%; margin:0 auto 24px; display:flex; align-items:center; justify-content:center; font-size:28px; animation:pulse 1.5s infinite;">&#9728;</div>
+            <div style="width:70px; height:70px; background:linear-gradient(135deg,#f7971e,#ff4e00); border-radius:50%; margin:0 auto 24px; display:flex; align-items:center; justify-content:center; animation:pulse 1.5s infinite;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+            </div>
             <h3 style="font-size:22px; font-weight:800; color:#1a1a1a; margin-bottom:10px;">Analyzing Your Roof...</h3>
             <p style="color:#6b7280; font-size:15px; margin-bottom:32px;">Processing satellite imagery and solar data for your location</p>
             <div style="background:#f5f5f5; border-radius:50px; height:6px; overflow:hidden; max-width:300px; margin:0 auto;">
@@ -1803,7 +1809,9 @@ function toggleFaq(i) {
                                 <span id="resRating" style="font-size:16px; font-weight:700;"></span>
                             </div>
                         </div>
-                        <div style="font-size:40px;">&#9728;</div>
+                        <div style="width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#f7971e,#ff4e00);border-radius:50%;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+                        </div>
                     </div>
                     <div style="background:#e8e8e8; border-radius:50px; height:8px; overflow:hidden;">
                         <div id="scoreBar" style="height:100%; background:linear-gradient(135deg,#f7971e,#ff4e00); border-radius:50px; width:0%; transition:width 1s ease;"></div>
@@ -1848,8 +1856,9 @@ function toggleFaq(i) {
                 <div style="background:linear-gradient(135deg,#ffffff,#e8e8e8); border-radius:20px; padding:28px; border:1px solid #ffc07a; text-align:center; margin-bottom:16px;">
                     <h3 style="font-size:20px; font-weight:800; color:#1a1a1a; margin-bottom:8px;">Want 100% Accurate Results?</h3>
                     <p style="color:#6b7280; font-size:14px; margin-bottom:20px; line-height:1.6;">Our certified drone operators will inspect your roof and deliver a professional PDF report within 24 hours — for just <strong style="color:#c45000;">&#8364;149</strong></p>
-                    <button onclick="orderDroneReport()" style="background:linear-gradient(135deg,#f7971e,#ff4e00); color:white; border:none; padding:16px 36px; border-radius:50px; font-size:16px; font-weight:700; cursor:pointer; box-shadow:0 6px 24px rgba(247,151,30,0.38); width:100%; font-family:inherit;">
-                        &#9654; Order Drone Report — &#8364;149
+                    <button onclick="orderDroneReport()" style="background:linear-gradient(135deg,#f7971e,#ff4e00); color:white; border:none; padding:16px 36px; border-radius:50px; font-size:16px; font-weight:700; cursor:pointer; box-shadow:0 6px 24px rgba(247,151,30,0.38); width:100%; font-family:inherit; display:flex; align-items:center; justify-content:center; gap:10px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z"/><path d="M10 8l6 4-6 4V8z" fill="white"/></svg>
+                        Order Drone Report — &#8364;149
                     </button>
                 </div>
 
@@ -1880,7 +1889,7 @@ function toggleFaq(i) {
                             No obligation
                         </div>
                     </div>
-                    <a href="contact.html" style="background:linear-gradient(135deg,#22c55e,#16a34a); color:white; text-decoration:none; padding:14px 36px; border-radius:50px; font-size:15px; font-weight:700; width:100%; font-family:inherit; box-shadow:0 6px 20px rgba(34,197,94,0.35); display:flex; align-items:center; justify-content:center; gap:10px; box-sizing:border-box; white-space:nowrap;">
+                    <a href="contact.html" class="quote-btn" style="width:100%; box-sizing:border-box; font-size:15px; padding:14px 20px; background:linear-gradient(135deg,#22c55e,#16a34a); box-shadow:0 6px 20px rgba(34,197,94,0.35);">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                         Get Free Installation Quote
                     </a>
@@ -1919,7 +1928,7 @@ function toggleFaq(i) {
             </div>
             <div style="margin-bottom:14px;">
                 <label style="font-size:13px; font-weight:600; color:#1a1a1a; margin-bottom:6px; display:block;">Phone Number</label>
-                <input type="tel" id="dronePhone" placeholder="+371 ..." style="width:100%; padding:15px 18px; border:2px solid #e8e8e8; border-radius:12px; font-size:15px; outline:none; font-family:inherit; background:#ffffff; transition:border-color 0.2s;" onfocus="this.style.borderColor='#f7971e'" onblur="this.style.borderColor='#e8e8e8'">
+                <input type="tel" id="dronePhone" placeholder="+31 6 12345678" style="width:100%; padding:15px 18px; border:2px solid #e8e8e8; border-radius:12px; font-size:15px; outline:none; font-family:inherit; background:#ffffff; transition:border-color 0.2s;" onfocus="this.style.borderColor='#f7971e'" onblur="this.style.borderColor='#e8e8e8'">
             </div>
             <div style="margin-bottom:24px;">
                 <label style="font-size:13px; font-weight:600; color:#1a1a1a; margin-bottom:6px; display:block;">Property Address</label>
@@ -1943,11 +1952,11 @@ function toggleFaq(i) {
             <p style="color:#6b7280; font-size:14px; line-height:1.7; margin-bottom:28px;">We will contact you at <strong id="successEmail"></strong> within a few hours to confirm your appointment and arrange payment.</p>
             <div style="background:#f0fdf4; border-radius:16px; padding:20px; margin-bottom:28px; border:1px solid #bbf7d0; text-align:left;">
                 <div style="font-size:13px; color:#16a34a; font-weight:700; margin-bottom:8px;">What happens next?</div>
-                <div style="font-size:13px; color:#374151; line-height:2;">
-                    &#10003; We review your address &amp; schedule a local pilot<br>
-                    &#10003; You confirm the appointment by phone or email<br>
-                    &#10003; Drone inspection at your property<br>
-                    &#10003; PDF report delivered within 24 hours
+                <div style="font-size:13px; color:#374151; line-height:2; display:flex; flex-direction:column; gap:6px;">
+                    <div style="display:flex;align-items:center;gap:8px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg> We review your address &amp; schedule a local pilot</div>
+                    <div style="display:flex;align-items:center;gap:8px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg> You confirm the appointment by phone or email</div>
+                    <div style="display:flex;align-items:center;gap:8px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg> Drone inspection at your property</div>
+                    <div style="display:flex;align-items:center;gap:8px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg> PDF report delivered within 24 hours</div>
                 </div>
             </div>
             <button onclick="closeModal()" style="background:linear-gradient(135deg,#f7971e,#ff4e00); color:white; border:none; padding:14px 36px; border-radius:50px; font-size:15px; font-weight:700; cursor:pointer; font-family:inherit; box-shadow:0 6px 20px rgba(247,151,30,0.35);">Close</button>
@@ -1971,12 +1980,31 @@ function toggleFaq(i) {
 }
 </style>
 
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
     // ── MENU ─────────────────────────────────────────────────────
     function toggleMenu() {
-        document.getElementById('navLinks').classList.toggle('open');
+        const nav = document.getElementById('navLinks');
+        const btn = document.getElementById('hamburgerBtn');
+        const isOpen = nav.classList.toggle('open');
+        btn.setAttribute('aria-expanded', isOpen);
+    }
+
+    document.addEventListener('click', function(e) {
+        const nav = document.getElementById('navLinks');
+        if (nav.classList.contains('open') && !e.target.closest('nav')) {
+            nav.classList.remove('open');
+            document.getElementById('hamburgerBtn').setAttribute('aria-expanded', 'false');
+        }
+    });
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeModal();
+    });
+
+    function handleModalBackdrop(e) {
+        if (e.target === document.getElementById('resultsModal')) closeModal();
     }
 
     // ── WEATHER ──────────────────────────────────────────────────
@@ -2017,10 +2045,10 @@ function toggleFaq(i) {
             const canFly = parseFloat(windMs) < 10 && rain < 50 && temp > 0;
             const status = document.getElementById('droneStatus');
             if (canFly) {
-                status.textContent = '✓ Drone Can Fly Today';
+                status.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Drone Can Fly Today';
                 status.className = 'drone-status status-good';
             } else {
-                status.textContent = '✗ Drone Flight Not Recommended';
+                status.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Drone Flight Not Recommended';
                 status.className = 'drone-status status-bad';
             }
         } catch(e) {
@@ -2143,6 +2171,12 @@ function toggleFaq(i) {
             if (!el.value.trim()) { el.style.borderColor = '#ef4444'; valid = false; }
             else el.style.borderColor = '#e8e8e8';
         });
+        // Extra email format check
+        const emailEl = document.getElementById('droneEmail');
+        if (emailEl.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl.value.trim())) {
+            emailEl.style.borderColor = '#ef4444';
+            valid = false;
+        }
         if (!valid) return;
 
         const btn = document.getElementById('droneSubmitBtn');
@@ -2232,12 +2266,9 @@ function toggleFaq(i) {
     document.addEventListener('DOMContentLoaded', function() {
         initCookieBanner();
         loadWeather();
-        buildFaq();
     });
 </script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-    // ── INLINE i18n (EN + NL) ─────────────────────────────────
     const i18n = {
         en: {
             nav_how: "How it Works", nav_pricing: "Pricing", nav_about: "About",
@@ -2259,11 +2290,15 @@ function toggleFaq(i) {
             const key = el.getAttribute('data-i18n');
             if (i18n[lang] && i18n[lang][key]) el.textContent = i18n[lang][key];
         });
-        document.getElementById('langEN').classList.toggle('active', lang === 'en');
-        document.getElementById('langNL').classList.toggle('active', lang === 'nl');
+        const enBtn = document.getElementById('langEN');
+        const nlBtn = document.getElementById('langNL');
+        enBtn.classList.toggle('active', lang === 'en');
+        nlBtn.classList.toggle('active', lang === 'nl');
+        enBtn.setAttribute('aria-pressed', lang === 'en');
+        nlBtn.setAttribute('aria-pressed', lang === 'nl');
     }
 
-    function initLang() { setLang(currentLang); }
+    function initLang() { setLang(currentLang); buildFaq(); }
 
     document.addEventListener('DOMContentLoaded', initLang);
 </script>
