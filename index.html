@@ -1848,10 +1848,10 @@ function toggleFaq(i) {
                             No obligation
                         </div>
                     </div>
-                    <button onclick="referToPartner()" style="background:linear-gradient(135deg,#22c55e,#16a34a); color:white; border:none; padding:14px 36px; border-radius:50px; font-size:15px; font-weight:700; cursor:pointer; width:100%; font-family:inherit; box-shadow:0 6px 20px rgba(34,197,94,0.35); display:flex; align-items:center; justify-content:center; gap:10px;">
+                    <a href="contact.html" style="background:linear-gradient(135deg,#22c55e,#16a34a); color:white; text-decoration:none; padding:14px 36px; border-radius:50px; font-size:15px; font-weight:700; width:100%; font-family:inherit; box-shadow:0 6px 20px rgba(34,197,94,0.35); display:flex; align-items:center; justify-content:center; gap:10px; box-sizing:border-box; white-space:nowrap;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                         Get Free Installation Quote
-                    </button>
+                    </a>
                 </div>
 
                 <button onclick="closeModal()" style="width:100%; background:#f5f5f5; border:none; padding:14px; border-radius:50px; font-size:14px; font-weight:600; cursor:pointer; color:#666; font-family:inherit;">
@@ -1963,16 +1963,16 @@ function toggleFaq(i) {
             const rain = hourIndex >= 0 ? data.hourly.precipitation_probability[hourIndex] : 0;
 
             function weatherLabel(code) {
-                if (code === 0) return 'Clear sky \u2600\uFE0F';
-                if (code <= 2) return 'Partly cloudy \u26C5';
-                if (code === 3) return 'Overcast <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>';
-                if (code <= 49) return 'Foggy \uD83C\uDF2B\uFE0F';
-                if (code <= 59) return 'Drizzle \uD83C\uDF26\uFE0F';
-                if (code <= 69) return 'Rain \uD83C\uDF27\uFE0F';
-                if (code <= 79) return 'Snow \uD83C\uDF28\uFE0F';
-                if (code <= 84) return 'Rain showers \uD83C\uDF26\uFE0F';
-                if (code <= 94) return 'Snow showers \uD83C\uDF28\uFE0F';
-                return 'Thunderstorm \u26C8\uFE0F';
+                if (code === 0) return 'Clear Sky ☀️';
+                if (code <= 2) return 'Partly Cloudy ⛅';
+                if (code === 3) return 'Overcast ☁️';
+                if (code <= 49) return 'Foggy 🌫️';
+                if (code <= 59) return 'Drizzle 🌦️';
+                if (code <= 69) return 'Rainy 🌧️';
+                if (code <= 79) return 'Snowy 🌨️';
+                if (code <= 84) return 'Rain Showers 🌦️';
+                if (code <= 94) return 'Snow Showers 🌨️';
+                return 'Thunderstorm ⛈️';
             }
 
             document.getElementById('tempVal').textContent = temp + '\u00b0C';
@@ -1985,10 +1985,10 @@ function toggleFaq(i) {
             const canFly = parseFloat(windMs) < 10 && rain < 50 && temp > 0;
             const status = document.getElementById('droneStatus');
             if (canFly) {
-                status.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" style="vertical-align:middle;margin-right:6px;"><polyline points="20 6 9 17 4 12"/></svg> Drone Can Fly Today';
+                status.textContent = '✓ Drone Can Fly Today';
                 status.className = 'drone-status status-good';
             } else {
-                status.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="3" style="vertical-align:middle;margin-right:6px;"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Drone Flight Not Recommended';
+                status.textContent = '✗ Drone Flight Not Recommended';
                 status.className = 'drone-status status-bad';
             }
         } catch(e) {
