@@ -29,13 +29,14 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
+        html { scroll-behavior: smooth; overflow-x: hidden; }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: var(--white);
             color: var(--navy);
             overflow-x: hidden;
+            max-width: 100vw;
         }
 
         /* ── NAVBAR ── */
@@ -1108,6 +1109,25 @@
 
         .map-search-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(247,151,30,0.45); }
 
+        .map-locate-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            flex-shrink: 0;
+            background: #fff;
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            color: #f7971e;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .map-locate-btn:hover { background: #fef9f0; border-color: #fde8c3; }
+        .map-locate-btn.loading { animation: locate-spin 1s linear infinite; }
+        @keyframes locate-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
         .map-suggestions {
             position: absolute;
             top: 100%;
@@ -1247,11 +1267,23 @@
             .hero-map-text p { margin-left: auto; margin-right: auto; }
             .map-trust-pills { justify-content: center; }
 
+            .hero-map-badge {
+                white-space: normal;
+                text-align: center;
+                justify-content: center;
+            }
+
             .map-card {
                 border-radius: 20px 20px 0 0;
                 padding: 20px 16px 0;
-                margin: 0 -5%;
-                width: calc(100% + 10%);
+                margin: 0;
+                width: 100%;
+            }
+
+            .map-free-note {
+                flex-wrap: wrap;
+                gap: 4px;
+                font-size: 11px;
             }
 
             #heroMap { height: 240px; }
@@ -1338,7 +1370,9 @@
                     <input type="text" id="addressInput" class="map-search-input" style="width:100%;" placeholder="e.g. Keizersgracht 123, Amsterdam" autocomplete="off" oninput="onMapSearchInput(this.value)" onkeydown="if(event.key==='Enter') doMapSearch()" />
                     <div id="mapSuggestions" class="map-suggestions" style="display:none;"></div>
                 </div>
-                
+                <button type="button" class="map-locate-btn" id="locateBtn" onclick="useMyLocation()" title="Use my current location" aria-label="Use my current location">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg>
+                </button>
             </div>
 
             <!-- Selected address pill -->
@@ -2490,30 +2524,34 @@ function toggleFaq(i) {
 // ── MAP INIT ──────────────────────────────────────────────
 let heroMap, heroMarker;
 let selectedLat = null, selectedLng = null;
-let searchDebounceTimer;
+
+const MARKER_HTML = `<div style="width:26px;height:26px;background:linear-gradient(135deg,#f7971e,#ff4e00);border:3px solid white;border-radius:50% 50% 50% 0;transform:rotate(-45deg);box-shadow:0 4px 14px rgba(247,151,30,0.6);"></div>`;
+
+function getMarkerIcon() {
+    return L.divIcon({ className: '', html: MARKER_HTML, iconSize: [26, 26], iconAnchor: [13, 26] });
+}
 
 document.addEventListener('DOMContentLoaded', function() {
-    if (typeof L === 'undefined') {
-        console.warn('Leaflet not loaded, map disabled.');
-        return;
-    }
-    // Init Leaflet map centred on the Netherlands
-    heroMap = L.map('heroMap', { zoomControl: true, scrollWheelZoom: false }).setView([52.3676, 4.9041], 7);
+    if (typeof L === 'undefined') { console.warn('Leaflet not loaded.'); return; }
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-        maxZoom: 19
+    heroMap = L.map('heroMap', { zoomControl: true, scrollWheelZoom: false }).setView([52.3676, 4.9041], 8);
+
+    // Satellite imagery as the base layer so the visitor can see their actual roof
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Imagery © Esri',
+        maxZoom: 20,
+        maxNativeZoom: 19
     }).addTo(heroMap);
 
-    // Custom orange marker icon
-    const markerIcon = L.divIcon({
-        className: '',
-        html: `<div style="width:22px;height:22px;background:linear-gradient(135deg,#f7971e,#ff4e00);border:3px solid white;border-radius:50% 50% 50% 0;transform:rotate(-45deg);box-shadow:0 4px 12px rgba(247,151,30,0.5);"></div>`,
-        iconSize: [22, 22],
-        iconAnchor: [11, 22]
-    });
+    // Thin label/roads overlay on top of the satellite imagery for orientation
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {
+        attribution: '',
+        maxZoom: 20,
+        maxNativeZoom: 19,
+        opacity: 0.9
+    }).addTo(heroMap);
 
-    // Click on map to pin
+    // Click on map to pin exact location
     heroMap.on('click', function(e) {
         const { lat, lng } = e.latlng;
         setMapPin(lat, lng);
@@ -2522,87 +2560,170 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function setMapPin(lat, lng) {
+    if (typeof L === 'undefined') return;
     selectedLat = lat;
     selectedLng = lng;
-
-    const markerIcon = L.divIcon({
-        className: '',
-        html: `<div style="width:22px;height:22px;background:linear-gradient(135deg,#f7971e,#ff4e00);border:3px solid white;border-radius:50% 50% 50% 0;transform:rotate(-45deg);box-shadow:0 4px 12px rgba(247,151,30,0.5);"></div>`,
-        iconSize: [22, 22],
-        iconAnchor: [11, 22]
-    });
-
     if (heroMarker) {
         heroMarker.setLatLng([lat, lng]);
     } else {
-        heroMarker = L.marker([lat, lng], { icon: markerIcon }).addTo(heroMap);
+        heroMarker = L.marker([lat, lng], { icon: getMarkerIcon() }).addTo(heroMap);
     }
-    heroMap.panTo([lat, lng]);
+    heroMap.setView([lat, lng], 20); // zoom to rooftop level on satellite imagery
 }
 
 async function reverseGeocode(lat, lng) {
     try {
         const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&addressdetails=1`);
         const data = await res.json();
-        const address = data.display_name || `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
-        document.getElementById('addressInput').value = address;
-        showSelectedAddress(address);
+        const a = data.address || {};
+        // Build a clean short label: house number + road + city
+        const parts = [
+            (a.road || '') + (a.house_number ? ' ' + a.house_number : ''),
+            a.city || a.town || a.village || a.municipality || '',
+        ].filter(Boolean);
+        const label = parts.length ? parts.join(', ') : data.display_name;
+        document.getElementById('addressInput').value = label;
+        showSelectedAddress(label);
     } catch(e) {
-        const address = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
-        document.getElementById('addressInput').value = address;
-        showSelectedAddress(address);
+        const label = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+        document.getElementById('addressInput').value = label;
+        showSelectedAddress(label);
     }
 }
 
 function showSelectedAddress(addr) {
     const el = document.getElementById('mapSelectedAddress');
     const txt = document.getElementById('mapSelectedText');
+    if (!el || !txt) return;
     txt.textContent = addr.length > 60 ? addr.substring(0, 60) + '…' : addr;
     el.classList.add('visible');
 }
 
+// ── USE MY LOCATION ───────────────────────────────────────
+function useMyLocation() {
+    const btn = document.getElementById('locateBtn');
+    if (!navigator.geolocation) {
+        alert('Location is not supported by your browser. Please search or click your address on the map instead.');
+        return;
+    }
+    btn.classList.add('loading');
+    navigator.geolocation.getCurrentPosition(
+        function(pos) {
+            btn.classList.remove('loading');
+            const { latitude, longitude } = pos.coords;
+            setMapPin(latitude, longitude);
+            reverseGeocode(latitude, longitude);
+        },
+        function(err) {
+            btn.classList.remove('loading');
+            alert('Could not get your location. Please allow location access, or search/click your address on the map.');
+        },
+        { enableHighAccuracy: true, timeout: 10000 }
+    );
+}
+
+// ── SUGGESTIONS ───────────────────────────────────────────
 let suggTimeout;
+let currentSuggestions = [];
+
 function onMapSearchInput(val) {
     clearTimeout(suggTimeout);
     const box = document.getElementById('mapSuggestions');
-    if (val.length < 3) { box.style.display = 'none'; return; }
-    suggTimeout = setTimeout(() => fetchSuggestions(val), 350);
+    if (val.length < 2) { box.style.display = 'none'; currentSuggestions = []; return; }
+    suggTimeout = setTimeout(() => fetchSuggestions(val), 280);
+}
+
+function formatSuggestion(r) {
+    const a = r.address || {};
+    const road = a.road || a.pedestrian || a.path || '';
+    const num  = a.house_number || '';
+    const city = a.city || a.town || a.village || a.municipality || '';
+    const post = a.postcode || '';
+    const line1 = road ? (road + (num ? ' ' + num : '')) : r.display_name.split(',')[0];
+    const line2 = [post, city].filter(Boolean).join(' ');
+    return { line1, line2 };
 }
 
 async function fetchSuggestions(query) {
     try {
-        const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&countrycodes=nl&limit=5&addressdetails=1`);
+        const res = await fetch(
+            `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&countrycodes=nl&limit=6&addressdetails=1`
+        );
         const results = await res.json();
         const box = document.getElementById('mapSuggestions');
         if (!results.length) { box.style.display = 'none'; return; }
-        box.innerHTML = results.map(r => `
-            <div class="map-suggestion-item" onclick="selectSuggestion(${r.lat}, ${r.lon}, ${JSON.stringify(r.display_name).replace(/'/g, "\'")})">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-                ${r.display_name}
-            </div>`).join('');
+
+        currentSuggestions = results;
+        box.innerHTML = results.map((r, i) => {
+            const { line1, line2 } = formatSuggestion(r);
+            return `
+            <div class="map-suggestion-item" data-idx="${i}" onclick="selectSuggestion(${i})">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f7971e" stroke-width="2" style="flex-shrink:0;"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                <div>
+                    <div style="font-weight:600; color:#1a1a1a; font-size:13px;">${line1}</div>
+                    ${line2 ? `<div style="font-size:11px; color:#9ca3af; margin-top:1px;">${line2}</div>` : ''}
+                </div>
+            </div>`;
+        }).join('');
         box.style.display = 'block';
     } catch(e) {}
 }
 
-function selectSuggestion(lat, lng, displayName) {
-    document.getElementById('addressInput').value = displayName;
+function selectSuggestion(idx) {
+    const r = currentSuggestions[idx];
+    if (!r) return;
+    const { line1, line2 } = formatSuggestion(r);
+    const label = line2 ? `${line1}, ${line2}` : line1;
+    document.getElementById('addressInput').value = label;
     document.getElementById('mapSuggestions').style.display = 'none';
-    setMapPin(parseFloat(lat), parseFloat(lng));
-    heroMap.setView([parseFloat(lat), parseFloat(lng)], 15);
-    showSelectedAddress(displayName);
+    currentSuggestions = [];
+    const lat = parseFloat(r.lat), lng = parseFloat(r.lon);
+    setMapPin(lat, lng);
+    showSelectedAddress(label);
 }
+
+// Keyboard: Enter on input triggers search; Arrow keys navigate suggestions
+document.addEventListener('DOMContentLoaded', function() {
+    const input = document.getElementById('addressInput');
+    if (!input) return;
+    input.addEventListener('keydown', function(e) {
+        const box = document.getElementById('mapSuggestions');
+        const items = box ? box.querySelectorAll('.map-suggestion-item') : [];
+        const active = box ? box.querySelector('.map-suggestion-item.hovered') : null;
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            const next = active ? active.nextElementSibling : items[0];
+            if (active) active.classList.remove('hovered');
+            if (next) { next.classList.add('hovered'); next.scrollIntoView({ block: 'nearest' }); }
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            const prev = active ? active.previousElementSibling : items[items.length - 1];
+            if (active) active.classList.remove('hovered');
+            if (prev) { prev.classList.add('hovered'); prev.scrollIntoView({ block: 'nearest' }); }
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+            if (active) {
+                active.click();
+            } else {
+                doMapSearch();
+            }
+        } else if (e.key === 'Escape') {
+            if (box) box.style.display = 'none';
+        }
+    });
+});
 
 async function doMapSearch() {
     const query = document.getElementById('addressInput').value.trim();
     document.getElementById('mapSuggestions').style.display = 'none';
     if (!query) return;
+    if (currentSuggestions.length) { selectSuggestion(0); return; }
     try {
-        const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&countrycodes=nl&limit=1`);
+        const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&countrycodes=nl&limit=1&addressdetails=1`);
         const results = await res.json();
         if (results.length) {
-            const r = results[0];
-            selectSuggestion(r.lat, r.lon, r.display_name);
-            analyzeAddress();
+            currentSuggestions = results;
+            selectSuggestion(0);
         }
     } catch(e) {}
 }
