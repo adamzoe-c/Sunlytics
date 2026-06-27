@@ -2046,7 +2046,12 @@ function toggleFaq(i) {
             </div>
             <div style="margin-bottom:14px;">
                 <label style="font-size:13px; font-weight:600; color:#1a1a1a; margin-bottom:6px; display:block;">Phone Number</label>
-                <input type="tel" id="dronePhone" placeholder="+31 6 12345678" style="width:100%; padding:15px 18px; border:2px solid #e8e8e8; border-radius:12px; font-size:15px; outline:none; font-family:inherit; background:#ffffff; transition:border-color 0.2s;" onfocus="this.style.borderColor='#f7971e'" onblur="this.style.borderColor='#e8e8e8'">
+                <div id="phoneWrap" style="display:flex; align-items:stretch; width:100%; border:2px solid #e8e8e8; border-radius:12px; overflow:hidden; background:#ffffff; transition:border-color 0.2s;">
+                    <div style="display:flex; align-items:center; gap:7px; padding:0 14px; background:#f5f5f5; border-right:2px solid #e8e8e8; font-size:15px; font-weight:600; color:#374151; white-space:nowrap; flex-shrink:0;">
+                        <span style="font-size:17px; line-height:1;">🇳🇱</span> +31
+                    </div>
+                    <input type="tel" id="dronePhone" placeholder="6 12345678" style="flex:1; min-width:0; padding:15px 18px; border:none; border-radius:0; font-size:15px; outline:none; font-family:inherit; background:transparent;" onfocus="document.getElementById('phoneWrap').style.borderColor='#f7971e'" onblur="document.getElementById('phoneWrap').style.borderColor='#e8e8e8'">
+                </div>
             </div>
             <div style="margin-bottom:24px;">
                 <label style="font-size:13px; font-weight:600; color:#1a1a1a; margin-bottom:6px; display:block;">Property Address</label>
@@ -2270,7 +2275,8 @@ function toggleFaq(i) {
     async function submitDroneOrder() {
         const name    = document.getElementById('droneName').value.trim();
         const email   = document.getElementById('droneEmail').value.trim();
-        const phone   = document.getElementById('dronePhone').value.trim();
+        const phoneLocal = document.getElementById('dronePhone').value.trim();
+        const phone   = phoneLocal ? ('+31 ' + phoneLocal.replace(/^\+?31\s*/, '')) : '';
         const address = document.getElementById('droneAddress').value.trim();
 
         // Validate
