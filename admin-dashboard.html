@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin — Sunlytics Control Panel</title>
+<title>Admin - Sunlytics Control Panel</title>
 <meta name="robots" content="noindex">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <style>
@@ -354,7 +354,7 @@ tr:hover td{background:#fafafa;}
     <div class="form-row">
       <div class="form-group">
         <label>Customer Phone</label>
-        <input type="tel" id="mCustomerPhone" placeholder="+371 20000000">
+        <input type="tel" id="mCustomerPhone" placeholder="+31 20000000">
       </div>
       <div class="form-group">
         <label>Price (€)</label>
@@ -363,15 +363,15 @@ tr:hover td{background:#fafafa;}
     </div>
     <div class="form-group">
       <label>Full Address *</label>
-      <input type="text" id="mAddress" placeholder="Brīvības iela 1, Riga">
+        <input type="text" id="mAddress" placeholder="Keizersgracht 123, Amsterdam">
     </div>
     <div class="form-row">
       <div class="form-group">
         <label>City *</label>
         <select id="mCity">
-          <option>Riga</option><option>Liepāja</option><option>Daugavpils</option>
-          <option>Jelgava</option><option>Jūrmala</option><option>Ventspils</option>
-          <option>Rēzekne</option><option>Valmiera</option><option>Jēkabpils</option>
+          <option>Amsterdam</option><option>Groningen</option><option>Utrecht</option>
+          <option>Den Haag</option><option>Rotterdam</option><option>Breda</option>
+          <option>Tilburg</option><option>Almere</option><option>Eindhoven</option>
         </select>
       </div>
       <div class="form-group">
@@ -386,8 +386,8 @@ tr:hover td{background:#fafafa;}
       <div class="form-group">
         <label>Package</label>
         <select id="mPackage">
-          <option value="drone">Drone Report — €149</option>
-          <option value="premium">Premium Report — €249</option>
+          <option value="drone">Drone Report (€149)</option>
+          <option value="premium">Premium Report (€249)</option>
         </select>
       </div>
       <div class="form-group">
@@ -428,7 +428,7 @@ tr:hover td{background:#fafafa;}
 <script>
 const SUPABASE_URL = 'https://keeityfejyfqqsvcqfsz.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_A6r_0AtMpEs_KBJIJJXmYg_mq66XazY';
-const ADMIN_EMAIL  = 'info@sunlytics.lv';
+const ADMIN_EMAIL  = 'info@sunlytics.nl';
 const { createClient } = supabase;
 const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -649,12 +649,12 @@ async function approvePilot(id){
       }
       showToast(`Approved! Welcome email sent to ${pilot.email}`);
     } else {
-      // Auth invite may have failed (e.g. user already exists) — still approved
-      showToast(`Approved! Note: could not send invite email — pilot may already have an account.`,'warning');
+      // Auth invite may have failed (e.g. user already exists), still approved
+      showToast(`Approved! Note: could not send invite email. Pilot may already have an account.`,'warning');
     }
   } catch(e) {
     // Still approved even if email fails
-    showToast(`Approved! (Email notification failed — check Supabase email settings)`,'warning');
+    showToast(`Approved! (Email notification failed, check Supabase email settings)`,'warning');
   }
 
   btn.disabled=false; btn.innerHTML='Approve';
@@ -752,7 +752,7 @@ function subscribeRealtime(){
       showToast('New drone image uploaded!');
       // Browser notification for admin
       if(Notification.permission==='granted'){
-        new Notification('Sunlytics — New Drone Images!',{
+        new Notification('Sunlytics: New Drone Images!',{
           body:'A pilot just uploaded images. Check the Images section.',
           icon:'favicon-32.png'
         });

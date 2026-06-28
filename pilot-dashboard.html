@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pilot Dashboard — Sunlytics</title>
+<title>Pilot Dashboard - Sunlytics</title>
 <meta name="robots" content="noindex">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <meta name="theme-color" content="#f7971e">
@@ -309,7 +309,6 @@ nav{
 <!-- NAV -->
 <nav>
   <a class="logo" href="index.html">
-    <img src="logo.png" alt="Sunlytics" onerror="this.style.display='none'">
     <span class="logo-text">SUNLYTICS</span>
   </a>
   <div class="nav-right">
@@ -317,8 +316,8 @@ nav{
       <button class="lang-btn active" id="btnEN" onclick="setLang('en')">
         <img src="united-kingdom.png" alt="EN"> EN
       </button>
-      <button class="lang-btn" id="btnLV" onclick="setLang('lv')">
-        <img src="latvia.png" alt="LV"> LV
+      <button class="lang-btn" id="btnNL" onclick="setLang('nl')">
+        <img src="netherlands.png" alt="NL"> NL
       </button>
     </div>
     <button class="notif-bell" onclick="toggleNotifPanel()">
@@ -392,7 +391,7 @@ nav{
     <div class="section-title">
       <!-- Red dot / live icon -->
       <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--red)" stroke="none"><circle cx="12" cy="12" r="10"/></svg>
-      <span data-i18n="section_open">Open Missions — Claim First!</span>
+      <span data-i18n="section_open">Open Missions: Claim First!</span>
     </div>
     <div class="section-badge" id="openBadge">0 available</div>
   </div>
@@ -462,7 +461,7 @@ const T = {
     stat_open:'Open Missions Nearby', stat_available:'available now',
     stat_earnings:'Total Earnings', stat_estimated:'estimated',
     stat_rating:'Your Rating', stat_outof:'out of 5.0',
-    section_open:'Open Missions — Claim First!',
+    section_open:'Open Missions: Claim First!',
     section_mine:'My Active Missions',
     empty_open_h:'No open missions right now',
     empty_open_p:'We\'ll notify you instantly when a new mission appears!',
@@ -481,31 +480,31 @@ const T = {
     new_mission_notif:'New mission in your area!',
     open_badge:'available',
   },
-  lv:{
-    btn_logout:'Iziet', notif_title:'Paziņojumi', notif_clear:'Atzīmēt visus',
-    notif_empty:'Pagaidām nav paziņojumu',
-    stat_completed:'Pabeigtās misijas', stat_alltime:'kopā',
-    stat_open:'Atvērtās misijas', stat_available:'pieejamas tagad',
-    stat_earnings:'Kopējie ienākumi', stat_estimated:'aptuveni',
-    stat_rating:'Jūsu vērtējums', stat_outof:'no 5.0',
-    section_open:'Atvērtās misijas — Pieņem pirmais!',
-    section_mine:'Manas aktīvās misijas',
-    empty_open_h:'Pašlaik nav atvērtu misiju',
-    empty_open_p:'Mēs jūs nekavējoties informēsim, kad parādīsies jauna misija!',
-    empty_mine_h:'Nav aktīvu misiju',
-    empty_mine_p:'Pieņemiet misiju augstāk, lai sāktu!',
-    modal_accept_h:'Pieņemt šo misiju?',
-    modal_cancel:'Atcelt', modal_confirm:'Jā, lidošu!',
-    btn_accept:'Pieņemt misiju', btn_upload:'Augšupielādēt attēlus',
-    btn_view:'Skatīt detaļas',
-    toast_accepted:'Misija pieņemta! Pārbaudiet e-pastu.',
-    toast_taken:'Atvainojiet! Cits pilots tikko pieņēma šo misiju.',
-    toast_error:'Kaut kas nogāja greizi. Lūdzu, mēģiniet vēlreiz.',
-    status_open:'Pieejama', status_assigned:'Pieņemta', status_flying:'Lido',
-    status_uploaded:'Attēli augšupielādēti', status_completed:'Pabeigta',
-    deadline_label:'Termiņš:',
-    new_mission_notif:'Jauna misija jūsu rajonā!',
-    open_badge:'pieejamas',
+  nl:{
+    btn_logout:'Uitloggen', notif_title:'Meldingen', notif_clear:'Alles als gelezen markeren',
+    notif_empty:'Nog geen meldingen',
+    stat_completed:'Voltooide missies', stat_alltime:'totaal',
+    stat_open:'Open missies in de buurt', stat_available:'nu beschikbaar',
+    stat_earnings:'Totale inkomsten', stat_estimated:'geschat',
+    stat_rating:'Uw beoordeling', stat_outof:'van 5.0',
+    section_open:'Open missies, wees er snel bij!',
+    section_mine:'Mijn actieve missies',
+    empty_open_h:'Momenteel geen open missies',
+    empty_open_p:'We laten het u direct weten zodra er een nieuwe missie verschijnt!',
+    empty_mine_h:'Geen actieve missies',
+    empty_mine_p:'Accepteer hierboven een missie om te beginnen!',
+    modal_accept_h:'Deze missie accepteren?',
+    modal_cancel:'Annuleren', modal_confirm:'Ja, ik vlieg dit!',
+    btn_accept:'Missie accepteren', btn_upload:'Afbeeldingen uploaden',
+    btn_view:'Details bekijken',
+    toast_accepted:'Missie geaccepteerd! Bekijk uw e-mail voor details.',
+    toast_taken:'Sorry! Een andere piloot heeft deze missie net geaccepteerd.',
+    toast_error:'Er is iets misgegaan. Probeer het opnieuw.',
+    status_open:'Beschikbaar', status_assigned:'Geaccepteerd', status_flying:'Aan het vliegen',
+    status_uploaded:'Afbeeldingen geüpload', status_completed:'Voltooid',
+    deadline_label:'Deadline:',
+    new_mission_notif:'Nieuwe missie in uw regio!',
+    open_badge:'beschikbaar',
   }
 };
 
@@ -526,7 +525,7 @@ function setLang(l){
     if(T[l][k]) el.textContent=T[l][k];
   });
   document.getElementById('btnEN').classList.toggle('active',l==='en');
-  document.getElementById('btnLV').classList.toggle('active',l==='lv');
+  document.getElementById('btnNL').classList.toggle('active',l==='nl');
   renderAll();
 }
 
@@ -755,7 +754,7 @@ function subscribeRealtime(){
         el.insertAdjacentHTML('afterbegin', missionCard(m, true));
         if(Notification.permission==='granted'){
           new Notification(t('new_mission_notif'),{
-            body:`${m.address} — €${m.price||149}`,
+            body:`${m.address} (€${m.price||149})`,
             icon:'favicon-32.png'
           });
         }
@@ -807,8 +806,8 @@ function renderNotifications(notifs){
   }
   list.innerHTML = notifs.map(n=>`
     <div class="notif-item ${n.read?'':'unread'}" onclick="markRead('${n.id}')">
-      <div class="notif-item-title">${lang==='lv'&&n.title_lv ? n.title_lv : n.title}</div>
-      <div class="notif-item-msg">${lang==='lv'&&n.message_lv ? n.message_lv : n.message}</div>
+      <div class="notif-item-title">${lang==='nl'&&n.title_nl ? n.title_nl : n.title}</div>
+      <div class="notif-item-msg">${lang==='nl'&&n.message_nl ? n.message_nl : n.message}</div>
       <div class="notif-item-time">${timeAgo(n.created_at)}</div>
     </div>`).join('');
 }
@@ -849,7 +848,8 @@ init();
 </script>
 
 <footer style="text-align:center;padding:20px;font-size:12px;color:var(--gray);border-top:1px solid var(--border);margin-top:8px;">
-  <p>&copy; 2026 Sunlytics &nbsp;&bull;&nbsp; <a href="privacy.html" style="color:var(--orange);text-decoration:none;">Privacy</a> &nbsp;&bull;&nbsp; <a href="terms.html" style="color:var(--orange);text-decoration:none;">Terms</a> &nbsp;&bull;&nbsp; <a href="contact.html" style="color:var(--orange);text-decoration:none;">Contact</a></p>
+  <p style="margin:0 0 6px;">&copy; 2026 Sunlytics. All rights reserved.</p>
+  <p style="margin:0; display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap; font-size:14px;"><a href="privacy.html" style="color:var(--orange-dark);text-decoration:none;">Privacy Policy</a> <span style="opacity:0.4;">&middot;</span> <a href="terms.html" style="color:var(--orange-dark);text-decoration:none;">Terms of Service</a> <span style="opacity:0.4;">&middot;</span> <a href="contact.html" style="color:var(--orange-dark);text-decoration:none;">Contact</a></p>
 </footer>
 </body>
 </html>

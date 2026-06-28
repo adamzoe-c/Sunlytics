@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pilot Login — Sunlytics</title>
+<title>Pilot Login - Sunlytics</title>
 <meta name="robots" content="noindex">
-<meta name="description" content="Sunlytics pilot portal — sign in to access your drone mission dashboard.">
+<meta name="description" content="Sunlytics pilot portal - sign in to access your drone mission dashboard.">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <meta name="theme-color" content="#f7971e">
 <style>
@@ -145,15 +145,14 @@ main{flex:1;display:flex;align-items:center;justify-content:center;padding:24px 
 @keyframes spin{to{transform:rotate(360deg);}}
 .spinner{width:18px;height:18px;border:2px solid rgba(255,255,255,0.4);border-top-color:white;border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0;}
 
-footer{text-align:center;padding:18px;font-size:12px;color:var(--gray);}
-footer a{color:var(--orange);text-decoration:none;}
+footer{text-align:center;padding:18px;font-size:13px;color:var(--gray);}
+footer a{color:var(--orange-dark);text-decoration:none;font-size:14px;}
 </style>
 <script src="lang.js"></script>
 </head>
 <body>
 <nav>
     <a href="index.html" class="logo">
-        <img src="logo.png" alt="Sunlytics" onerror="this.style.display='none'">
         <span class="logo-text">SUNLYTICS</span>
     </a>
     <ul class="nav-links" id="navLinks">
@@ -170,8 +169,8 @@ footer a{color:var(--orange);text-decoration:none;}
             <button class="lang-btn active" id="langEN" onclick="setLang('en')">
                 <img src="united-kingdom.png" alt="English"> EN
             </button>
-            <button class="lang-btn" id="langLV" onclick="setLang('lv')">
-                <img src="latvia.png" alt="Latviešu"> LV
+            <button class="lang-btn" id="langNL" onclick="setLang('nl')">
+                <img src="netherlands.png" alt="Nederlands"> NL
             </button>
         </div>
         <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')"><span></span><span></span><span></span></button>
@@ -225,7 +224,8 @@ footer a{color:var(--orange);text-decoration:none;}
 </main>
 
 <footer>
-  <p>&copy; 2026 Sunlytics &nbsp;&bull;&nbsp; <a href="privacy.html">Privacy</a> &nbsp;&bull;&nbsp; <a href="terms.html">Terms</a></p>
+  <p style="margin:0 0 6px;">&copy; 2026 Sunlytics. All rights reserved.</p>
+  <p style="margin:0; display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap;"><a href="privacy.html">Privacy Policy</a> <span style="opacity:0.4;">&middot;</span> <a href="terms.html">Terms of Service</a></p>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -237,7 +237,7 @@ const sb=createClient(SUPABASE_URL,SUPABASE_KEY);
 
 const T={
   en:{back_home:'Back to website',login_title:'Pilot Login',login_subtitle:'Sign in to your Sunlytics pilot dashboard',label_email:'Email Address',label_password:'Password',forgot_password:'Forgot password?',btn_login:'Sign In',or_divider:"Don't have an account?",apply_link:'Apply to join the pilot network →',login_success:'Login successful! Redirecting...',err_fill:'Please enter your email and password.',err_invalid:'Invalid email or password. Please try again.',err_notpilot:'Your account is pending approval. We will contact you within 48 hours.'},
-  lv:{back_home:'Atpakaļ uz vietni',login_title:'Pilota Pieteikšanās',login_subtitle:'Pierakstieties savā Sunlytics pilota panelī',label_email:'E-pasta adrese',label_password:'Parole',forgot_password:'Aizmirsāt paroli?',btn_login:'Ieiet',or_divider:'Nav konta?',apply_link:'Pieteikties pilota tīklam →',login_success:'Veiksmīga pieteikšanās! Pāradresācija...',err_fill:'Lūdzu, ievadiet e-pastu un paroli.',err_invalid:'Nepareizs e-pasts vai parole.',err_notpilot:'Jūsu konts gaida apstiprinājumu. 48 stundu laikā sazināsimies.'}
+  nl:{back_home:'Terug naar de website',login_title:'Pilotenlogin',login_subtitle:'Log in op uw Sunlytics pilotendashboard',label_email:'E-mailadres',label_password:'Wachtwoord',forgot_password:'Wachtwoord vergeten?',btn_login:'Inloggen',or_divider:'Nog geen account?',apply_link:'Meld u aan voor het pilotennetwerk →',login_success:'Inloggen gelukt! Doorverwijzen...',err_fill:'Vul uw e-mailadres en wachtwoord in.',err_invalid:'Ongeldig e-mailadres of wachtwoord. Probeer het opnieuw.',err_notpilot:'Uw account wacht op goedkeuring. We nemen binnen 48 uur contact met u op.'}
 };
 let lang=localStorage.getItem('sunlytics_lang')||'en';
 
