@@ -544,7 +544,7 @@ function openAcceptModal(mission){
   pendingAcceptId = mission.id;
   document.getElementById('modalMissionDetail').innerHTML =
     `<strong>${mission.address}</strong><br>${mission.city}<br><br>
-     <strong>€${mission.price || 149}</strong> &middot; ${mission.city}`;
+     <strong>€${mission.price || 40}</strong> &middot; ${mission.city}`;
   document.getElementById('acceptModal').classList.add('open');
 }
 
@@ -668,7 +668,7 @@ function missionCard(m, isNew=false){
       </div>
       <div class="mission-status">
         ${statusPill(m.status)}
-        <div class="mission-price">€${m.price||149}</div>
+        <div class="mission-price">€${m.price||40}</div>
       </div>
     </div>
     <div class="mission-bottom">
