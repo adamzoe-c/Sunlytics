@@ -354,7 +354,7 @@ tr:hover td{background:#fafafa;}
     <div class="form-row">
       <div class="form-group">
         <label>Customer Phone</label>
-        <input type="tel" id="mCustomerPhone" placeholder="+31 20000000">
+        <input type="tel" id="mCustomerPhone" placeholder="+370 52000000">
       </div>
       <div class="form-group">
         <label>Price (€)</label>
@@ -363,15 +363,15 @@ tr:hover td{background:#fafafa;}
     </div>
     <div class="form-group">
       <label>Full Address *</label>
-        <input type="text" id="mAddress" placeholder="Keizersgracht 123, Amsterdam">
+        <input type="text" id="mAddress" placeholder="Gedimino pr. 9, Vilnius">
     </div>
     <div class="form-row">
       <div class="form-group">
         <label>City *</label>
         <select id="mCity">
-          <option>Amsterdam</option><option>Groningen</option><option>Utrecht</option>
-          <option>Den Haag</option><option>Rotterdam</option><option>Breda</option>
-          <option>Tilburg</option><option>Almere</option><option>Eindhoven</option>
+          <option>Vilnius</option><option>Marijampolė</option><option>Klaipėda</option>
+          <option>Šiauliai</option><option>Kaunas</option><option>Kėdainiai</option>
+          <option>Mažeikiai</option><option>Jonava</option><option>Panevėžys</option>
         </select>
       </div>
       <div class="form-group">
@@ -428,7 +428,7 @@ tr:hover td{background:#fafafa;}
 <script>
 const SUPABASE_URL = 'https://keeityfejyfqqsvcqfsz.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_A6r_0AtMpEs_KBJIJJXmYg_mq66XazY';
-const ADMIN_EMAIL  = 'info@sunlytics.nl';
+const ADMIN_EMAIL  = 'info@sunlytics.lt';
 const { createClient } = supabase;
 const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -765,5 +765,33 @@ function subscribeRealtime(){
 
 init();
 </script>
+<!-- COOKIE CONSENT -->
+<div id="cookieBanner" style="display:none; position:fixed; bottom:0; left:0; right:0; z-index:9999; background:#1a1a1a; padding:18px 20px; box-shadow:0 -4px 20px rgba(0,0,0,0.25);">
+    <div style="max-width:1100px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;">
+        <p style="margin:0; font-size:13px; line-height:1.5; color:rgba(255,255,255,0.85); flex:1; min-width:240px;">We use cookies to improve your experience and analyze site traffic. By continuing, you agree to our <a href="privacy.html" style="color:#f7971e; text-decoration:underline;">Privacy Policy</a>.</p>
+        <div style="display:flex; gap:10px; flex-shrink:0;">
+            <button onclick="sunlyticsCookieConsent(false)" style="padding:10px 18px; border-radius:8px; border:1px solid rgba(255,255,255,0.25); background:transparent; color:#fff; font-size:13px; cursor:pointer; font-family:inherit;">Decline</button>
+            <button onclick="sunlyticsCookieConsent(true)" style="padding:10px 18px; border-radius:8px; border:none; background:linear-gradient(135deg,#f7971e,#ff4e00); color:#fff; font-weight:600; font-size:13px; cursor:pointer; font-family:inherit;">Accept</button>
+        </div>
+    </div>
+</div>
+<script>
+(function () {
+    try {
+        if (!localStorage.getItem('sunlytics_cookie_consent')) {
+            document.addEventListener('DOMContentLoaded', function () {
+                var b = document.getElementById('cookieBanner');
+                if (b) b.style.display = 'block';
+            });
+        }
+    } catch (e) {}
+})();
+function sunlyticsCookieConsent(accepted) {
+    try { localStorage.setItem('sunlytics_cookie_consent', accepted ? 'accepted' : 'declined'); } catch (e) {}
+    var b = document.getElementById('cookieBanner');
+    if (b) b.style.display = 'none';
+}
+</script>
+
 </body>
 </html>

@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://sunlytics.eu/">
-    <meta property="og:title" content="Sunlytics — Solar Roof Analysis & Drone Inspection Netherlands">
-    <meta property="og:description" content="AI-powered solar roof analysis and certified drone inspection service in the Netherlands. Get your free solar analysis today.">
+    <meta property="og:title" content="Sunlytics — Solar Roof Analysis & Drone Inspection Lithuania">
+    <meta property="og:description" content="AI-powered solar roof analysis and certified drone inspection service in Lithuania. Get your free solar analysis today.">
     <meta property="og:image" content="https://sunlytics.eu/og-image.jpg">
     <meta property="og:site_name" content="Sunlytics">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <meta name="theme-color" content="#f7971e">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
-    <meta name="description" content="Sunlytics — AI-powered solar roof analysis and certified drone inspection service in the Netherlands. Get your free solar analysis today.">
+    <meta name="description" content="Sunlytics — AI-powered solar roof analysis and certified drone inspection service in Lithuania. Get your free solar analysis today.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="canonical" href="https://sunlytics.eu/">
     <title>Sunlytics - Solar Roof Analysis</title>
@@ -787,7 +787,9 @@
             border-radius: 20px;
             padding: 32px 40px;
             text-align: center;
-            min-width: 150px;
+            width: 190px;
+            min-width: 190px;
+            box-sizing: border-box;
             transition: background 0.3s;
         }
 
@@ -1316,9 +1318,9 @@
                 <img src="united-kingdom.png" alt="English">
                 EN
             </button>
-            <button class="lang-btn" id="langNL" onclick="setLang('nl')" aria-label="Switch to Dutch" aria-pressed="false">
-                <img src="netherlands.png" alt="Nederlands">
-                NL
+            <button class="lang-btn" id="langLT" onclick="setLang('lt')" aria-label="Switch to Lithuanian" aria-pressed="false">
+                <img src="lithuania.png" alt="Lietuvių">
+                LT
             </button>
         </div>
         <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle navigation menu" aria-expanded="false" id="hamburgerBtn"><span></span><span></span><span></span></button>
@@ -1331,8 +1333,8 @@
         <!-- Left: text -->
         <div class="hero-map-text">
             <div class="hero-map-badge">
-                <img src="netherlands.png" alt="Netherlands" style="width:18px;height:18px;object-fit:contain;border-radius:2px;">
-                Serving the Netherlands &nbsp;·&nbsp; Results in 60 seconds
+                <img src="lithuania.png" alt="Lithuania" style="width:18px;height:18px;object-fit:contain;border-radius:2px;">
+                Serving Lithuania &nbsp;·&nbsp; Results in 60 seconds
             </div>
             <h1 data-i18n="hero_h1">Know Your Roof's<br><span>Solar Potential</span><br>Instantly</h1>
             <p data-i18n="hero_p">Pin your address on the map or search below. Get a free AI-powered solar analysis in seconds. No engineers, no waiting, no cost.</p>
@@ -1367,7 +1369,7 @@
             <div class="map-search-row" style="position:relative;">
                 <div class="map-search-wrap" style="position:relative; flex:1;">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-                    <input type="text" id="addressInput" class="map-search-input" style="width:100%;" placeholder="e.g. Keizersgracht 123, Amsterdam" autocomplete="off" oninput="onMapSearchInput(this.value)" onkeydown="if(event.key==='Enter') doMapSearch()" />
+                    <input type="text" id="addressInput" class="map-search-input" style="width:100%;" placeholder="e.g. Gedimino pr. 9, Vilnius" autocomplete="off" oninput="onMapSearchInput(this.value)" onkeydown="if(event.key==='Enter') doMapSearch()" />
                     <div id="mapSuggestions" class="map-suggestions" style="display:none;"></div>
                 </div>
                 <button type="button" class="map-locate-btn" id="locateBtn" onclick="useMyLocation()" title="Use my current location" aria-label="Use my current location">
@@ -1433,7 +1435,7 @@
         <div class="step">
             <div class="step-icon"><span style="width:28px;height:28px;display:inline-block;vertical-align:middle;flex-shrink:0;color:white;stroke:white;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span></div>
             <h3 data-i18n="step1_title">Enter Your Address</h3>
-            <p data-i18n="step1_desc">Type your building address anywhere in the Netherlands. Our system instantly pulls satellite imagery of your roof.</p>
+            <p data-i18n="step1_desc">Type your building address anywhere in Lithuania. Our system instantly pulls satellite imagery of your roof.</p>
         </div>
         <div class="step">
             <div class="step-icon"><span style="width:28px;height:28px;display:inline-block;vertical-align:middle;flex-shrink:0;color:white;stroke:white;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg></span></div>
@@ -1573,7 +1575,7 @@
 <section class="section-wrap" id="weather">
     <div class="section-tag">Live Status</div>
     <div class="section-title">Drone Flight <span>Weather Status</span></div>
-    <div class="section-subtitle">Real-time conditions for drone operations across the Netherlands</div>
+    <div class="section-subtitle">Real-time conditions for drone operations across Lithuania</div>
     <div class="weather-widget">
         <div class="drone-status status-loading" id="droneStatus">
             Checking conditions...
@@ -1601,7 +1603,7 @@
             </div>
         </div>
         <div class="weather-note">
-            Weather data for Amsterdam, Netherlands. Drone flights are scheduled when wind is below 10 m/s, rain chance below 50%, and temperature above 0&deg;C.
+            Weather data for Vilnius, Lithuania. Drone flights are scheduled when wind is below 10 m/s, rain chance below 50%, and temperature above 0&deg;C.
         </div>
     </div>
 </section>
@@ -1609,12 +1611,12 @@
 <!-- COVERAGE -->
 <section class="coverage-section">
     <div class="section-tag">Coverage</div>
-    <div class="section-title">Serving the <span>Netherlands</span></div>
-    <div class="section-subtitle" style="margin-bottom:48px;">Currently active in the Netherlands. More EU countries coming soon.</div>
+    <div class="section-title">Serving the <span>Lithuania</span></div>
+    <div class="section-subtitle" style="margin-bottom:48px;">Currently active in Lithuania. More EU countries coming soon.</div>
     <div class="coverage-flags">
         <div class="flag-card">
-            <img src="netherlands.png" alt="Netherlands">
-            <div class="country">Netherlands</div>
+            <img src="lithuania.png" alt="Lithuania">
+            <div class="country">Lithuania</div>
             <div class="status">Active Now</div>
         </div>
         <div class="flag-card">
@@ -1631,7 +1633,7 @@
 <section style="padding:90px 5%; background:#f5f5f5; text-align:center;">
     <div style="display:inline-block; background:#ffffff; color:#c45000; padding:5px 16px; border-radius:50px; font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:16px;">Reviews</div>
     <div style="font-size:clamp(28px,3.5vw,44px); font-weight:800; color:#1a1a1a; letter-spacing:-0.5px; margin-bottom:14px;">What Our <span style="background:linear-gradient(135deg,#f7971e,#ff4e00); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">Customers</span> Say</div>
-    <div style="font-size:16px; color:#6b7280; margin-bottom:56px; line-height:1.6;">Real feedback from homeowners and businesses across the Netherlands</div>
+    <div style="font-size:16px; color:#6b7280; margin-bottom:56px; line-height:1.6;">Real feedback from homeowners and businesses across Lithuania</div>
 
     <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px; max-width:1050px; margin:0 auto;" class="testimonials-grid">
 
@@ -1648,7 +1650,7 @@
                 <div style="width:44px; height:44px; background:linear-gradient(135deg,#f7971e,#ff4e00); border-radius:50%; display:flex; align-items:center; justify-content:center; color:white; font-weight:800; font-size:16px; flex-shrink:0;">A</div>
                 <div>
                     <div style="font-weight:700; font-size:14px; color:#1a1a1a;">Arjan de Vries</div>
-                    <div style="font-size:12px; color:#9ca3af;">Homeowner, Amsterdam</div>
+                    <div style="font-size:12px; color:#9ca3af;">Homeowner, Vilnius</div>
                 </div>
             </div>
         </div>
@@ -1661,12 +1663,12 @@
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="#f7971e"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="#f7971e"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
             </div>
-            <p style="color:#374151; font-size:15px; line-height:1.7; margin-bottom:20px;">"We used Sunlytics for our warehouse in Rotterdam. The free report gave us confidence to invest. After the drone inspection we proceeded with a 48 kWp installation. ROI on track for 3.8 years."</p>
+            <p style="color:#374151; font-size:15px; line-height:1.7; margin-bottom:20px;">"We used Sunlytics for our warehouse in Kaunas. The free report gave us confidence to invest. After the drone inspection we proceeded with a 48 kWp installation. ROI on track for 3.8 years."</p>
             <div style="display:flex; align-items:center; gap:12px;">
                 <div style="width:44px; height:44px; background:linear-gradient(135deg,#f7971e,#ff4e00); border-radius:50%; display:flex; align-items:center; justify-content:center; color:white; font-weight:800; font-size:16px; flex-shrink:0;">M</div>
                 <div>
                     <div style="font-weight:700; font-size:14px; color:#1a1a1a;">Mark van den Berg</div>
-                    <div style="font-size:12px; color:#9ca3af;">Operations Manager, Rotterdam</div>
+                    <div style="font-size:12px; color:#9ca3af;">Operations Manager, Kaunas</div>
                 </div>
             </div>
         </div>
@@ -1684,7 +1686,7 @@
                 <div style="width:44px; height:44px; background:linear-gradient(135deg,#f7971e,#ff4e00); border-radius:50%; display:flex; align-items:center; justify-content:center; color:white; font-weight:800; font-size:16px; flex-shrink:0;">S</div>
                 <div>
                     <div style="font-weight:700; font-size:14px; color:#1a1a1a;">Sophie Bakker</div>
-                    <div style="font-size:12px; color:#9ca3af;">Homeowner, Utrecht</div>
+                    <div style="font-size:12px; color:#9ca3af;">Homeowner, Klaipėda</div>
                 </div>
             </div>
         </div>
@@ -1726,8 +1728,8 @@ const faqData = [
         a: { en: "No problem. We track weather automatically and reschedule your flight if conditions aren't suitable. You can also check the live drone status on our website anytime.", nl: "Geen probleem. We volgen het weer automatisch en plannen uw vlucht opnieuw als de omstandigheden niet geschikt zijn. U kunt ook altijd de live drone-status op onze website bekijken." }
     },
     {
-        q: { en: "Do you cover areas outside Amsterdam?", nl: "Werkt u ook buiten Amsterdam?" },
-        a: { en: "Yes. We have pilots across the Netherlands including Rotterdam, Utrecht, Den Haag, Eindhoven and more. If you are unsure about your area, just contact us.", nl: "Ja. We hebben piloten door heel Nederland, waaronder Rotterdam, Utrecht, Den Haag, Eindhoven en meer. Als u niet zeker bent over uw regio, neem dan gewoon contact met ons op." }
+        q: { en: "Do you cover areas outside Vilnius?", nl: "Werkt u ook buiten Vilnius?" },
+        a: { en: "Yes. We have pilots across Lithuania including Kaunas, Klaipėda, Šiauliai, Panevėžys and more. If you are unsure about your area, just contact us.", nl: "Ja. We hebben piloten door heel Nederland, waaronder Kaunas, Klaipėda, Šiauliai, Panevėžys en meer. Als u niet zeker bent over uw regio, neem dan gewoon contact met ons op." }
     },
     {
         q: { en: "Can I become a drone pilot for Sunlytics?", nl: "Kan ik drone-piloot worden voor Sunlytics?" },
@@ -1797,7 +1799,7 @@ function toggleFaq(i) {
             </div>
             <div style="text-align:left;">
                 <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:#16a34a; margin-bottom:4px;" data-i18n="partner_label">Official Sunlytics Partner</div>
-                <div style="font-size:28px; font-weight:800; color:#1a1a1a;">SolarPro Netherlands</div>
+                <div style="font-size:28px; font-weight:800; color:#1a1a1a;">SolarPro Lithuania</div>
             </div>
         </div>
 
@@ -1821,7 +1823,7 @@ function toggleFaq(i) {
         <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:32px; text-align:left;">
             <div style="display:flex; align-items:center; gap:10px; font-size:14px; font-weight:600; color:#374151;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg>
-                <span data-i18n="trust_certified">Licensed &amp; certified in the Netherlands</span>
+                <span data-i18n="trust_certified">Licensed &amp; certified in Lithuania</span>
             </div>
             <div style="display:flex; align-items:center; gap:10px; font-size:14px; font-weight:600; color:#374151;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg>
@@ -1841,7 +1843,7 @@ function toggleFaq(i) {
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
             <span data-i18n="quote_btn">Get Your Free Installation Quote</span>
         </a>
-        <div style="font-size:12px; color:#6b7280; margin-top:14px;" data-i18n="quote_note">No payment required. A SolarPro Netherlands advisor will contact you within 24 hours.</div>
+        <div style="font-size:12px; color:#6b7280; margin-top:14px;" data-i18n="quote_note">No payment required. A SolarPro Lithuania advisor will contact you within 24 hours.</div>
     </div>
 </section>
 
@@ -1850,7 +1852,7 @@ function toggleFaq(i) {
     <div class="footer-top">
         <div class="footer-brand">
             <div style="font-size:20px; font-weight:800; background:linear-gradient(135deg,var(--orange),var(--orange-dark)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; letter-spacing:1px; text-align:left;">SUNLYTICS</div>
-            <p>Smart solar analysis for the Netherlands. Fast, accurate, and affordable.</p>
+            <p>Smart solar analysis for Lithuania. Fast, accurate, and affordable.</p>
         </div>
         <div class="footer-links">
             <h4>Product</h4>
@@ -1865,9 +1867,9 @@ function toggleFaq(i) {
             <h4>Contact</h4>
             <ul>
                 <li><a href="contact.html"><span data-i18n="nav_contact">Contact Us</span></a></li>
-                <li><a href="mailto:info@sunlytics.nl">info@sunlytics.nl</a></li>
-                <li><a href="https://sunlytics.nl" target="_blank">sunlytics.nl</a></li>
-                <li><a href="https://maps.google.com/?q=Amsterdam,Netherlands" target="_blank" rel="noopener">Amsterdam, Netherlands</a></li>
+                <li><a href="mailto:info@sunlytics.lt">info@sunlytics.lt</a></li>
+                <li><a href="https://sunlytics.lt" target="_blank">sunlytics.lt</a></li>
+                <li><a href="https://maps.google.com/?q=Vilnius,Lithuania" target="_blank" rel="noopener">Vilnius, Lithuania</a></li>
             </ul>
         </div>
     </div>
@@ -1967,7 +1969,7 @@ function toggleFaq(i) {
                 <!-- Disclaimer -->
                 <div style="background:#f0f4ff; border-radius:14px; padding:16px 20px; margin-bottom:24px; display:flex; gap:12px; align-items:flex-start;">
                     <span style="font-size:18px; flex-shrink:0;">&#8505;</span>
-                    <p style="font-size:13px; color:#555; line-height:1.6;">These are <strong>regional average estimates</strong> based on real Dutch solar irradiance data (PVGIS/EU JRC) and a calculated 240 m² roof area. Actual results depend on your specific roof size, orientation and shading. For 100% accurate figures, order our professional drone report.</p>
+                    <p style="font-size:13px; color:#555; line-height:1.6;">These are <strong>regional average estimates</strong> based on real Lithuanian solar irradiance data (PVGIS/EU JRC) and a calculated 240 m² roof area. Actual results depend on your specific roof size, orientation and shading. For 100% accurate figures, order our professional drone report.</p>
                 </div>
 
                 <!-- Drone Report CTA -->
@@ -1980,7 +1982,7 @@ function toggleFaq(i) {
                     </button>
                 </div>
 
-                <!-- SolarPro Netherlands Partner CTA -->
+                <!-- SolarPro Lithuania Partner CTA -->
                 <div style="background:linear-gradient(135deg,#f0fff4,#e6f7ee); border-radius:20px; padding:24px; border:1px solid #a7f3c0; margin-bottom:16px;">
                     <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
                         <div style="width:40px; height:40px; background:linear-gradient(135deg,#22c55e,#16a34a); border-radius:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
@@ -1988,7 +1990,7 @@ function toggleFaq(i) {
                         </div>
                         <div>
                             <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#16a34a;">Certified Installation Partner</div>
-                            <div style="font-size:16px; font-weight:800; color:#1a1a1a;">SolarPro Netherlands</div>
+                            <div style="font-size:16px; font-weight:800; color:#1a1a1a;">SolarPro Lithuania</div>
                         </div>
                         <div style="margin-left:auto; background:#dcfce7; color:#16a34a; font-size:11px; font-weight:700; padding:4px 10px; border-radius:50px; white-space:nowrap;">FREE QUOTE</div>
                     </div>
@@ -2133,7 +2135,7 @@ function toggleFaq(i) {
     // ── WEATHER ──────────────────────────────────────────────────
     async function loadWeather() {
         try {
-            const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=52.3676&longitude=4.9041&current=temperature_2m,wind_speed_10m,weather_code&hourly=precipitation_probability&timezone=Europe/Amsterdam&forecast_days=1');
+            const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=52.3676&longitude=4.9041&current=temperature_2m,wind_speed_10m,weather_code&hourly=precipitation_probability&timezone=Europe/Vilnius&forecast_days=1');
             const data = await res.json();
             const temp = data.current.temperature_2m;
             const windKmh = data.current.wind_speed_10m;
@@ -2207,13 +2209,14 @@ function toggleFaq(i) {
 
     function generateResults(address, lat, lng) {
         const regions = [
-            { names: ['amsterdam'],                                         irr: 1020 },
-            { names: ['rotterdam'],                                         irr: 1035 },
-            { names: ['den haag','the hague','s-gravenhage'],               irr: 1030 },
-            { names: ['utrecht'],                                           irr: 1015 },
-            { names: ['eindhoven'],                                         irr: 1040 },
-            { names: ['groningen'],                                         irr: 1000 },
-            { names: ['maastricht'],                                        irr: 1055 },
+            { names: ['vilnius','kaunas','klaipėda','klaipeda'],              irr: 1050 },
+            { names: ['šiauliai','siauliai'],                                  irr: 1040 },
+            { names: ['panevėžys','panevezys'],                               irr: 1035 },
+            { names: ['alytus'],                                               irr: 1060 },
+            { names: ['marijampolė','marijampole'],                           irr: 1058 },
+            { names: ['mažeikiai','mazeikiai'],                               irr: 1030 },
+            { names: ['jonava'],                                               irr: 1042 },
+            { names: ['kėdainiai','kedainiai'],                               irr: 1038 },,
             { names: ['arnhem'],                                            irr: 1020 },
             { names: ['nijmegen'],                                          irr: 1025 },
         ];
@@ -2276,7 +2279,7 @@ function toggleFaq(i) {
         const name    = document.getElementById('droneName').value.trim();
         const email   = document.getElementById('droneEmail').value.trim();
         const phoneLocal = document.getElementById('dronePhone').value.trim();
-        const phone   = phoneLocal ? ('+31 ' + phoneLocal.replace(/^\+?31\s*/, '')) : '';
+        const phone   = phoneLocal ? ('+370 ' + phoneLocal.replace(/^\+?31\s*/, '')) : '';
         const address = document.getElementById('droneAddress').value.trim();
 
         // Validate
@@ -2307,7 +2310,7 @@ function toggleFaq(i) {
             const { createClient } = supabase;
             const sb = createClient('https://keeityfejyfqqsvcqfsz.supabase.co', 'sb_publishable_A6r_0AtMpEs_KBJIJJXmYg_mq66XazY');
 
-            const cityList = ['amsterdam','rotterdam','den haag','utrecht','eindhoven','groningen','maastricht','arnhem','nijmegen'];
+            const cityList = ['vilnius','kaunas','klaipėda','šiauliai','panevėžys','alytus','marijampolė','mažeikiai','jonava','kėdainiai'];
             const addrLow  = address.toLowerCase();
             const city     = cityList.find(c => addrLow.includes(c)) || 'netherlands';
 
@@ -2403,7 +2406,7 @@ function toggleFaq(i) {
             hiw_title: "How <span>Sunlytics</span> Works",
             hiw_subtitle: "Three simple steps to complete solar clarity",
             step1_title: "Enter Your Address",
-            step1_desc: "Type your building address anywhere in the Netherlands. Our system instantly pulls satellite imagery of your roof.",
+            step1_desc: "Type your building address anywhere in Lithuania. Our system instantly pulls satellite imagery of your roof.",
             step2_title: "Get Instant Results",
             step2_desc: "Receive your Solar Score, usable roof area, payback period and 25-year profit estimate. Completely free, in seconds.",
             step3_title: "Get Full Drone Report",
@@ -2429,14 +2432,17 @@ function toggleFaq(i) {
             partner_subtitle: "Your solar report is just the first step. Our certified installation partner will turn your analysis into reality.",
             partner_label: "Official Sunlytics Partner",
             stat_installations: "Installations Done", stat_warranty: "Workmanship Warranty", stat_rating: "Customer Rating",
-            trust_certified: "Licensed & certified in the Netherlands",
+            trust_certified: "Licensed & certified in Lithuania",
             trust_visit: "Free on-site visit",
             trust_quote: "No-obligation quote",
             trust_financing: "Financing available",
             quote_btn: "Get Your Free Installation Quote",
-            quote_note: "No payment required. A SolarPro Netherlands advisor will contact you within 24 hours.",
+            quote_note: "No payment required. A SolarPro Lithuania advisor will contact you within 24 hours.",
+            cookie_text: 'We use cookies to improve your experience and analyze site traffic. By continuing, you agree to our <a href="privacy.html" style="color:#f7971e;text-decoration:underline;">Privacy Policy</a>.',
+            cookie_decline: "Decline",
+            cookie_accept: "Accept",
         },
-        nl: {
+        lt: {
             // Nav
             nav_how: "Hoe het werkt", nav_pricing: "Prijzen", nav_about: "Over ons",
             nav_drone: "Drone status", nav_fly: "Vlieg voor ons", nav_contact: "Contact",
@@ -2486,6 +2492,9 @@ function toggleFaq(i) {
             trust_financing: "Financiering beschikbaar",
             quote_btn: "Gratis Installatieofferte Aanvragen",
             quote_note: "Geen betaling vereist. Een SolarPro Nederland adviseur neemt binnen 24 uur contact met u op.",
+            cookie_text: 'Wij gebruiken cookies om uw ervaring te verbeteren en het websiteverkeer te analyseren. Door verder te gaan, gaat u akkoord met ons <a href="privacy.html" style="color:#f7971e;text-decoration:underline;">privacybeleid</a>.',
+            cookie_decline: "Afwijzen",
+            cookie_accept: "Accepteren",
         }
     };
     let currentLang = localStorage.getItem('lang') || 'en';
@@ -2501,13 +2510,13 @@ function toggleFaq(i) {
         });
         // Update input placeholder
         const addrInput = document.getElementById('addressInput');
-        if (addrInput) addrInput.placeholder = lang === 'nl' ? 'bijv. Keizersgracht 123, Amsterdam' : 'e.g. Keizersgracht 123, Amsterdam';
+        if (addrInput) addrInput.placeholder = lang === 'lt' ? 'bijv. Gedimino pr. 9, Vilnius' : 'e.g. Gedimino pr. 9, Vilnius';
         const enBtn = document.getElementById('langEN');
-        const nlBtn = document.getElementById('langNL');
+        const nlBtn = document.getElementById('langLT');
         enBtn.classList.toggle('active', lang === 'en');
-        nlBtn.classList.toggle('active', lang === 'nl');
+        nlBtn.classList.toggle('active', lang === 'lt');
         enBtn.setAttribute('aria-pressed', lang === 'en');
-        nlBtn.setAttribute('aria-pressed', lang === 'nl');
+        nlBtn.setAttribute('aria-pressed', lang === 'lt');
         // Rebuild FAQ in selected language
         if (typeof buildFaq === 'function') buildFaq();
     }

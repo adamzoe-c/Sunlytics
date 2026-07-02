@@ -93,8 +93,8 @@ footer a{color:var(--orange-dark);text-decoration:none;font-size:14px;}
       <button class="lang-btn active" id="btnEN" onclick="setLang('en')">
         <img src="https://flagcdn.com/w40/gb.png" alt="EN"> EN
       </button>
-      <button class="lang-btn" id="btnNL" onclick="setLang('nl')">
-        <img src="netherlands.png" alt="NL"> NL
+      <button class="lang-btn" id="btnLT" onclick="setLang('lt')">
+        <img src="lithuania.png" alt="Lietuvių"> LT
       </button>
     </div>
     <a class="nav-back" href="pilot-login.html">
@@ -167,6 +167,7 @@ footer a{color:var(--orange-dark);text-decoration:none;font-size:14px;}
 <footer>
   <p style="margin:0 0 6px;">&copy; 2026 Sunlytics. All rights reserved.</p>
   <p style="margin:0; display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap;"><a href="privacy.html">Privacy Policy</a> <span style="opacity:0.4;">&middot;</span> <a href="terms.html">Terms of Service</a></p>
+  <p style="margin:6px 0 0; font-size:11px; color:rgba(30,30,30,0.35); text-align:center;">Sunlytics UAB &middot; JAR 306789123 &middot; PVM LT864213907 &middot; Gedimino pr. 9, 01103 Vilnius</p>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -189,24 +190,24 @@ const T={
     success_note:"Check your spam folder if you don't see it within a few minutes.",
   },
   nl:{
-    back_login:'Terug naar inloggen',title:'Wachtwoord resetten',
-    subtitle:'Vul uw e-mailadres in en we sturen u een link om uw wachtwoord opnieuw in te stellen.',
-    label_email:'E-mailadres',btn_send:'Resetlink versturen',
-    err_empty:'Vul uw e-mailadres in.',
-    err_invalid:'Geen account gevonden met dit e-mailadres.',
-    err_generic:'Er is iets misgegaan. Probeer het opnieuw.',
-    success_title:'Controleer uw e-mail',
-    success_msg:'We hebben een link om uw wachtwoord opnieuw in te stellen gestuurd naar',
-    success_note:'Controleer uw spammap als u deze niet binnen een paar minuten ontvangt.',
+    back_login:'Grįžti į prisijungimą',title:'Atstatyti slaptažodį',
+    subtitle:'Įveskite el. pašto adresą ir mes atsiųsime nuorodą slaptažodžiui atstatyti.',
+    label_email:'El. pašto adresas',btn_send:'Siųsti atstatymo nuorodą',
+    err_empty:'Įveskite el. pašto adresą.',
+    err_invalid:'Nepavyko rasti paskyros su šiuo el. paštu.',
+    err_generic:'Kažkas nutiko. Bandykite dar kartą.',
+    success_title:'Patikrinkite el. paštą',
+    success_msg:'Slaptažodžio atstatymo nuorodą išsiuntėme į',
+    success_note:'Jei per kelias minutes negavote, patikrinkite šlamšto aplanką.',
   }
 };
-let lang=localStorage.getItem('sunlytics_lang')||'en';
+let lang=localStorage.getItem('lang')||'en';
 
 function setLang(l){
-  lang=l;localStorage.setItem('sunlytics_lang',l);
+  lang=l;localStorage.setItem('lang',l);
   document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(T[l][k])el.textContent=T[l][k];});
   document.getElementById('btnEN').classList.toggle('active',l==='en');
-  document.getElementById('btnNL').classList.toggle('active',l==='nl');
+  document.getElementById('btnLT').classList.toggle('active',l==='lt');
   // update button text if not in loading state
   const btn=document.getElementById('resetBtn');
   if(btn&&!btn.disabled) btn.innerHTML=BTN_HTML+'<span>'+T[l].btn_send+'</span>';
@@ -254,5 +255,33 @@ async function doReset(){
 
 document.addEventListener('DOMContentLoaded',()=>setLang(lang));
 </script>
+<!-- COOKIE CONSENT -->
+<div id="cookieBanner" style="display:none; position:fixed; bottom:0; left:0; right:0; z-index:9999; background:#1a1a1a; padding:18px 20px; box-shadow:0 -4px 20px rgba(0,0,0,0.25);">
+    <div style="max-width:1100px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;">
+        <p style="margin:0; font-size:13px; line-height:1.5; color:rgba(255,255,255,0.85); flex:1; min-width:240px;">We use cookies to improve your experience and analyze site traffic. By continuing, you agree to our <a href="privacy.html" style="color:#f7971e; text-decoration:underline;">Privacy Policy</a>.</p>
+        <div style="display:flex; gap:10px; flex-shrink:0;">
+            <button onclick="sunlyticsCookieConsent(false)" style="padding:10px 18px; border-radius:8px; border:1px solid rgba(255,255,255,0.25); background:transparent; color:#fff; font-size:13px; cursor:pointer; font-family:inherit;">Decline</button>
+            <button onclick="sunlyticsCookieConsent(true)" style="padding:10px 18px; border-radius:8px; border:none; background:linear-gradient(135deg,#f7971e,#ff4e00); color:#fff; font-weight:600; font-size:13px; cursor:pointer; font-family:inherit;">Accept</button>
+        </div>
+    </div>
+</div>
+<script>
+(function () {
+    try {
+        if (!localStorage.getItem('sunlytics_cookie_consent')) {
+            document.addEventListener('DOMContentLoaded', function () {
+                var b = document.getElementById('cookieBanner');
+                if (b) b.style.display = 'block';
+            });
+        }
+    } catch (e) {}
+})();
+function sunlyticsCookieConsent(accepted) {
+    try { localStorage.setItem('sunlytics_cookie_consent', accepted ? 'accepted' : 'declined'); } catch (e) {}
+    var b = document.getElementById('cookieBanner');
+    if (b) b.style.display = 'none';
+}
+</script>
+
 </body>
 </html>
