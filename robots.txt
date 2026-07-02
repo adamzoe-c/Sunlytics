@@ -1,8 +1,10 @@
 User-agent: *
 Allow: /
+
 Disallow: /admin-dashboard.html
 Disallow: /pilot-dashboard.html
 Disallow: /pilot-login.html
+Disallow: /pilot-reset.html
 Disallow: /upload-mission.html
 
-Sitemap: https://sunlytics.eu/sitemap.xml
+Sitemap: https://sunlytics.lt/sitemap.xml

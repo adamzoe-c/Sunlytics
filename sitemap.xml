@@ -1,59 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
-
-  <url>
-    <loc>https://sunlytics.eu/</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://sunlytics.eu/"/>
-    <xhtml:link rel="alternate" hreflang="lv" href="https://sunlytics.eu/"/>
-    <lastmod>2026-06-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-
-  <url>
-    <loc>https://sunlytics.eu/about.html</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://sunlytics.eu/about.html"/>
-    <xhtml:link rel="alternate" hreflang="lv" href="https://sunlytics.eu/about.html"/>
-    <lastmod>2026-06-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://sunlytics.eu/contact.html</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://sunlytics.eu/contact.html"/>
-    <xhtml:link rel="alternate" hreflang="lv" href="https://sunlytics.eu/contact.html"/>
-    <lastmod>2026-06-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://sunlytics.eu/fly-for-us.html</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://sunlytics.eu/fly-for-us.html"/>
-    <xhtml:link rel="alternate" hreflang="lv" href="https://sunlytics.eu/fly-for-us.html"/>
-    <lastmod>2026-06-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://sunlytics.eu/privacy.html</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://sunlytics.eu/privacy.html"/>
-    <xhtml:link rel="alternate" hreflang="lv" href="https://sunlytics.eu/privacy.html"/>
-    <lastmod>2026-06-08</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-
-  <url>
-    <loc>https://sunlytics.eu/terms.html</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://sunlytics.eu/terms.html"/>
-    <xhtml:link rel="alternate" hreflang="lv" href="https://sunlytics.eu/terms.html"/>
-    <lastmod>2026-06-08</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://sunlytics.lt/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://sunlytics.lt/about.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://sunlytics.lt/contact.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://sunlytics.lt/fly-for-us.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://sunlytics.lt/for-installers.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://sunlytics.lt/privacy.html</loc><changefreq>yearly</changefreq><priority>0.4</priority></url>
+  <url><loc>https://sunlytics.lt/terms.html</loc><changefreq>yearly</changefreq><priority>0.4</priority></url>
 </urlset>
