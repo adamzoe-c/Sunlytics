@@ -320,37 +320,73 @@
 
         /* ── STATS ── */
         .stats {
-            display: flex;
-            justify-content: center;
-            background: var(--off-white);
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            padding: 48px 5%;
+            background: #fff;
             border-bottom: 1px solid #e8e8e8;
+            max-width: 100%;
         }
 
         .stat-item {
-            text-align: center;
-            padding: 48px 56px;
-            border-right: 1px solid #e8e8e8;
-            flex: 1;
-            min-width: 140px;
+            background: var(--off-white);
+            border: 1px solid #e8e8e8;
+            border-radius: 20px;
+            padding: 32px 24px;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: box-shadow 0.2s, transform 0.2s;
         }
 
-        .stat-item:last-child { border-right: none; }
+        .stat-item:hover {
+            box-shadow: 0 8px 28px rgba(0,0,0,0.07);
+            transform: translateY(-2px);
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+            border-radius: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
 
         .stat-number {
-            font-size: 46px;
-            font-weight: 800;
+            font-size: 38px;
+            font-weight: 900;
             background: linear-gradient(135deg, var(--orange), var(--orange-dark));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             line-height: 1;
+            letter-spacing: -1px;
         }
 
         .stat-label {
             font-size: 13px;
             color: var(--gray);
-            margin-top: 10px;
-            font-weight: 500;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        .stat-desc {
+            font-size: 12px;
+            color: #aaa;
+            line-height: 1.4;
+        }
+
+        @media (max-width: 860px) {
+            .stats { grid-template-columns: repeat(2, 1fr); padding: 28px 5%; gap: 14px; }
+        }
+        @media (max-width: 480px) {
+            .stats { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .stat-item { padding: 22px 18px; }
+            .stat-number { font-size: 30px; }
         }
 
         /* ── SECTION COMMON ── */
@@ -1416,20 +1452,36 @@
 <!-- STATS -->
 <div class="stats">
     <div class="stat-item">
+        <div class="stat-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
         <div class="stat-number">60s</div>
         <div class="stat-label">Instant Results</div>
+        <div class="stat-desc">Free AI analysis of your roof in under a minute</div>
     </div>
     <div class="stat-item">
+        <div class="stat-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21 4 19 2c-2-2-4-2-5.5-.5L10 5 1.8 6.2c-.5.1-.9.6-.6 1.1l1.5 2.5 5.5-1L6 13l-2 1 1 2 2-1 3.5-2.5-1 5.5 2.5 1.5c.5.3 1 0 1.1-.6z"/></svg>
+        </div>
         <div class="stat-number">24h</div>
         <div class="stat-label">Full Drone Report</div>
+        <div class="stat-desc">Certified pilot, full PDF delivered within 24 hours</div>
     </div>
     <div class="stat-item">
+        <div class="stat-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
         <div class="stat-number">&#8364;0</div>
         <div class="stat-label">Free Analysis</div>
+        <div class="stat-desc">No sign-up, no payment required to get started</div>
     </div>
     <div class="stat-item">
+        <div class="stat-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
         <div class="stat-number">95%</div>
         <div class="stat-label">Accuracy Rate</div>
+        <div class="stat-desc">Drone report accuracy vs. full engineering survey</div>
     </div>
 </div>
 
@@ -1723,28 +1775,40 @@ const faqData = [
         a: { en: "The free instant analysis takes under 60 seconds. Once you order the drone report (€149), we confirm within a few hours and schedule your flight. The drone inspection happens within 24 to 48 hours and your full PDF report lands in your inbox the same day the flight is completed. From clicking to full report: usually 24 to 48 hours.", lt: "Nemokama momentinė analizė trunka mažiau nei 60 sekundžių. Kai užsakote drono ataskaitą (149 €), patvirtinome per kelias valandas ir suplanuojame skrydį. Drono apžiūra vyksta per 24 iki 48 valandų, o PDF ataskaita atsiduria jūsų el. pašte tą pačią dieną, kai skrydis baigtas. Nuo paspaudimo iki pilnos ataskaitos: paprastai 24 iki 48 valandų." }
     },
     {
-        q: { en: "How accurate is the free instant analysis?", nl: "Hoe nauwkeurig is de gratis analyse?" },
-        a: { en: "The free analysis is based on satellite imagery and solar irradiance data. It gives a solid estimate, usually within 10-20% of a full inspection. For exact numbers, the drone report gets you to 95%+ accuracy.", nl: "De gratis analyse is gebaseerd op satellietbeelden en zonnestralingdata. Het geeft een goede schatting, meestal binnen 10-20% van een volledige inspectie. Voor exacte cijfers geeft het dronerapport 95%+ nauwkeurigheid." }
+        q: { en: "How accurate is the free instant analysis?", lt: "Kaip tiksli nemokama momentinė analizė?" },
+        a: { en: "The free analysis is based on satellite imagery and solar irradiance data. It gives a solid estimate, usually within 10 to 20% of a full inspection. For exact numbers, the drone report gets you to 95%+ accuracy.", lt: "Nemokama analizė remiasi palydoviniais vaizdais ir saulės spinduliuotės duomenimis. Ji pateikia tvirtą įvertinimą, paprastai per 10 iki 20% nuo pilno patikrinimo. Tiksliniams skaičiams drono ataskaita suteikia 95%+ tikslumą." }
     },
     {
-        q: { en: "What happens after I order the drone report?", nl: "Wat gebeurt er nadat ik het dronerapport bestel?" },
-        a: { en: "We contact you within a few hours to confirm. A certified local drone operator comes to your building, flies the inspection, and you get your PDF report within 24 hours.", nl: "We nemen binnen een paar uur contact met u op ter bevestiging. Een gecertificeerde lokale drone-operator komt naar uw gebouw, voert de inspectie uit en u ontvangt uw PDF-rapport binnen 24 uur." }
+        q: { en: "What happens after I order the drone report?", lt: "Kas nutinka užsakius drono ataskaitą?" },
+        a: { en: "We contact you within a few hours to confirm. A certified local drone operator comes to your building, flies the inspection, and you get your PDF report within 24 hours.", lt: "Susisieksime su jumis per kelias valandas patvirtinti. Sertifikuotas vietinis drono operatorius atvyksta prie jūsų pastato, atlieka apžiūrą ir per 24 valandas gausite PDF ataskaitą." }
     },
     {
-        q: { en: "Is my data safe?", nl: "Is mijn data veilig?" },
-        a: { en: "Yes. We are GDPR compliant. Your data is never sold. Drone operators only receive the property address, nothing personal.", nl: "Ja. We voldoen aan de AVG. Uw gegevens worden nooit verkocht. Drone-operators ontvangen alleen het adres van het pand, niets persoonlijks." }
+        q: { en: "Is my data safe?", lt: "Ar mano duomenys saugūs?" },
+        a: { en: "Yes. We are GDPR compliant. Your data is never sold. Drone operators only receive the property address, nothing personal.", lt: "Taip. Mes laikomės BDAR reikalavimų. Jūsų duomenys niekada neparduodami. Drono operatoriai gauna tik nekilnojamojo turto adresą, nieko asmeninio." }
     },
     {
-        q: { en: "What if the weather is bad on my drone report day?", nl: "Wat als het weer slecht is op de dag van mijn dronerapport?" },
-        a: { en: "No problem. We track weather automatically and reschedule your flight if conditions aren't suitable. You can also check the live drone status on our website anytime.", nl: "Geen probleem. We volgen het weer automatisch en plannen uw vlucht opnieuw als de omstandigheden niet geschikt zijn. U kunt ook altijd de live drone-status op onze website bekijken." }
+        q: { en: "What if the weather is bad on my drone report day?", lt: "Kas nutinka, jei oro sąlygos blogos?" },
+        a: { en: "No problem. We track weather automatically and reschedule your flight if conditions are not suitable. You can also check the live drone status on our website anytime.", lt: "Nėra problema. Automatiškai sekame orą ir perplanuojame skrydį, jei sąlygos netinkamos. Taip pat galite bet kada patikrinti tiesioginį drono statusą mūsų svetainėje." }
     },
     {
-        q: { en: "Do you cover areas outside Vilnius?", nl: "Werkt u ook buiten Vilnius?" },
-        a: { en: "Yes. We have pilots across Lithuania including Kaunas, Klaipėda, Šiauliai, Panevėžys and more. If you are unsure about your area, just contact us.", nl: "Ja. We hebben piloten door heel Nederland, waaronder Kaunas, Klaipėda, Šiauliai, Panevėžys en meer. Als u niet zeker bent over uw regio, neem dan gewoon contact met ons op." }
+        q: { en: "Do you cover areas outside Vilnius?", lt: "Ar aptarnaujate vietoves ne tik Vilniuje?" },
+        a: { en: "Yes. We have pilots across Lithuania including Kaunas, Klaipėda, Šiauliai, Panevėžys and more. If you are unsure about your area, just contact us.", lt: "Taip. Turime pilotus visoje Lietuvoje, įskaitant Kauną, Klaipėdą, Šiaulius, Panevėžį ir kt. Jei nesate tikri dėl savo rajono, tiesiog susisiekite su mumis." }
     },
     {
-        q: { en: "Can I become a drone pilot for Sunlytics?", nl: "Kan ik drone-piloot worden voor Sunlytics?" },
-        a: { en: "Yes! If you have a valid CAA license and a compatible drone, you can earn €40 per mission. Visit our Fly for Us page to apply.", nl: "Ja! Als u een geldig CAA-licentie en een compatibele drone heeft, kunt u €100 per missie verdienen. Bezoek onze pagina 'Vlieg voor ons' om u aan te melden." }
+        q: { en: "Can I become a drone pilot for Sunlytics?", lt: "Ar galiu tapti Sunlytics drono pilotu?" },
+        a: { en: "Yes! If you have a valid CAA license and a compatible drone, you can earn €40 per mission. Visit our Fly for Us page to apply.", lt: "Taip! Jei turite galiojančią CAA licenciją ir suderinamą droną, galite uždirbti 40 € už misiją. Apsilankykite mūsų puslapyje Skraidykite mums, kad pateiktumėte paraišką." }
+    },
+    {
+        q: { en: "Do these reports replace a certified structural engineer?", lt: "Ar šios ataskaitos pakeičia sertifikuotą konstrukcijų inžinierių?" },
+        a: { en: "No, and they are not meant to. We provide the digital x-ray of your roof. By delivering highly precise, drone-mapped architectural layouts and 3D shading analysis directly to your engineering team before they visit, we eliminate up to 80% of manual fieldwork, saving you thousands in billable hours.", lt: "Ne, ir tam neskirtos. Mes pateikiame skaitmeninį jūsų stogo rentgeno vaizdą. Teikdami itin tikslias, dronu sudarytus architektūrinius išdėstymus ir 3D šešėlių analizę tiesiai jūsų inžinierių komandai prieš apsilankymą, pašaliname iki 80% rankinio lauko darbo, taupydami tūkstančius konsultacinių valandų." }
+    },
+    {
+        q: { en: "How does the drone dispatch work?", lt: "Kaip veikia drono išsiuntimas?" },
+        a: { en: "Once you select a tier and submit your property details, our system automatically schedules a localized, fully certified drone pilot to handle the automated grid flight. You do not have to manage any hardware, liability, or data extraction.", lt: "Kai pasirenkate lygį ir pateikiate nekilnojamojo turto duomenis, mūsų sistema automatiškai paskiria vietinį, visiškai sertifikuotą drono pilotą automatizuotam tinklelio skrydžiui atlikti. Jums nereikia valdyti jokios aparatinės įrangos, atsakomybės ar duomenų ištraukimo." }
+    },
+    {
+        q: { en: "What is included in the final report?", lt: "Kas įtraukta į galutinę ataskaitą?" },
+        a: { en: "You receive a comprehensive PDF and digital dashboard containing exact roof topography mapping, 3D solar obstacle shading analytics, annual kilowatt-hour performance modeling, and localized financial ROI analysis.", lt: "Gausite išsamų PDF ir skaitmeninį valdymo pultą, kuriame yra tikslus stogo topografijos žemėlapis, 3D saulės kliūčių šešėlių analizė, metinis kilovatvalandžių našumo modeliavimas ir vietinė finansinė investicijų grąžos analizė." }
     }
 ];
 
@@ -1865,12 +1929,6 @@ function toggleFaq(i) {
             <div style="font-size:20px; font-weight:800; background:linear-gradient(135deg,var(--orange),var(--orange-dark)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; letter-spacing:1px; text-align:left;">SUNLYTICS</div>
             <p>Smart solar analysis for Lithuania. Fast, accurate, and affordable.</p>
             <div style="display:flex; gap:12px; margin-top:14px;">
-                <a href="https://www.facebook.com/sunlytics" target="_blank" rel="noopener" aria-label="Facebook" style="width:36px; height:36px; background:#1877f2; border-radius:8px; display:flex; align-items:center; justify-content:center;" title="Follow us on Facebook">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-                </a>
-                <a href="https://www.linkedin.com/company/sunlytics" target="_blank" rel="noopener" aria-label="LinkedIn" style="width:36px; height:36px; background:#0a66c2; border-radius:8px; display:flex; align-items:center; justify-content:center;" title="Find us on LinkedIn">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-                </a>
                 <a href="https://g.page/r/sunlytics" target="_blank" rel="noopener" aria-label="Google Business" style="width:36px; height:36px; background:#fff; border:1.5px solid #e8e8e8; border-radius:8px; display:flex; align-items:center; justify-content:center;" title="Review us on Google">
                     <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
                 </a>
