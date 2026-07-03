@@ -633,7 +633,7 @@ async function approvePilot(id){
           pilot_id:   pilot.id,
           role:       'pilot'
         },
-        redirect_to: window.location.origin+'/pilot-reset-confirm.html'
+        redirect_to: window.location.origin+'/pilot-onboarding.html'
       })
     });
     const inviteData = await res.json();
