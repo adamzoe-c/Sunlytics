@@ -481,11 +481,17 @@ function showSection(s){
 
 // ── AUTH ──────────────────────────────────────────────────────────────────────
 async function init(){
-  const { data:{ session } } = await sb.auth.getSession();
-  if(!session){ window.location.href='pilot-login.html'; return; }
-  document.getElementById('adminEmail').textContent=session.user.email;
-  await loadAll();
-  subscribeRealtime();
+  try {
+    const { data:{ session }, error } = await sb.auth.getSession();
+    if(error) throw error;
+    if(!session){ window.location.href='pilot-login.html'; return; }
+    document.getElementById('adminEmail').textContent=session.user.email;
+    await loadAll();
+    subscribeRealtime();
+  } catch(e) {
+    console.error('Init error:', e);
+    showToast('Connection error: ' + (e.message||'Could not reach Supabase. Check if your project is active at supabase.com'), 'error');
+  }
 }
 
 async function doLogout(){ await sb.auth.signOut(); window.location.href='pilot-login.html'; }

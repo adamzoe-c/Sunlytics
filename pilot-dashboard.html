@@ -551,14 +551,25 @@ function openAcceptModal(mission){
 
 // ── AUTH ──────────────────────────────────────────────────────────────────────
 async function init(){
-  const { data:{ session } } = await sb.auth.getSession();
-  if(!session){ window.location.href='pilot-login.html'; return; }
-  currentUser = session.user;
-  await loadPilot();
-  setLang(lang);
-  await loadMissions();
-  subscribeRealtime();
-  subscribeNotifications();
+  try {
+    const { data:{ session }, error } = await sb.auth.getSession();
+    if(error) throw error;
+    if(!session){ window.location.href='pilot-login.html'; return; }
+    currentUser = session.user;
+    await loadPilot();
+    setLang(lang);
+    await loadMissions();
+    subscribeRealtime();
+    subscribeNotifications();
+  } catch(e) {
+    console.error('Init error:', e);
+    const msg = e.message || 'Could not connect. Check if your Supabase project is active at supabase.com';
+    document.body.insertAdjacentHTML('afterbegin',
+      `<div style="background:#fef2f2;border-bottom:2px solid #fecaca;padding:14px 5%;font-size:14px;color:#dc2626;text-align:center;">
+        Connection error: ${msg}. <a href="pilot-login.html" style="color:#dc2626;font-weight:700;">Try logging in again</a>
+      </div>`
+    );
+  }
 }
 
 async function loadPilot(){
