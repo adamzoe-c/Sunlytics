@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Order - Sunlytics</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="Track your Sunlytics drone report order status.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="theme-color" content="#f7971e">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root {
+  --orange: #f7971e;
+  --orange-dark: #ff4e00;
+  --navy: #1a1a1a;
+  --gray: #6b7280;
+  --border: #e8e8e8;
+  --off: #f9f9f9;
+  --green: #16a34a;
+  --green-bg: #f0fdf4;
+  --green-border: #bbf7d0;
+  --blue: #2563eb;
+  --blue-bg: #eff6ff;
+  --blue-border: #bfdbfe;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--off);
+  color: var(--navy);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── NAV ── */
+nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 5%; height: 64px;
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 100;
+}
+.logo { text-decoration: none; }
+.logo-text { font-size: 18px; font-weight: 900; letter-spacing: 1.5px; background: linear-gradient(135deg, var(--orange), var(--orange-dark)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.nav-right { display: flex; align-items: center; gap: 12px; }
+.nav-back { display: flex; align-items: center; gap: 6px; text-decoration: none; font-size: 13px; font-weight: 600; color: var(--gray); transition: color 0.2s; }
+.nav-back:hover { color: var(--orange); }
+
+/* ── MAIN LAYOUT ── */
+main { flex: 1; max-width: 680px; margin: 0 auto; padding: 40px 20px 60px; width: 100%; }
+
+/* ── LOOKUP / AUTH ── */
+.lookup-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 44px 40px;
+  text-align: center;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+}
+.lookup-icon {
+  width: 64px; height: 64px;
+  background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+  border-radius: 18px;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 20px;
+}
+.lookup-card h1 { font-size: 24px; font-weight: 800; margin-bottom: 8px; }
+.lookup-card p { font-size: 14px; color: var(--gray); margin-bottom: 28px; line-height: 1.6; }
+.form-group { margin-bottom: 14px; text-align: left; }
+.form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+.form-group input {
+  width: 100%; padding: 13px 16px;
+  border: 2px solid var(--border); border-radius: 12px;
+  font-size: 15px; font-family: inherit; color: var(--navy); outline: none;
+  transition: border-color 0.2s;
+}
+.form-group input:focus { border-color: var(--orange); }
+.lookup-btn {
+  width: 100%; padding: 14px;
+  background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+  color: #fff; font-size: 15px; font-weight: 700;
+  border: none; border-radius: 12px; cursor: pointer;
+  font-family: inherit; margin-top: 6px;
+  box-shadow: 0 6px 20px rgba(247,151,30,0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.lookup-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 28px rgba(247,151,30,0.4); }
+.lookup-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+.lookup-note { font-size: 12px; color: var(--gray); margin-top: 12px; }
+.err-msg { background: #fef2f2; border: 1px solid #fecaca; border-radius: 10px; padding: 12px 16px; font-size: 13px; color: #dc2626; margin-top: 14px; display: none; }
+
+/* ── DASHBOARD ── */
+.dashboard { display: none; }
+
+.order-header {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 28px;
+  margin-bottom: 16px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  flex-wrap: wrap;
+}
+.order-address { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
+.order-meta { font-size: 13px; color: var(--gray); }
+.status-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 16px; border-radius: 50px;
+  font-size: 13px; font-weight: 700; white-space: nowrap;
+}
+.pill-open      { background: #eff6ff; color: #2563eb; }
+.pill-assigned  { background: #fef3c7; color: #d97706; }
+.pill-flying    { background: #f0fdf4; color: #16a34a; }
+.pill-uploaded  { background: #f0fdf4; color: #16a34a; }
+.pill-completed { background: #f0fdf4; color: #16a34a; }
+.pill-cancelled { background: #fef2f2; color: #dc2626; }
+
+/* ── PROGRESS TRACKER ── */
+.progress-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 28px;
+  margin-bottom: 16px;
+}
+.progress-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 24px; }
+.steps { display: flex; flex-direction: column; gap: 0; }
+.step {
+  display: flex; gap: 16px; align-items: flex-start;
+  position: relative;
+}
+.step:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: 19px; top: 40px;
+  width: 2px; height: calc(100% + 0px);
+  background: var(--border);
+  z-index: 0;
+}
+.step.done::before { background: var(--green); }
+.step.active::before { background: linear-gradient(180deg, var(--green) 0%, var(--border) 100%); }
+.step-dot {
+  width: 40px; height: 40px; flex-shrink: 0;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; font-weight: 800;
+  border: 2px solid var(--border);
+  background: #fff;
+  position: relative; z-index: 1;
+  transition: all 0.3s;
+}
+.step.done .step-dot   { background: var(--green); border-color: var(--green); color: #fff; }
+.step.active .step-dot { background: linear-gradient(135deg, var(--orange), var(--orange-dark)); border-color: transparent; color: #fff; box-shadow: 0 4px 14px rgba(247,151,30,0.4); }
+.step.pending .step-dot { color: #ccc; }
+.step-body { padding-bottom: 28px; flex: 1; }
+.step:last-child .step-body { padding-bottom: 0; }
+.step-title { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+.step.pending .step-title { color: #aaa; }
+.step-desc { font-size: 13px; color: var(--gray); line-height: 1.5; }
+.step-time { font-size: 11px; color: #aaa; margin-top: 4px; }
+
+/* ── INFO CARDS ── */
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+.info-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+}
+.info-card-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--gray); margin-bottom: 6px; }
+.info-card-value { font-size: 16px; font-weight: 700; color: var(--navy); }
+.info-card-sub { font-size: 12px; color: var(--gray); margin-top: 2px; }
+
+/* ── REPORT READY ── */
+.report-card {
+  background: linear-gradient(135deg, #1a1a1a, #2d1a00);
+  border-radius: 20px;
+  padding: 28px;
+  margin-bottom: 16px;
+  display: none;
+}
+.report-card h3 { font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 6px; }
+.report-card p { font-size: 14px; color: rgba(255,255,255,0.65); margin-bottom: 20px; }
+.download-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+  color: #fff; padding: 13px 24px; border-radius: 12px;
+  font-size: 14px; font-weight: 700; text-decoration: none;
+  box-shadow: 0 6px 20px rgba(247,151,30,0.4);
+  transition: transform 0.2s;
+}
+.download-btn:hover { transform: translateY(-1px); }
+
+/* ── HELP CARD ── */
+.help-card {
+  background: var(--blue-bg);
+  border: 1px solid var(--blue-border);
+  border-radius: 16px;
+  padding: 20px 24px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  flex-wrap: wrap;
+}
+.help-card p { font-size: 14px; color: var(--blue); font-weight: 500; }
+.help-card a { font-size: 13px; font-weight: 700; color: var(--blue); text-decoration: none; white-space: nowrap; }
+
+/* ── LOADING SPINNER ── */
+.spinner {
+  width: 40px; height: 40px; margin: 60px auto;
+  border: 3px solid var(--border);
+  border-top-color: var(--orange);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── FOOTER ── */
+footer {
+  text-align: center; padding: 20px;
+  font-size: 12px; color: var(--gray);
+  border-top: 1px solid var(--border);
+  background: #fff;
+}
+footer a { color: var(--orange-dark); text-decoration: none; margin: 0 8px; }
+
+@media (max-width: 500px) {
+  .lookup-card { padding: 28px 20px; }
+  .info-grid { grid-template-columns: 1fr; }
+  main { padding: 24px 16px 48px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="logo">
+    <span class="logo-text">SUNLYTICS</span>
+  </a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-back">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to site
+    </a>
+  </div>
+</nav>
+
+<main>
+
+  <!-- LOOKUP FORM -->
+  <div class="lookup-card" id="lookupCard">
+    <div class="lookup-icon">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+    </div>
+    <h1>Track Your Order</h1>
+    <p>Enter the email address you used when ordering your drone report and your order reference number. Both were sent to you in your confirmation email.</p>
+    <div class="form-group">
+      <label>Email Address</label>
+      <input type="email" id="lookupEmail" placeholder="your@email.com" autocomplete="email">
+    </div>
+    <div class="form-group">
+      <label>Order Reference</label>
+      <input type="text" id="lookupRef" placeholder="e.g. ABC123" autocomplete="off" style="text-transform:uppercase;" oninput="this.value=this.value.toUpperCase()">
+    </div>
+    <button class="lookup-btn" id="lookupBtn" onclick="lookupOrder()">Track My Order</button>
+    <p class="lookup-note">Both were included in your confirmation email from info@sunlytics.lt</p>
+    <div class="err-msg" id="errMsg"></div>
+  </div>
+
+  <!-- SPINNER -->
+  <div class="spinner" id="spinner" style="display:none;"></div>
+
+  <!-- DASHBOARD -->
+  <div class="dashboard" id="dashboard">
+
+    <!-- Order header -->
+    <div class="order-header">
+      <div>
+        <div class="order-address" id="dAddress"></div>
+        <div class="order-meta">Order <strong id="dRef"></strong> &middot; Placed <span id="dDate"></span></div>
+      </div>
+      <div id="dStatusPill"></div>
+    </div>
+
+    <!-- Report download (shown only when completed) -->
+    <div class="report-card" id="reportCard">
+      <h3>Your Report is Ready</h3>
+      <p>Your full drone roof analysis PDF is ready to download. Share it with your solar installer to get an accurate installation quote.</p>
+      <a href="#" id="reportLink" class="download-btn" target="_blank">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download PDF Report
+      </a>
+    </div>
+
+    <!-- Progress tracker -->
+    <div class="progress-card">
+      <h3>Order Progress</h3>
+      <div class="steps" id="stepsList"></div>
+    </div>
+
+    <!-- Info grid -->
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="info-card-label">Package</div>
+        <div class="info-card-value" id="dPackage"></div>
+        <div class="info-card-sub" id="dPrice"></div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-label">Assigned Pilot</div>
+        <div class="info-card-value" id="dPilot"></div>
+        <div class="info-card-sub" id="dPilotSub"></div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-label">Scheduled Flight</div>
+        <div class="info-card-value" id="dScheduled"></div>
+        <div class="info-card-sub" id="dScheduledSub"></div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-label">Report ETA</div>
+        <div class="info-card-value" id="dETA"></div>
+        <div class="info-card-sub">After your flight is completed</div>
+      </div>
+    </div>
+
+    <!-- Help -->
+    <div class="help-card">
+      <p>Have a question about your order?</p>
+      <a href="contact.html">Contact Support &rarr;</a>
+    </div>
+
+  </div>
+
+</main>
+
+<footer>
+  <p>&copy; 2026 Sunlytics UAB &middot; <a href="privacy.html">Privacy</a> <a href="terms.html">Terms</a> <a href="contact.html">Contact</a></p>
+</footer>
+
+<script>
+const SUPABASE_URL = 'https://keeityfejyfqqsvcqfsz.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_A6r_0AtMpEs_KBJIJJXmYg_mq66XazY';
+const { createClient } = supabase;
+const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const STATUS_CONFIG = {
+  open:      { label: 'Order Received',    pill: 'pill-open',      step: 0 },
+  assigned:  { label: 'Pilot Assigned',    pill: 'pill-assigned',  step: 1 },
+  flying:    { label: 'Flight In Progress',pill: 'pill-flying',    step: 2 },
+  uploaded:  { label: 'Processing Report', pill: 'pill-uploaded',  step: 3 },
+  completed: { label: 'Report Ready',      pill: 'pill-completed', step: 4 },
+  cancelled: { label: 'Cancelled',         pill: 'pill-cancelled', step: -1 },
+};
+
+const STEPS = [
+  {
+    title: 'Order Received',
+    desc: 'Your order has been confirmed and payment processed. We are scheduling your drone flight.',
+    icon: '✓'
+  },
+  {
+    title: 'Pilot Assigned',
+    desc: 'A certified drone pilot in your area has been assigned to your property.',
+    icon: '✈'
+  },
+  {
+    title: 'Drone Flight Underway',
+    desc: 'Your pilot is currently conducting the roof inspection. High-resolution imagery is being captured.',
+    icon: '⬆'
+  },
+  {
+    title: 'Processing Your Report',
+    desc: 'Our system is processing the drone imagery, calculating solar potential and generating your PDF report.',
+    icon: '⚙'
+  },
+  {
+    title: 'Report Ready',
+    desc: 'Your full solar roof analysis report is ready. Download it using the button above.',
+    icon: '★'
+  },
+];
+
+function showErr(msg) {
+  const el = document.getElementById('errMsg');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+function formatDate(iso) {
+  if (!iso) return null;
+  return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+function timeAgo(iso) {
+  if (!iso) return '';
+  const diff = (Date.now() - new Date(iso)) / 1000;
+  if (diff < 3600) return Math.round(diff/60) + ' min ago';
+  if (diff < 86400) return Math.round(diff/3600) + 'h ago';
+  return Math.round(diff/86400) + ' days ago';
+}
+
+function buildSteps(status) {
+  const cfg = STATUS_CONFIG[status] || STATUS_CONFIG.open;
+  const currentStep = cfg.step;
+  let html = '';
+  STEPS.forEach((s, i) => {
+    let cls = 'pending';
+    if (i < currentStep) cls = 'done';
+    else if (i === currentStep) cls = 'active';
+    const checkIcon = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>`;
+    const dotContent = cls === 'done' ? checkIcon : (i + 1);
+    html += `
+      <div class="step ${cls}">
+        <div class="step-dot">${dotContent}</div>
+        <div class="step-body">
+          <div class="step-title">${s.title}</div>
+          <div class="step-desc">${cls !== 'pending' ? s.desc : 'Waiting...'}</div>
+        </div>
+      </div>`;
+  });
+  document.getElementById('stepsList').innerHTML = html;
+}
+
+function buildDashboard(m) {
+  const cfg = STATUS_CONFIG[m.status] || STATUS_CONFIG.open;
+
+  // Header
+  document.getElementById('dAddress').textContent = m.address + (m.city ? ', ' + m.city : '');
+  document.getElementById('dRef').textContent = m.id.slice(-6).toUpperCase();
+  document.getElementById('dDate').textContent = formatDate(m.created_at);
+  document.getElementById('dStatusPill').innerHTML =
+    `<span class="status-pill ${cfg.pill}">${cfg.label}</span>`;
+
+  // Report download
+  if (m.status === 'completed' && m.report_url) {
+    document.getElementById('reportCard').style.display = 'block';
+    document.getElementById('reportLink').href = m.report_url;
+  }
+
+  // Steps
+  buildSteps(m.status);
+
+  // Info grid
+  const pkg = m.package || 'Drone Report';
+  document.getElementById('dPackage').textContent = pkg.charAt(0).toUpperCase() + pkg.slice(1);
+  document.getElementById('dPrice').textContent = m.price ? '€' + m.price : '€149';
+
+  const pilotName = m.pilots ? m.pilots.first_name + ' ' + m.pilots.last_name : null;
+  document.getElementById('dPilot').textContent = pilotName || 'Being assigned';
+  document.getElementById('dPilotSub').textContent = pilotName ? 'Certified LCAA pilot' : 'You will be notified by email';
+
+  const scheduledDate = m.scheduled_at ? formatDate(m.scheduled_at) : null;
+  document.getElementById('dScheduled').textContent = scheduledDate || 'To be confirmed';
+  document.getElementById('dScheduledSub').textContent = scheduledDate
+    ? 'Weather permitting' : 'Within 24 to 48 hours of order';
+
+  const etaDate = m.scheduled_at
+    ? formatDate(new Date(new Date(m.scheduled_at).getTime() + 86400000).toISOString())
+    : 'Within 24h of flight';
+  document.getElementById('dETA').textContent = m.status === 'completed' ? 'Delivered' : etaDate;
+
+  // Show dashboard
+  document.getElementById('lookupCard').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+}
+
+async function lookupOrder() {
+  const email = document.getElementById('lookupEmail').value.trim().toLowerCase();
+  const ref   = document.getElementById('lookupRef').value.trim().toUpperCase();
+  document.getElementById('errMsg').style.display = 'none';
+
+  if (!email || !ref) {
+    showErr('Please enter your email address and order reference.');
+    return;
+  }
+  if (!email.includes('@')) {
+    showErr('Please enter a valid email address.');
+    return;
+  }
+
+  const btn = document.getElementById('lookupBtn');
+  btn.disabled = true;
+  btn.textContent = 'Looking up...';
+  document.getElementById('lookupCard').style.display = 'none';
+  document.getElementById('spinner').style.display = 'block';
+
+  try {
+    // Match by last 6 chars of ID (the reference shown to customer) + email
+    const { data, error } = await sb
+      .from('missions')
+      .select('*, pilots(first_name, last_name)')
+      .eq('customer_email', email)
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
+
+    // Filter by reference (last 6 chars of UUID, uppercased)
+    const match = data && data.find(m => m.id.slice(-6).toUpperCase() === ref);
+
+    document.getElementById('spinner').style.display = 'none';
+
+    if (!match) {
+      document.getElementById('lookupCard').style.display = 'block';
+      showErr('No order found with that email and reference. Please check your confirmation email and try again.');
+      btn.disabled = false;
+      btn.textContent = 'Track My Order';
+      return;
+    }
+
+    buildDashboard(match);
+
+  } catch (err) {
+    document.getElementById('spinner').style.display = 'none';
+    document.getElementById('lookupCard').style.display = 'block';
+    showErr('Something went wrong. Please try again or contact info@sunlytics.lt.');
+    btn.disabled = false;
+    btn.textContent = 'Track My Order';
+  }
+}
+
+// Allow Enter key to submit
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') lookupOrder();
+});
+</script>
+</body>
+</html>
