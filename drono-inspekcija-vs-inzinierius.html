@@ -50,11 +50,16 @@ nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-co
 .cta-box p{font-size:15px;color:rgba(255,255,255,0.85);margin-bottom:22px;}
 .cta-btn{display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--orange-dark);padding:14px 28px;border-radius:50px;font-size:15px;font-weight:700;text-decoration:none;transition:transform 0.2s;}
 .cta-btn:hover{transform:translateY(-2px);}
-.price-table{width:100%;border-collapse:collapse;margin:20px 0;}
-.price-table th{background:linear-gradient(135deg,var(--orange),var(--orange-dark));color:#fff;padding:12px 16px;text-align:left;font-size:13px;}
-.price-table td{padding:12px 16px;border-bottom:1px solid var(--border);font-size:15px;}
-.price-table tr:nth-child(even) td{background:var(--off);}
-.price-table td:last-child{font-weight:700;color:var(--orange-dark);}
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:20px 0;border-radius:12px;border:1px solid #e8e8e8;}
+.price-table{width:100%;border-collapse:collapse;min-width:480px;}
+.price-table th{background:linear-gradient(135deg,#f7971e,#ff4e00);color:#fff;padding:12px 14px;text-align:left;font-size:12px;white-space:nowrap;}
+.price-table td{padding:11px 14px;border-bottom:1px solid #e8e8e8;font-size:13px;line-height:1.4;}
+.price-table tr:nth-child(even) td{background:#f9f9f9;}
+.price-table td:last-child{font-weight:700;color:#ff4e00;}
+
+
+
+
 footer{background:#f5f5f5;color:var(--navy);padding:60px 5% 36px;}
 .footer-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:40px;margin-bottom:40px;}
 .footer-links h4{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px;}
@@ -146,7 +151,7 @@ footer{background:#f5f5f5;color:var(--navy);padding:60px 5% 36px;}
 
 <h2>Palyginimas: dronas vs inžinierius</h2>
 
-<table class="price-table">
+<div class="table-wrap"><table class="price-table">
     <tr><th>Kriterijus</th><th>Tradicinis inžinierius</th><th>Drono inspekcija</th></tr>
     <tr><td>Laukimo laikas</td><td>1-3 savaitės</td><td>24-48 valandos</td></tr>
     <tr><td>Kaina</td><td>€200-600</td><td>€149</td></tr>
@@ -155,7 +160,7 @@ footer{background:#f5f5f5;color:var(--navy);padding:60px 5% 36px;}
     <tr><td>Ataskaita</td><td>Komercinis pasiūlymas</td><td>Pilna PDF ataskaita su duomenimis</td></tr>
     <tr><td>Duomenų nešališkumas</td><td>Suinteresuotas montuotojas</td><td>Nepriklausoma analizė</td></tr>
     <tr><td>Stogo būklės vertinimas</td><td>Taip (vizualinis)</td><td>Taip (fotogrametrinė analizė)</td></tr>
-</table>
+</table></div>
 
 <h2>Kada rinktis droną, kada inžinierių</h2>
 
@@ -231,34 +236,50 @@ footer{background:#f5f5f5;color:var(--navy);padding:60px 5% 36px;}
     <div class="footer-top">
         <div class="footer-brand">
             <div style="font-size:20px;font-weight:800;background:linear-gradient(135deg,#f7971e,#ff4e00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:1px;">SUNLYTICS</div>
-            <p style="font-size:14px;color:#6b7280;margin-top:8px;max-width:200px;">Saulės energijos analizė Lietuvai. Greita, tiksli ir įperkama.</p>
+            <p style="font-size:14px;color:#6b7280;margin-top:8px;max-width:200px;">Smart solar analysis for Lithuania. Fast, accurate, and affordable.</p>
+            <div style="display:flex;gap:12px;margin-top:14px;">
+                <a href="https://g.page/r/sunlytics" target="_blank" rel="noopener" aria-label="Google Business" style="width:36px;height:36px;background:#fff;border:1.5px solid #e8e8e8;border-radius:8px;display:flex;align-items:center;justify-content:center;" title="Review us on Google">
+                    <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+                </a>
+            </div>
         </div>
         <div class="footer-links">
-            <h4>Produktas</h4>
+            <h4>Product</h4>
             <ul>
-                <li><a href="index.html#how-it-works">Kaip tai veikia</a></li>
-                <li><a href="index.html#pricing">Kainos</a></li>
-                <li><a href="index.html#calculator">Nemokama analizė</a></li>
+                <li><a href="index.html#how-it-works">How it Works</a></li>
+                <li><a href="index.html#pricing">Pricing</a></li>
+                <li><a href="index.html#calculator">Free Analysis</a></li>
+                <li><a href="index.html#weather">Drone Status</a></li>
             </ul>
         </div>
         <div class="footer-links">
-            <h4>Kontaktai</h4>
+            <h4>Contact</h4>
             <ul>
-                <li><a href="contact.html">Susisiekite</a></li>
+                <li><a href="contact.html">Contact</a></li>
                 <li><a href="mailto:info@sunlytics.lt">info@sunlytics.lt</a></li>
-                <li><a href="https://sunlytics.lt">sunlytics.lt</a></li>
-                <li><a href="blog.html">Blogas</a></li>
+                <li><a href="https://sunlytics.lt" target="_blank">sunlytics.lt</a></li>
+                <li><a href="https://maps.google.com/?q=Vilnius,Lithuania" target="_blank" rel="noopener">Vilnius, Lithuania</a></li>
+            </ul>
+        </div>
+        <div class="footer-links">
+            <h4>My Account</h4>
+            <ul>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="customer-dashboard.html">Track My Order</a></li>
+                <li><a href="pilot-login.html">Pilot Login</a></li>
+                <li><a href="pilot-onboarding.html">Pilot Onboarding</a></li>
+                <li><a href="for-installers.html">For Installers</a></li>
             </ul>
         </div>
     </div>
     <div class="footer-bottom" style="flex-direction:column;align-items:center;text-align:center;gap:8px;padding-top:28px;border-top:1px solid #e8e8e8;">
-        <p style="color:rgba(30,30,30,0.5);font-size:13px;">&copy; 2026 Sunlytics. Visos teisės saugomos.</p>
+        <p style="color:rgba(30,30,30,0.5);font-size:13px;">&copy; 2026 Sunlytics. All rights reserved.</p>
         <p style="display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;margin:0;">
-            <a href="privacy.html" style="color:#ff4e00;text-decoration:none;font-size:13px;">Privatumo politika</a>
+            <a href="privacy.html" style="color:#ff4e00;text-decoration:none;font-size:13px;">Privacy Policy</a>
             <span style="opacity:0.4;color:#666;">·</span>
-            <a href="terms.html" style="color:#ff4e00;text-decoration:none;font-size:13px;">Naudojimo sąlygos</a>
+            <a href="terms.html" style="color:#ff4e00;text-decoration:none;font-size:13px;">Terms of Service</a>
         </p>
-        <p style="font-size:11px;color:rgba(30,30,30,0.35);">Sunlytics UAB · JAR 306789123 · PVM LT864213907 · Gedimino pr. 9, 01103 Vilnius</p>
+        <p style="font-size:11px;color:rgba(30,30,30,0.35);">Sunlytics UAB &middot; JAR 306789123 &middot; PVM LT864213907 &middot; Gedimino pr. 9, 01103 Vilnius</p>
     </div>
 </footer>
 <script>document.querySelector('.hamburger').onclick=function(){document.getElementById('navLinks').classList.toggle('open');};</script>
