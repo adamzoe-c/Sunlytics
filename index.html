@@ -2864,6 +2864,21 @@ document.addEventListener('DOMContentLoaded', function() {
         maxNativeZoom: 19
     });
 
+    // Esri's free imagery has patchy high-zoom coverage in some regions (e.g. rural
+    // Eastern Europe). If tiles fail to load at the current zoom, step back one level
+    // until real imagery appears, instead of showing blank "no data" tiles.
+    let satelliteStepDownTimer = null;
+    satelliteLayer.on('tileerror', function() {
+        if (!heroMap.hasLayer(satelliteLayer)) return;
+        if (satelliteStepDownTimer) return; // already handling a step-down
+        satelliteStepDownTimer = setTimeout(function() {
+            satelliteStepDownTimer = null;
+            if (heroMap.hasLayer(satelliteLayer) && heroMap.getZoom() > 14) {
+                heroMap.setZoom(heroMap.getZoom() - 1);
+            }
+        }, 400);
+    });
+
     // Click on map to pin exact location
     heroMap.on('click', function(e) {
         const { lat, lng } = e.latlng;
@@ -2913,7 +2928,7 @@ function setMapPin(lat, lng) {
     } else {
         heroMarker = L.marker([lat, lng], { icon: getMarkerIcon() }).addTo(heroMap);
     }
-    heroMap.setView([lat, lng], 19); // zoom to rooftop level
+    heroMap.setView([lat, lng], 18); // zoom to rooftop level
     showSatelliteView();
     toggleViewToggleBtn(true);
 }
@@ -2991,12 +3006,29 @@ function formatSuggestion(r) {
     return { line1, line2 };
 }
 
+function photonToNominatim(feature) {
+    const p = feature.properties || {};
+    const coords = (feature.geometry && feature.geometry.coordinates) || [0, 0];
+    return {
+        lat: coords[1],
+        lon: coords[0],
+        address: {
+            road: p.street || p.name || '',
+            house_number: p.housenumber || '',
+            city: p.city || p.town || p.village || p.district || '',
+            postcode: p.postcode || ''
+        },
+        display_name: [p.name, p.street, p.housenumber, p.postcode, p.city, p.country].filter(Boolean).join(', ')
+    };
+}
+
 async function fetchSuggestions(query) {
     try {
         const res = await fetch(
-            `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=8&addressdetails=1&accept-language=en`
+            `https://photon.komoot.io/api/?q=${encodeURIComponent(query)}&limit=8&lang=en`
         );
-        const results = await res.json();
+        const data = await res.json();
+        const results = (data.features || []).map(photonToNominatim);
         const box = document.getElementById('mapSuggestions');
         if (!results.length) { box.style.display = 'none'; return; }
 
@@ -3066,8 +3098,9 @@ async function doMapSearch() {
     if (!query) return;
     if (currentSuggestions.length) { selectSuggestion(0); return; }
     try {
-        const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1&addressdetails=1&accept-language=en`);
-        const results = await res.json();
+        const res = await fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(query)}&limit=1&lang=en`);
+        const data = await res.json();
+        const results = (data.features || []).map(photonToNominatim);
         if (results.length) {
             currentSuggestions = results;
             selectSuggestion(0);
