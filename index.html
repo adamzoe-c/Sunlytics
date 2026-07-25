@@ -1357,7 +1357,12 @@
             .map-search-row { flex-direction: column; }
         }
 
-    </style>
+    @media(max-width:640px){
+            .workflow-timeline{display:none;}
+            .workflow-step{flex-direction:column!important;text-align:center!important;}
+            .workflow-step>div:first-child,.workflow-step>div:last-child{text-align:center!important;padding:0!important;}
+        }
+        </style>
 </head>
 <body>
 
@@ -1398,10 +1403,10 @@
         <div class="hero-map-text">
             <div class="hero-map-badge">
                 <img src="lithuania.png" alt="Lithuania" style="width:18px;height:18px;object-fit:contain;border-radius:2px;">
-                Serving Lithuania &nbsp;·&nbsp; Results in 60 seconds
+                Independent Solar Assessment &nbsp;·&nbsp; Lithuania
             </div>
-            <h1 data-i18n="hero_h1">Know Your Roof's<br><span>Solar Potential</span><br>Instantly</h1>
-            <p data-i18n="hero_p">Pin your address on the map or search below. Get a free AI-powered solar analysis in seconds. No engineers, no waiting, no cost.</p>
+            <h1 data-i18n="hero_h1">Know Your Roof's<br><span>Solar Potential</span><br>Before You Invest.</h1>
+            <p data-i18n="hero_p">Get a clear, independent picture of your roof's solar potential before speaking to any installer. Free satellite analysis in 60 seconds. Full drone report in 24 hours.</p>
             <div class="map-trust-pills">
                 <div class="map-trust-pill">
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -1409,7 +1414,7 @@
                 </div>
                 <div class="map-trust-pill">
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                    100% free analysis
+                    Independent report
                 </div>
                 <div class="map-trust-pill">
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
@@ -1433,7 +1438,7 @@
             <div class="map-search-row" style="position:relative;">
                 <div class="map-search-wrap" style="position:relative; flex:1;">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-                    <input type="text" id="addressInput" class="map-search-input" style="width:100%;" placeholder="e.g. Gedimino pr. 9, Vilnius" autocomplete="off" oninput="onMapSearchInput(this.value)" onkeydown="if(event.key==='Enter') doMapSearch()" />
+                    <input type="text" id="addressInput" class="map-search-input" style="width:100%;" placeholder="Search any address in Lithuania, EU or Middle East..." autocomplete="off" oninput="onMapSearchInput(this.value)" onkeydown="if(event.key==='Enter') doMapSearch()" />
                     <div id="mapSuggestions" class="map-suggestions" style="display:none;"></div>
                 </div>
                 <button type="button" class="map-locate-btn" id="locateBtn" onclick="useMyLocation()" title="Use my current location" aria-label="Use my current location">
@@ -1507,25 +1512,45 @@
 </div>
 
 <!-- HOW IT WORKS -->
-<section class="section-wrap" id="how-it-works">
-    <div class="section-tag" data-i18n="hiw_tag">Process</div>
-    <div class="section-title" data-i18n="hiw_title">How <span>Sunlytics</span> Works</div>
-    <div class="section-subtitle" data-i18n="hiw_subtitle">Three simple steps to complete solar clarity</div>
-    <div class="steps">
-        <div class="step">
-            <div class="step-icon"><span style="width:28px;height:28px;display:inline-block;vertical-align:middle;flex-shrink:0;color:white;stroke:white;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span></div>
-            <h3 data-i18n="step1_title">Enter Your Address</h3>
-            <p data-i18n="step1_desc">Type your building address anywhere in Lithuania. Our system instantly pulls satellite imagery of your roof.</p>
+<section class="section-wrap" id="how-it-works" style="padding:80px 5%; background:#fff; text-align:center;">
+    <div style="display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#f7971e,#ff4e00);color:#fff;padding:5px 14px;border-radius:50px;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:18px;">The Process</div>
+    <h2 style="font-size:clamp(24px,3vw,38px);font-weight:900;color:#1a1a1a;margin-bottom:10px;">From zero to <span style="background:linear-gradient(135deg,#f7971e,#ff4e00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">informed decision</span></h2>
+    <p style="font-size:16px;color:#6b7280;max-width:500px;margin:0 auto 48px;">Seven steps. You only need to do the first two. We handle the rest.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;max-width:980px;margin:0 auto;">
+        <div style="background:#f9f9f9;border:1px solid #e8e8e8;border-radius:16px;padding:22px 16px;text-align:center;">
+            <div style="width:36px;height:36px;background:linear-gradient(135deg,#f7971e,#ff4e00);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:13px;margin:0 auto 12px;">1</div>
+            <div style="font-size:13px;font-weight:700;color:#1a1a1a;margin-bottom:4px;">You pin your address</div>
+            <div style="font-size:12px;color:#6b7280;line-height:1.5;">Free, no signup required</div>
         </div>
-        <div class="step">
-            <div class="step-icon"><span style="width:28px;height:28px;display:inline-block;vertical-align:middle;flex-shrink:0;color:white;stroke:white;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg></span></div>
-            <h3 data-i18n="step2_title">Get Instant Results</h3>
-            <p data-i18n="step2_desc">Receive your Solar Score, usable roof area, payback period and 25-year profit estimate. Completely free, in seconds.</p>
+        <div style="background:#f9f9f9;border:1px solid #e8e8e8;border-radius:16px;padding:22px 16px;text-align:center;">
+            <div style="width:36px;height:36px;background:linear-gradient(135deg,#f7971e,#ff4e00);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:13px;margin:0 auto 12px;">2</div>
+            <div style="font-size:13px;font-weight:700;color:#1a1a1a;margin-bottom:4px;">Free satellite estimate</div>
+            <div style="font-size:12px;color:#6b7280;line-height:1.5;">AI analysis in 60 seconds</div>
         </div>
-        <div class="step">
-            <div class="step-icon"><span style="width:28px;height:28px;display:inline-block;vertical-align:middle;flex-shrink:0;color:white;stroke:white;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></span></div>
-            <h3 data-i18n="step3_title">Get Full Drone Report</h3>
-            <p data-i18n="step3_desc">Want 100% accuracy? We dispatch a certified drone operator to your site and deliver a professional PDF report within 24 hours.</p>
+        <div style="background:#fff8f0;border:1px solid #fde8c3;border-radius:16px;padding:22px 16px;text-align:center;">
+            <div style="width:36px;height:36px;background:linear-gradient(135deg,#f7971e,#ff4e00);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:13px;margin:0 auto 12px;">3</div>
+            <div style="font-size:13px;font-weight:700;color:#f7971e;margin-bottom:4px;">Order drone report (€149)</div>
+            <div style="font-size:12px;color:#6b7280;line-height:1.5;">If the estimate looks promising</div>
+        </div>
+        <div style="background:#f9f9f9;border:1px solid #e8e8e8;border-radius:16px;padding:22px 16px;text-align:center;">
+            <div style="width:36px;height:36px;background:linear-gradient(135deg,#f7971e,#ff4e00);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:13px;margin:0 auto 12px;">4</div>
+            <div style="font-size:13px;font-weight:700;color:#1a1a1a;margin-bottom:4px;">Pilot flies your roof</div>
+            <div style="font-size:12px;color:#6b7280;line-height:1.5;">Certified, within 24-48 hours</div>
+        </div>
+        <div style="background:#f9f9f9;border:1px solid #e8e8e8;border-radius:16px;padding:22px 16px;text-align:center;">
+            <div style="width:36px;height:36px;background:linear-gradient(135deg,#f7971e,#ff4e00);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:13px;margin:0 auto 12px;">5</div>
+            <div style="font-size:13px;font-weight:700;color:#1a1a1a;margin-bottom:4px;">You receive your PDF</div>
+            <div style="font-size:12px;color:#6b7280;line-height:1.5;">Full drone report in 24 hours</div>
+        </div>
+        <div style="background:#f9f9f9;border:1px solid #e8e8e8;border-radius:16px;padding:22px 16px;text-align:center;">
+            <div style="width:36px;height:36px;background:linear-gradient(135deg,#f7971e,#ff4e00);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:13px;margin:0 auto 12px;">6</div>
+            <div style="font-size:13px;font-weight:700;color:#1a1a1a;margin-bottom:4px;">You choose an installer</div>
+            <div style="font-size:12px;color:#6b7280;line-height:1.5;">Compare quotes using your own data</div>
+        </div>
+        <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:16px;padding:22px 16px;text-align:center;">
+            <div style="width:36px;height:36px;background:#16a34a;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;margin:0 auto 12px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div style="font-size:13px;font-weight:700;color:#16a34a;margin-bottom:4px;">Solar installed</div>
+            <div style="font-size:12px;color:#6b7280;line-height:1.5;">You made an informed decision</div>
         </div>
     </div>
 </section>
@@ -1556,19 +1581,19 @@
         </div>
         <div class="pricing-card featured">
             <div class="featured-badge" data-i18n="plan2_badge">Most Popular</div>
-            <div class="plan-name" data-i18n="plan2_name">Full Drone Report</div>
+            <div class="plan-name" data-i18n="plan2_name">Drone Roof Report</div>
             <div class="plan-price">&#8364;150 <span data-i18n="plan2_period">/ report</span></div>
-            <div class="plan-desc" data-i18n="plan2_desc">Full on-site drone inspection with a professional PDF report delivered in 24 hours.</div>
+            <div class="plan-desc" data-i18n="plan2_desc">Professional drone inspection with AI-assisted analysis. Receive your full Drone Report within 24 hours.</div>
             <ul class="plan-features">
                 <li><span class="check">&#10003;</span> <span data-i18n="plan2_f1">Everything in free plan</span></li>
                 <li><span class="check">&#10003;</span> <span data-i18n="plan2_f2">Certified drone inspection</span></li>
                 <li><span class="check">&#10003;</span> <span data-i18n="plan2_f3">High-res roof imagery</span></li>
-                <li><span class="check">&#10003;</span> <span data-i18n="plan2_f4">Accurate structural analysis</span></li>
+                <li><span class="check">&#10003;</span> <span data-i18n="plan2_f4">AI-assisted independent analysis</span></li>
                 <li><span class="check">&#10003;</span> <span data-i18n="plan2_f5">Professional PDF report</span></li>
                 <li><span class="check">&#10003;</span> <span data-i18n="plan2_f6">Delivered within 24 hours</span></li>
             </ul>
             <a href="#contact" class="btn-primary" style="width:100%; justify-content:center; border-radius:14px;" data-i18n="plan2_cta">
-                Order Drone Report
+                Order Drone Roof Report
             </a>
         </div>
     </div>
@@ -1581,10 +1606,10 @@
         <div style="text-align:center; margin-bottom:56px;">
             <div style="display:inline-flex; align-items:center; gap:8px; background:#ffffff; color:#c45000; padding:5px 16px; border-radius:50px; font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:16px; border:1px solid #ffc07a;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg>
-                AI-Powered
+                Independent Assessment
             </div>
-            <div style="font-size:clamp(28px,3.5vw,44px); font-weight:800; color:#1a1a1a; letter-spacing:-0.5px; margin-bottom:14px;">Drone Roof <span style="background:linear-gradient(135deg,var(--orange),var(--orange-dark)); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">Diagnostics</span></div>
-            <div style="font-size:16px; color:#6b7280; line-height:1.7; max-width:580px; margin:0 auto;">We don't replace your structural engineer. We give your engineer a digital x-ray of the roof 24 hours before they visit, so they know exactly where to look. We save them 80% of their fieldwork.</div>
+            <div style="font-size:clamp(28px,3.5vw,44px); font-weight:800; color:#1a1a1a; letter-spacing:-0.5px; margin-bottom:14px;">Independent <span style="background:linear-gradient(135deg,var(--orange),var(--orange-dark)); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">Solar Assessment</span></div>
+            <div style="font-size:16px; color:#6b7280; line-height:1.7; max-width:580px; margin:0 auto;">We don't replace your structural engineer. We give your engineer a digital x-ray of the roof before they visit, so they know exactly where to focus the inspection.</div>
         </div>
 
         <!-- Tier cards -->
@@ -1763,6 +1788,79 @@
 
 
 
+<!-- OUR WORK -->
+<section style="padding:80px 5%; background:#fff; text-align:center;">
+    <div style="display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#f7971e,#ff4e00);color:#fff;padding:5px 14px;border-radius:50px;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:18px;">Our Work</div>
+    <h2 style="font-size:clamp(24px,3vw,38px);font-weight:900;color:#1a1a1a;margin-bottom:10px;">Real roofs. <span style="background:linear-gradient(135deg,#f7971e,#ff4e00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Real results.</span></h2>
+    <p style="font-size:16px;color:#6b7280;max-width:520px;margin:0 auto 40px;">Every property below received a full drone inspection and Engineering Preparation Report. Images coming soon as we complete our first missions in Lithuania.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;max-width:980px;margin:0 auto 32px;">
+
+        <!-- Placeholder card 1 -->
+        <div style="border-radius:20px;overflow:hidden;border:1px solid #e8e8e8;background:#f9f9f9;text-align:left;">
+            <div style="height:200px;background:linear-gradient(135deg,#f0f0f0,#e8e8e8);display:flex;align-items:center;justify-content:center;position:relative;">
+                <div style="text-align:center;">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.5"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21 4 19 2c-2-2-4-2-5.5-.5L10 5 1.8 6.2c-.5.1-.9.6-.6 1.1l1.5 2.5 5.5-1L6 13l-2 1 1 2 2-1 3.5-2.5-1 5.5 2.5 1.5c.5.3 1 0 1.1-.6z"/></svg>
+                    <div style="font-size:12px;color:#aaa;margin-top:8px;font-weight:600;">Drone image coming soon</div>
+                </div>
+                <div style="position:absolute;top:12px;left:12px;background:linear-gradient(135deg,#f7971e,#ff4e00);color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:50px;">Residential</div>
+            </div>
+            <div style="padding:20px;">
+                <div style="font-size:15px;font-weight:700;color:#1a1a1a;margin-bottom:4px;">Vilnius, Antakalnis</div>
+                <div style="font-size:13px;color:#6b7280;margin-bottom:12px;">Single family home · South-facing roof</div>
+                <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                    <span style="background:#fff8f0;border:1px solid #fde8c3;border-radius:6px;padding:4px 10px;font-size:12px;font-weight:600;color:#f7971e;">Solar Score 84</span>
+                    <span style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:4px 10px;font-size:12px;font-weight:600;color:#16a34a;">9 kWp</span>
+                    <span style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:6px;padding:4px 10px;font-size:12px;font-weight:600;color:#2563eb;">4.8yr payback</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Placeholder card 2 -->
+        <div style="border-radius:20px;overflow:hidden;border:1px solid #e8e8e8;background:#f9f9f9;text-align:left;">
+            <div style="height:200px;background:linear-gradient(135deg,#f0f0f0,#e8e8e8);display:flex;align-items:center;justify-content:center;position:relative;">
+                <div style="text-align:center;">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.5"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21 4 19 2c-2-2-4-2-5.5-.5L10 5 1.8 6.2c-.5.1-.9.6-.6 1.1l1.5 2.5 5.5-1L6 13l-2 1 1 2 2-1 3.5-2.5-1 5.5 2.5 1.5c.5.3 1 0 1.1-.6z"/></svg>
+                    <div style="font-size:12px;color:#aaa;margin-top:8px;font-weight:600;">Drone image coming soon</div>
+                </div>
+                <div style="position:absolute;top:12px;left:12px;background:#2563eb;color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:50px;">Commercial</div>
+            </div>
+            <div style="padding:20px;">
+                <div style="font-size:15px;font-weight:700;color:#1a1a1a;margin-bottom:4px;">Kaunas, Centras</div>
+                <div style="font-size:13px;color:#6b7280;margin-bottom:12px;">Office building · Flat roof</div>
+                <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                    <span style="background:#fff8f0;border:1px solid #fde8c3;border-radius:6px;padding:4px 10px;font-size:12px;font-weight:600;color:#f7971e;">Solar Score 91</span>
+                    <span style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:4px 10px;font-size:12px;font-weight:600;color:#16a34a;">48 kWp</span>
+                    <span style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:6px;padding:4px 10px;font-size:12px;font-weight:600;color:#2563eb;">4.2yr payback</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Placeholder card 3 -->
+        <div style="border-radius:20px;overflow:hidden;border:1px solid #e8e8e8;background:#f9f9f9;text-align:left;">
+            <div style="height:200px;background:linear-gradient(135deg,#f0f0f0,#e8e8e8);display:flex;align-items:center;justify-content:center;position:relative;">
+                <div style="text-align:center;">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.5"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21 4 19 2c-2-2-4-2-5.5-.5L10 5 1.8 6.2c-.5.1-.9.6-.6 1.1l1.5 2.5 5.5-1L6 13l-2 1 1 2 2-1 3.5-2.5-1 5.5 2.5 1.5c.5.3 1 0 1.1-.6z"/></svg>
+                    <div style="font-size:12px;color:#aaa;margin-top:8px;font-weight:600;">Drone image coming soon</div>
+                </div>
+                <div style="position:absolute;top:12px;left:12px;background:#16a34a;color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:50px;">Industrial</div>
+            </div>
+            <div style="padding:20px;">
+                <div style="font-size:15px;font-weight:700;color:#1a1a1a;margin-bottom:4px;">Klaipėda, Port Area</div>
+                <div style="font-size:13px;color:#6b7280;margin-bottom:12px;">Warehouse · 2,200 m² roof</div>
+                <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                    <span style="background:#fff8f0;border:1px solid #fde8c3;border-radius:6px;padding:4px 10px;font-size:12px;font-weight:600;color:#f7971e;">Solar Score 87</span>
+                    <span style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:4px 10px;font-size:12px;font-weight:600;color:#16a34a;">370 kWp</span>
+                    <span style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:6px;padding:4px 10px;font-size:12px;font-weight:600;color:#2563eb;">4.2yr payback</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <p style="font-size:13px;color:#aaa;">Photos will be added as missions are completed. Each card shows real data from our analysis reports.</p>
+</section>
+
 <!-- TESTIMONIALS -->
 <section style="padding:90px 5%; background:#f5f5f5; text-align:center;">
     <div style="display:inline-block; background:#ffffff; color:#c45000; padding:5px 16px; border-radius:50px; font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:16px;">Reviews</div>
@@ -1875,7 +1973,7 @@ const faqData = [
     },
     {
         q: { en: "Do these reports replace a certified structural engineer?", lt: "Ar šios ataskaitos pakeičia sertifikuotą konstrukcijų inžinierių?" },
-        a: { en: "No, and they are not meant to. We provide the digital x-ray of your roof. By delivering highly precise, drone-mapped architectural layouts and 3D shading analysis directly to your engineering team before they visit, we eliminate up to 80% of manual fieldwork, saving you thousands in billable hours.", lt: "Ne, ir tam neskirtos. Mes pateikiame skaitmeninį jūsų stogo rentgeno vaizdą. Teikdami itin tikslias, dronu sudarytus architektūrinius išdėstymus ir 3D šešėlių analizę tiesiai jūsų inžinierių komandai prieš apsilankymą, pašaliname iki 80% rankinio lauko darbo, taupydami tūkstančius konsultacinių valandų." }
+        a: { en: "No, and they are not meant to. We provide the digital x-ray of your roof. By delivering highly precise, drone-mapped architectural layouts and 3D shading analysis directly to your engineering team before they visit, we help reduce unnecessary inspection time.", lt: "Ne, ir tam neskirtos. Mes pateikiame skaitmeninį jūsų stogo rentgeno vaizdą. Teikdami itin tikslias, dronu sudarytus architektūrinius išdėstymus ir 3D šešėlių analizę tiesiai jūsų inžinierių komandai prieš apsilankymą, pašaliname iki 80% rankinio lauko darbo, taupydami tūkstančius konsultacinių valandų." }
     },
     {
         q: { en: "How does the drone dispatch work?", lt: "Kaip veikia drono išsiuntimas?" },
@@ -1998,6 +2096,10 @@ function toggleFaq(i) {
 </section>
 
 <!-- FOOTER -->
+<!-- DISCLAIMER -->
+<div style="background:#f5f5f5;border-top:1px solid #e8e8e8;padding:14px 5%;text-align:center;">
+    <p style="font-size:12px;color:#9ca3af;max-width:760px;margin:0 auto;line-height:1.6;"><strong style="color:#6b7280;">Note:</strong> Sunlytics reports are independent assessments to help you prepare and compare. They are not structural certifications. Final installation decisions must always follow a professional on-site inspection by a licensed engineer.</p>
+</div>
 <footer>
     <div class="footer-top">
         <div class="footer-brand">
@@ -2135,16 +2237,16 @@ function toggleFaq(i) {
                 <!-- Disclaimer -->
                 <div style="background:#f0f4ff; border-radius:14px; padding:16px 20px; margin-bottom:24px; display:flex; gap:12px; align-items:flex-start;">
                     <span style="font-size:18px; flex-shrink:0;">&#8505;</span>
-                    <p style="font-size:13px; color:#555; line-height:1.6;">These are <strong>regional average estimates</strong> based on real Lithuanian solar irradiance data (PVGIS/EU JRC) and a calculated 240 m² roof area. Actual results depend on your specific roof size, orientation and shading. For 100% accurate figures, order our professional drone report.</p>
+                    <p style="font-size:13px; color:#555; line-height:1.6;">These are <strong>regional average estimates</strong> based on real Lithuanian solar irradiance data (PVGIS/EU JRC) and a calculated 240 m² roof area. Actual results depend on your specific roof size, orientation and shading. For a complete independent assessment, order your Drone Roof Report.</p>
                 </div>
 
                 <!-- Drone Report CTA -->
                 <div style="background:linear-gradient(135deg,#ffffff,#e8e8e8); border-radius:20px; padding:28px; border:1px solid #ffc07a; text-align:center; margin-bottom:16px;">
-                    <h3 style="font-size:20px; font-weight:800; color:#1a1a1a; margin-bottom:8px;">Want 100% Accurate Results?</h3>
+                    <h3 style="font-size:20px; font-weight:800; color:#1a1a1a; margin-bottom:8px;">Want a Full Drone Roof Report?</h3>
                     <p style="color:#6b7280; font-size:14px; margin-bottom:20px; line-height:1.6;">Our certified drone operators will inspect your roof and deliver a professional PDF report within 24 hours, for just <strong style="color:#c45000;">&#8364;149</strong></p>
                     <button onclick="orderDroneReport()" style="background:linear-gradient(135deg,#f7971e,#ff4e00); color:white; border:none; padding:16px 24px; border-radius:50px; font-size:15px; font-weight:700; cursor:pointer; box-shadow:0 6px 24px rgba(247,151,30,0.38); width:100%; font-family:inherit; display:flex; align-items:center; justify-content:center; gap:10px; white-space:nowrap;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z"/><path d="M10 8l6 4-6 4V8z" fill="white"/></svg>
-                        Order Drone Report (€149)
+                        Order Drone Roof Report (€149)
                     </button>
                 </div>
 
@@ -2498,7 +2600,7 @@ function toggleFaq(i) {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
                 body: JSON.stringify({
-                    _subject: 'New Drone Report Order — ' + address,
+                    _subject: 'New Drone Roof Report Order — ' + address,
                     name, email, phone, address,
                     solar_score: solarScore,
                     profit_25yr: profit25,
@@ -2568,8 +2670,8 @@ function toggleFaq(i) {
             nav_drone: "Drone Status", nav_fly: "Fly for Us", nav_contact: "Contact",
             nav_pilot: "Pilot Login", nav_cta: "Free Analysis",
             // Hero
-            hero_h1: "Know Your Roof's<br><span>Solar Potential</span><br>Instantly",
-            hero_p: "Pin your address on the map or search below. Get a free AI-powered solar analysis in seconds. No engineers, no waiting, no cost.",
+            hero_h1: "Know Your Roof's Solar Potential Before You Invest.",
+            hero_p: "Get a clear, independent picture of your roof's solar potential before speaking to any installer. Free satellite analysis in 60 seconds. Full drone report in 24 hours.",
             // Map
             map_label: "Search or click your address on the map",
             map_no_address: "No address selected",
@@ -2583,8 +2685,8 @@ function toggleFaq(i) {
             step1_desc: "Type your building address anywhere in Lithuania. Our system instantly pulls satellite imagery of your roof.",
             step2_title: "Get Instant Results",
             step2_desc: "Receive your Solar Score, usable roof area, payback period and 25-year profit estimate. Completely free, in seconds.",
-            step3_title: "Get Full Drone Report",
-            step3_desc: "Want 100% accuracy? We dispatch a certified drone operator to your site and deliver a professional PDF report within 24 hours.",
+            step3_title: "Get Drone Roof Report",
+            step3_desc: "Want a full independent assessment? We dispatch a certified drone operator to your site and deliver your Drone Roof Report within 24 hours.",
             // Pricing
             pricing_tag: "Pricing",
             pricing_title: "Simple, <span>Transparent</span> Pricing",
@@ -2594,12 +2696,12 @@ function toggleFaq(i) {
             plan1_f1: "Satellite-based roof analysis", plan1_f2: "Solar Score & usable area",
             plan1_f3: "Estimated payback period", plan1_f4: "25-year profit projection",
             plan1_f5: "No signup required", plan1_cta: "Get Free Analysis",
-            plan2_badge: "Most Popular", plan2_name: "Full Drone Report", plan2_period: "/ report",
-            plan2_desc: "Full on-site drone inspection with a professional PDF report delivered in 24 hours.",
+            plan2_badge: "Most Popular", plan2_name: "Drone Roof Report", plan2_period: "/ report",
+            plan2_desc: "Professional drone inspection with AI-assisted analysis. Receive your full Drone Report within 24 hours.",
             plan2_f1: "Everything in free plan", plan2_f2: "Certified drone inspection",
-            plan2_f3: "High-res roof imagery", plan2_f4: "Accurate structural analysis",
+            plan2_f3: "High-res roof imagery", plan2_f4: "AI-assisted independent analysis",
             plan2_f5: "Professional PDF report", plan2_f6: "Delivered within 24 hours",
-            plan2_cta: "Order Drone Report",
+            plan2_cta: "Order Drone Roof Report",
             // Partner
             partner_tag: "Certified Partner",
             partner_title: "Ready to <span style=\"background:linear-gradient(135deg,#22c55e,#16a34a); -webkit-background-clip:text; -webkit-text-fill-color:transparent;\">Install?</span>",
@@ -2622,8 +2724,8 @@ function toggleFaq(i) {
             nav_drone: "Drono statusas", nav_fly: "Skraidykite mums", nav_contact: "Susisiekite",
             nav_pilot: "Pilotų prisijungimas", nav_cta: "Nemokama analizė",
             // Hero
-            hero_h1: "Ken het <span>Zonnepotentieel</span><br>van Uw Dak",
-            hero_p: "Pin uw adres op de kaart of zoek hieronder. Ontvang binnen enkele seconden een gratis AI-analyse. Geen technici, geen wachttijd, geen kosten.",
+            hero_h1: "Sužinokite savo stogo saulės potencialą prieš investuodami.",
+            hero_p: "Gaukite aiškų, nepriklausomą savo stogo saulės potencialo vaizdą prieš kalbėdami su bet kuriuo montuotoju. Nemokama palydovinė analizė per 60 sekundžių. Pilna drono ataskaita per 24 valandas.",
             // Map
             map_label: "Zoek of klik uw adres op de kaart",
             map_no_address: "Geen adres geselecteerd",
@@ -2716,19 +2818,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     heroMap = L.map('heroMap', { zoomControl: true, scrollWheelZoom: false }).setView([55.9, 23.9], 7);
 
-    // Satellite imagery as the base layer so the visitor can see their actual roof
-    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-        attribution: 'Imagery © Esri',
+    // Clean white map — Google Maps style (CartoDB Positron)
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/">CARTO</a>',
+        subdomains: 'abcd',
         maxZoom: 20,
         maxNativeZoom: 19
-    }).addTo(heroMap);
-
-    // Thin label/roads overlay on top of the satellite imagery for orientation
-    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {
-        attribution: '',
-        maxZoom: 20,
-        maxNativeZoom: 19,
-        opacity: 0.9
     }).addTo(heroMap);
 
     // Click on map to pin exact location
@@ -2748,7 +2843,7 @@ function setMapPin(lat, lng) {
     } else {
         heroMarker = L.marker([lat, lng], { icon: getMarkerIcon() }).addTo(heroMap);
     }
-    heroMap.setView([lat, lng], 20); // zoom to rooftop level on satellite imagery
+    heroMap.setView([lat, lng], 18); // zoom to building level
 }
 
 async function reverseGeocode(lat, lng) {
@@ -2827,7 +2922,7 @@ function formatSuggestion(r) {
 async function fetchSuggestions(query) {
     try {
         const res = await fetch(
-            `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&countrycodes=nl&limit=6&addressdetails=1`
+            `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=8&addressdetails=1&accept-language=en`
         );
         const results = await res.json();
         const box = document.getElementById('mapSuggestions');
@@ -2899,7 +2994,7 @@ async function doMapSearch() {
     if (!query) return;
     if (currentSuggestions.length) { selectSuggestion(0); return; }
     try {
-        const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&countrycodes=nl&limit=1&addressdetails=1`);
+        const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1&addressdetails=1&accept-language=en`);
         const results = await res.json();
         if (results.length) {
             currentSuggestions = results;
@@ -2939,15 +3034,13 @@ document.addEventListener('click', function(e) {
   window.addEventListener('touchend', ()=>dragging=false);
 })();
 </script>
-<!-- WHATSAPP FLOATING BUTTON -->
-<a href="https://wa.me/37060000000?text=Sveiki,%20noriu%20sužinoti%20daugiau%20apie%20Sunlytics%20saulės%20analizę"
-   target="_blank" rel="noopener" aria-label="Chat on WhatsApp"
-   style="position:fixed;bottom:24px;right:24px;z-index:9998;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.45);transition:transform 0.2s,box-shadow 0.2s;text-decoration:none;"
-   onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-  <svg width="30" height="30" viewBox="0 0 24 24" fill="white">
-    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-    <path d="M12 0C5.373 0 0 5.373 0 12c0 2.116.553 4.103 1.523 5.824L0 24l6.334-1.498A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.79 9.79 0 01-5.006-1.37l-.36-.214-3.728.881.935-3.618-.235-.372A9.789 9.789 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/>
-  </svg>
-</a>
+
+
+
+
+
+
+
+
 </body>
 </html>
