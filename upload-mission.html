@@ -887,17 +887,17 @@
 <div class="page-hero">
     <div class="page-hero-inner">
         <div class="page-hero-text">
-            <div class="tag">Pilot Dashboard</div>
-            <h1>Upload <span>Mission Images</span></h1>
-            <p>Enter your mission ID, upload your drone images, and get paid automatically once validated.</p>
+            <div class="tag" data-i18n="hero_tag">Pilot Dashboard</div>
+            <h1 data-i18n="hero_h1">Upload <span>Mission Images</span></h1>
+            <p data-i18n="hero_p">Enter your mission ID, upload your drone images, and get paid automatically once validated.</p>
         </div>
         <div class="pilot-badge">
             <div class="pilot-badge-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21 4 19 2c-2-2-4-2-5.5-.5L10 5 1.8 6.2c-.5.1-.9.6-.6 1.1l1.5 2.5 5.5-1L6 13l-2 1 1 2 2-1 3.5-2.5-1 5.5 2.5 1.5c.5.3 1 0 1.1-.6z"/></svg>
             </div>
             <div class="pilot-badge-text">
-                <div class="name">Verified Pilot</div>
-                <div class="role">Sunlytics Partner Network</div>
+                <div class="name" data-i18n="badge_name">Verified Pilot</div>
+                <div class="role" data-i18n="badge_role">Sunlytics Partner Network</div>
             </div>
         </div>
     </div>
@@ -908,19 +908,19 @@
     <div class="progress-bar-inner">
         <div class="progress-step active" id="pStep1">
             <div class="step-dot">1</div>
-            <span class="step-label">Mission ID</span>
+            <span class="step-label" data-i18n="pstep1">Mission ID</span>
         </div>
         <div class="progress-step" id="pStep2">
             <div class="step-dot">2</div>
-            <span class="step-label">Upload Images</span>
+            <span class="step-label" data-i18n="pstep2">Upload Images</span>
         </div>
         <div class="progress-step" id="pStep3">
             <div class="step-dot">3</div>
-            <span class="step-label">Quality Check</span>
+            <span class="step-label" data-i18n="pstep3">Quality Check</span>
         </div>
         <div class="progress-step" id="pStep4">
             <div class="step-dot">4</div>
-            <span class="step-label">Submit</span>
+            <span class="step-label" data-i18n="pstep4">Submit</span>
         </div>
     </div>
 </div>
@@ -935,46 +935,46 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
             </div>
             <div>
-                <div class="card-title">Mission Details</div>
-                <div class="card-subtitle">Enter the mission ID from your SMS or email alert</div>
+                <div class="card-title" data-i18n="card1_title">Mission Details</div>
+                <div class="card-subtitle" data-i18n="card1_sub">Enter the mission ID from your SMS or email alert</div>
             </div>
         </div>
 
         <div class="mission-id-row">
             <div class="form-group">
-                <label>Mission ID</label>
+                <label data-i18n="lbl_missionid">Mission ID</label>
                 <input type="text" id="missionId" placeholder="e.g. SUN-2026-04821" autocomplete="off">
             </div>
             <div class="form-group" style="max-width:180px;">
-                <label>Your Pilot ID</label>
+                <label data-i18n="lbl_pilotid">Your Pilot ID</label>
                 <input type="text" id="pilotId" placeholder="e.g. PLT-0094" autocomplete="off">
             </div>
             <button class="verify-btn" onclick="verifyMission()">
                 <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-                Verify
+                <span data-i18n="btn_verify">Verify</span>
             </button>
         </div>
 
         <div class="mission-info-box" id="missionInfoBox">
             <div class="mission-info-grid">
                 <div class="mission-info-item">
-                    <div class="label">Address</div>
+                    <div class="label" data-i18n="info_address">Address</div>
                     <div class="value" id="infoAddress">-</div>
                 </div>
                 <div class="mission-info-item">
-                    <div class="label">Mission Type</div>
+                    <div class="label" data-i18n="info_type">Mission Type</div>
                     <div class="value" id="infoType">-</div>
                 </div>
                 <div class="mission-info-item">
-                    <div class="label">Images Required</div>
+                    <div class="label" data-i18n="info_images">Images Required</div>
                     <div class="value" id="infoImages">-</div>
                 </div>
                 <div class="mission-info-item">
-                    <div class="label">Reward</div>
+                    <div class="label" data-i18n="info_reward">Reward</div>
                     <div class="value orange" id="infoReward">-</div>
                 </div>
                 <div class="mission-info-item">
-                    <div class="label">Status</div>
+                    <div class="label" data-i18n="info_status">Status</div>
                     <div class="value"><span class="status-pill active" id="infoStatus">-</span></div>
                 </div>
             </div>
@@ -988,8 +988,8 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
             </div>
             <div>
-                <div class="card-title">Upload Drone Images</div>
-                <div class="card-subtitle">Drag and drop or click to select your raw image files</div>
+                <div class="card-title" data-i18n="card2_title">Upload Drone Images</div>
+                <div class="card-subtitle" data-i18n="card2_sub">Drag and drop or click to select your raw image files</div>
             </div>
         </div>
 
@@ -998,8 +998,8 @@
             <div class="upload-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
             </div>
-            <h3>Drop images here or click to browse</h3>
-            <p>Upload all raw images from your flight. Do not edit or compress.<br>Minimum 60 images recommended per standard rooftop mission.</p>
+            <h3 data-i18n="upload_h3">Drop images here or click to browse</h3>
+            <p data-i18n="upload_p">Upload all raw images from your flight. Do not edit or compress.<br>Minimum 60 images recommended per standard rooftop mission.</p>
             <div class="file-types">
                 <span class="file-type-tag">JPG</span>
                 <span class="file-type-tag">JPEG</span>
@@ -1015,7 +1015,7 @@
                 <span class="count" id="fileCountLabel">0 images selected</span>
                 <button class="clear-btn" onclick="clearFiles()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                    Clear all
+                    <span data-i18n="clear_all">Clear all</span>
                 </button>
             </div>
             <div class="file-grid" id="fileGrid"></div>
@@ -1029,8 +1029,8 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 0 2-2h11"/></svg>
             </div>
             <div>
-                <div class="card-title">Pre-Submission Checklist</div>
-                <div class="card-subtitle">Confirm each point before submitting. Rejections cause delays in payment</div>
+                <div class="card-title" data-i18n="card3_title">Pre-Submission Checklist</div>
+                <div class="card-subtitle" data-i18n="card3_sub">Confirm each point before submitting. Rejections cause delays in payment</div>
             </div>
         </div>
 
@@ -1040,8 +1040,8 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                 </div>
                 <div class="check-text">
-                    <h4>I followed the pre-planned flight route exactly</h4>
-                    <p>The drone completed the full automated waypoint mission without manual overrides that affected coverage.</p>
+                    <h4 data-i18n="chk1_h">I followed the pre-planned flight route exactly</h4>
+                    <p data-i18n="chk1_p">The drone completed the full automated waypoint mission without manual overrides that affected coverage.</p>
                 </div>
             </div>
             <div class="check-item" onclick="toggleCheck(this)">
@@ -1049,8 +1049,8 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                 </div>
                 <div class="check-text">
-                    <h4>Images are unedited raw files</h4>
-                    <p>No filters, cropping, brightness adjustments, or compression applied. Straight from the SD card or drone storage.</p>
+                    <h4 data-i18n="chk2_h">Images are unedited raw files</h4>
+                    <p data-i18n="chk2_p">No filters, cropping, brightness adjustments, or compression applied. Straight from the SD card or drone storage.</p>
                 </div>
             </div>
             <div class="check-item" onclick="toggleCheck(this)">
@@ -1058,8 +1058,8 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                 </div>
                 <div class="check-text">
-                    <h4>All images are in focus and not motion-blurred</h4>
-                    <p>Images taken in suitable lighting. Blurry, overexposed, or dark images may cause automatic rejection.</p>
+                    <h4 data-i18n="chk3_h">All images are in focus and not motion-blurred</h4>
+                    <p data-i18n="chk3_p">Images taken in suitable lighting. Blurry, overexposed, or dark images may cause automatic rejection.</p>
                 </div>
             </div>
             <div class="check-item" onclick="toggleCheck(this)">
@@ -1067,8 +1067,8 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                 </div>
                 <div class="check-text">
-                    <h4>The correct property was photographed</h4>
-                    <p>Images show the address specified in the mission. GPS metadata is present in the files.</p>
+                    <h4 data-i18n="chk4_h">The correct property was photographed</h4>
+                    <p data-i18n="chk4_p">Images show the address specified in the mission. GPS metadata is present in the files.</p>
                 </div>
             </div>
             <div class="check-item" onclick="toggleCheck(this)">
@@ -1076,15 +1076,15 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                 </div>
                 <div class="check-text">
-                    <h4>Full roof coverage is included</h4>
-                    <p>All roof sections and angles are covered with sufficient overlap (at least 70%) between consecutive images.</p>
+                    <h4 data-i18n="chk5_h">Full roof coverage is included</h4>
+                    <p data-i18n="chk5_p">All roof sections and angles are covered with sufficient overlap (at least 70%) between consecutive images.</p>
                 </div>
             </div>
         </div>
 
         <div style="margin-top: 24px;">
             <div class="form-group">
-                <label>Notes for the Sunlytics team (optional)</label>
+                <label data-i18n="lbl_notes">Notes for the Sunlytics team (optional)</label>
                 <textarea id="pilotNotes" placeholder="Any issues encountered during the mission, weather conditions, partial coverage reasons, etc."></textarea>
             </div>
         </div>
@@ -1094,25 +1094,25 @@
     <div class="submit-bar" id="submitBar" style="opacity:0.45; pointer-events:none;">
         <div class="submit-bar-info">
             <div class="reward" id="submitReward">€40</div>
-            <div class="reward-label">Paid automatically after image validation</div>
+            <div class="reward-label" data-i18n="reward_label">Paid automatically after image validation</div>
             <div class="validation-hints" id="validationHints">
                 <span class="hint-pill fail" id="hintMission">
                     <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                    Mission not verified
+                    <span data-i18n="hint_mission">Mission not verified</span>
                 </span>
                 <span class="hint-pill fail" id="hintFiles">
                     <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                    No images selected
+                    <span data-i18n="hint_files">No images selected</span>
                 </span>
                 <span class="hint-pill fail" id="hintChecklist">
                     <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                    Checklist incomplete
+                    <span data-i18n="hint_checklist">Checklist incomplete</span>
                 </span>
             </div>
         </div>
         <button class="submit-btn" id="submitBtn" onclick="submitMission()" disabled>
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-            Submit Mission
+            <span data-i18n="submit_mission_btn">Submit Mission</span>
         </button>
     </div>
 
@@ -1129,34 +1129,34 @@
         <div class="success-circle">
             <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
         </div>
-        <h2>Mission Uploaded!</h2>
-        <p>Your images have been received and are queued for quality validation. You will be notified by email and SMS once the review is complete, usually within a few hours.</p>
+        <h2 data-i18n="success_h2">Mission Uploaded!</h2>
+        <p data-i18n="success_p">Your images have been received and are queued for quality validation. You will be notified by email and SMS once the review is complete, usually within a few hours.</p>
         <div class="success-meta">
             <div class="success-meta-item">
-                <div class="label">Mission ID</div>
+                <div class="label" data-i18n="sm_mission_id">Mission ID</div>
                 <div class="value" id="successMissionId">-</div>
             </div>
             <div class="success-meta-item">
-                <div class="label">Images Uploaded</div>
+                <div class="label" data-i18n="sm_images">Images Uploaded</div>
                 <div class="value" id="successImageCount">-</div>
             </div>
             <div class="success-meta-item">
-                <div class="label">Reward</div>
+                <div class="label" data-i18n="sm_reward">Reward</div>
                 <div class="value green" id="successReward">€40</div>
             </div>
             <div class="success-meta-item">
-                <div class="label">Payment ETA</div>
+                <div class="label" data-i18n="sm_eta">Payment ETA</div>
                 <div class="value">~2–4 hrs</div>
             </div>
         </div>
         <div class="success-actions">
             <a href="fly-for-us.html" class="btn-secondary">
                 <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21 4 19 2c-2-2-4-2-5.5-.5L10 5 1.8 6.2c-.5.1-.9.6-.6 1.1l1.5 2.5 5.5-1L6 13l-2 1 1 2 2-1 3.5-2.5-1 5.5 2.5 1.5c.5.3 1 0 1.1-.6z"/></svg>
-                Back to Pilot Page
+                <span data-i18n="back_pilot_btn">Back to Pilot Page</span>
             </a>
             <button class="btn-secondary" onclick="resetForm()">
                 <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.09"/></svg>
-                Upload Another Mission
+                <span data-i18n="upload_another_btn">Upload Another Mission</span>
             </button>
         </div>
     </div>
@@ -1168,7 +1168,7 @@
     <div class="footer-top">
         <div class="footer-brand">
             <div style="font-size:20px; font-weight:800; background:linear-gradient(135deg,var(--orange),var(--orange-dark)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; letter-spacing:1px; text-align:left;">SUNLYTICS</div>
-            <p>Smart solar analysis for Lithuania. Fast, accurate, and affordable.</p>
+            <p data-i18n="footer_tagline">Smart solar analysis for Lithuania. Fast, accurate, and affordable.</p>
             <div style="display:flex; gap:12px; margin-top:14px;">
                 <a href="https://g.page/r/sunlytics" target="_blank" rel="noopener" aria-label="Google Business" style="width:36px; height:36px; background:#fff; border:1.5px solid #e8e8e8; border-radius:8px; display:flex; align-items:center; justify-content:center;" title="Review us on Google">
                     <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
@@ -1179,7 +1179,7 @@
             </div>
         </div>
         <div class="footer-links">
-            <h4>Product</h4>
+            <h4 data-i18n="footer_product">Product</h4>
             <ul>
                 <li><a href="index.html#how-it-works"><span data-i18n="nav_how">How it Works</span></a></li>
                 <li><a href="index.html#pricing"><span data-i18n="nav_pricing">Pricing</span></a></li>
@@ -1188,7 +1188,7 @@
             </ul>
         </div>
         <div class="footer-links">
-            <h4>Contact</h4>
+            <h4 data-i18n="footer_contact">Contact</h4>
             <ul>
                 <li><a href="contact.html"><span data-i18n="nav_contact">Contact Us</span></a></li>
                 <li><a href="mailto:info@sunlytics.lt">info@sunlytics.lt</a></li>
@@ -1198,7 +1198,7 @@
         </div>
     </div>
     <div class="footer-bottom" style="flex-direction:column; align-items:center; text-align:center; gap:8px;">
-        <p>&copy; 2026 Sunlytics. All rights reserved.</p>
+        <p data-i18n="footer_copy">&copy; 2026 Sunlytics. All rights reserved.</p>
         <p style="display:flex; align-items:center; justify-content:center; gap:16px; flex-wrap:wrap; margin:0;"><a href="privacy.html" style="color:var(--orange-dark); text-decoration:none; font-size:13px;">Privacy Policy</a> <span style="opacity:0.4; color:#666;">·</span> <a href="terms.html" style="color:var(--orange-dark); text-decoration:none; font-size:13px;">Terms of Service</a></p>
         <p style="margin:6px 0 0; font-size:11px; color:rgba(30,30,30,0.35); text-align:center; width:100%;">Sunlytics UAB &middot; JAR 306789123 &middot; PVM LT864213907 &middot; Gedimino pr. 9, 01103 Vilnius</p>
     </div>
@@ -1612,6 +1612,36 @@ function sunlyticsCookieConsent(accepted) {
             cookie_text: 'We use cookies to improve your experience and analyze site traffic. By continuing, you agree to our <a href="privacy.html" style="color:#f7971e;text-decoration:underline;">Privacy Policy</a>.',
             cookie_decline: "Decline",
             cookie_accept: "Accept",
+            hero_tag: "Pilot Dashboard",
+            hero_h1: "Upload <span>Mission Images</span>",
+            hero_p: "Enter your mission ID, upload your drone images, and get paid automatically once validated.",
+            badge_name: "Verified Pilot", badge_role: "Sunlytics Partner Network",
+            pstep1: "Mission ID", pstep2: "Upload Images", pstep3: "Quality Check", pstep4: "Submit",
+            card1_title: "Mission Details", card1_sub: "Enter the mission ID from your SMS or email alert",
+            lbl_missionid: "Mission ID", lbl_pilotid: "Your Pilot ID", btn_verify: "Verify",
+            info_address: "Address", info_type: "Mission Type", info_images: "Images Required",
+            info_reward: "Reward", info_status: "Status",
+            card2_title: "Upload Drone Images", card2_sub: "Drag and drop or click to select your raw image files",
+            upload_h3: "Drop images here or click to browse",
+            upload_p: "Upload all raw images from your flight. Do not edit or compress.<br>Minimum 60 images recommended per standard rooftop mission.",
+            clear_all: "Clear all",
+            card3_title: "Pre-Submission Checklist", card3_sub: "Confirm each point before submitting. Rejections cause delays in payment",
+            chk1_h: "I followed the pre-planned flight route exactly", chk1_p: "The drone completed the full automated waypoint mission without manual overrides that affected coverage.",
+            chk2_h: "Images are unedited raw files", chk2_p: "No filters, cropping, brightness adjustments, or compression applied. Straight from the SD card or drone storage.",
+            chk3_h: "All images are in focus and not motion-blurred", chk3_p: "Images taken in suitable lighting. Blurry, overexposed, or dark images may cause automatic rejection.",
+            chk4_h: "The correct property was photographed", chk4_p: "Images show the address specified in the mission. GPS metadata is present in the files.",
+            chk5_h: "Full roof coverage is included", chk5_p: "All roof sections and angles are covered with sufficient overlap (at least 70%) between consecutive images.",
+            lbl_notes: "Notes for the Sunlytics team (optional)",
+            reward_label: "Paid automatically after image validation",
+            hint_mission: "Mission not verified", hint_files: "No images selected", hint_checklist: "Checklist incomplete",
+            submit_mission_btn: "Submit Mission",
+            success_h2: "Mission Uploaded!",
+            success_p: "Your images have been received and are queued for quality validation. You will be notified by email and SMS once the review is complete, usually within a few hours.",
+            sm_mission_id: "Mission ID", sm_images: "Images Uploaded", sm_reward: "Reward", sm_eta: "Payment ETA",
+            back_pilot_btn: "Back to Pilot Page", upload_another_btn: "Upload Another Mission",
+            footer_tagline: "Smart solar analysis for Lithuania. Fast, accurate, and affordable.",
+            footer_product: "Product", footer_contact: "Contact",
+            footer_copy: "&copy; 2026 Sunlytics. All rights reserved.",
         },
         lt: {
             nav_how: "Kaip tai veikia", nav_pricing: "Kainos", nav_about: "Apie mus",
@@ -1620,6 +1650,36 @@ function sunlyticsCookieConsent(accepted) {
             cookie_text: 'Naudojame slapukus, kad pagerintume jūsų patirtį ir analizuotume svetainės srautą. Tęsdami sutinkate su mūsų <a href="privacy.html" style="color:#f7971e;text-decoration:underline;">privatumo politika</a>.',
             cookie_decline: "Atmesti",
             cookie_accept: "Sutinku",
+            hero_tag: "Piloto valdymo skydelis",
+            hero_h1: "Įkelti <span>misijos nuotraukas</span>",
+            hero_p: "Įveskite savo misijos ID, įkelkite drono nuotraukas ir gaukite apmokėjimą automatiškai po patvirtinimo.",
+            badge_name: "Patvirtintas pilotas", badge_role: "Sunlytics partnerių tinklas",
+            pstep1: "Misijos ID", pstep2: "Nuotraukų įkėlimas", pstep3: "Kokybės patikra", pstep4: "Pateikimas",
+            card1_title: "Misijos duomenys", card1_sub: "Įveskite misijos ID iš SMS arba el. laiško pranešimo",
+            lbl_missionid: "Misijos ID", lbl_pilotid: "Jūsų piloto ID", btn_verify: "Patikrinti",
+            info_address: "Adresas", info_type: "Misijos tipas", info_images: "Reikalingos nuotraukos",
+            info_reward: "Atlygis", info_status: "Būsena",
+            card2_title: "Įkelti drono nuotraukas", card2_sub: "Vilkite ir paleiskite arba spustelėkite, kad pasirinktumėte neapdorotus failus",
+            upload_h3: "Įkelkite nuotraukas čia arba spustelėkite, kad naršytumėte",
+            upload_p: "Įkelkite visas neapdorotas savo skrydžio nuotraukas. Nieko nekeiskite ir nekompresuokite.<br>Rekomenduojama bent 60 nuotraukų standartinei stogo misijai.",
+            clear_all: "Išvalyti viską",
+            card3_title: "Patikros sąrašas prieš pateikiant", card3_sub: "Patvirtinkite kiekvieną punktą prieš pateikdami. Atmetimai sukelia mokėjimo vėlavimus",
+            chk1_h: "Tiksliai vykdžiau iš anksto suplanuotą skrydžio maršrutą", chk1_p: "Dronas užbaigė pilną automatinę maršruto taškų misiją be rankinių pakeitimų, kurie paveiktų aprėptį.",
+            chk2_h: "Nuotraukos yra neapdorotos, neredaguotos", chk2_p: "Netaikyti jokie filtrai, apkirpimas, ryškumo koregavimai ar suspaudimas. Tiesiai iš SD kortelės ar drono atminties.",
+            chk3_h: "Visos nuotraukos aiškios ir nesutrūkinėjusios", chk3_p: "Nuotraukos padarytos tinkamame apšvietime. Neryškios, per šviesios ar per tamsios nuotraukos gali būti automatiškai atmestos.",
+            chk4_h: "Nufotografuotas teisingas objektas", chk4_p: "Nuotraukose matomas misijoje nurodytas adresas. Failuose yra GPS metaduomenys.",
+            chk5_h: "Įtraukta pilna stogo aprėptis", chk5_p: "Visos stogo dalys ir kampai padengti su pakankamu persidengimu (bent 70%) tarp gretimų nuotraukų.",
+            lbl_notes: "Pastabos Sunlytics komandai (neprivaloma)",
+            reward_label: "Apmokama automatiškai patvirtinus nuotraukas",
+            hint_mission: "Misija nepatvirtinta", hint_files: "Nuotraukos nepasirinktos", hint_checklist: "Patikros sąrašas neužbaigtas",
+            submit_mission_btn: "Pateikti misiją",
+            success_h2: "Misija įkelta!",
+            success_p: "Jūsų nuotraukos gautos ir laukia kokybės patvirtinimo. Būsite informuoti el. paštu ir SMS, kai peržiūra bus baigta, paprastai per kelias valandas.",
+            sm_mission_id: "Misijos ID", sm_images: "Įkeltos nuotraukos", sm_reward: "Atlygis", sm_eta: "Apmokėjimo laikas",
+            back_pilot_btn: "Grįžti į piloto puslapį", upload_another_btn: "Įkelti kitą misiją",
+            footer_tagline: "Išmani saulės energijos analizė Lietuvai. Greita, tiksli ir prieinama.",
+            footer_product: "Produktas", footer_contact: "Kontaktai",
+            footer_copy: "&copy; 2026 Sunlytics. Visos teisės saugomos.",
         }
     };
     let currentLang = localStorage.getItem('lang') || 'en';
