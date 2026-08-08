@@ -97,10 +97,10 @@ footer nav{display:none;}
       <div class="card-icon">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
       </div>
-      <h1>Set Your Password</h1>
-      <p>Welcome to the Sunlytics pilot network. Choose a strong password to secure your account.</p>
+      <h1 data-i18n="form_h1">Set Your Password</h1>
+      <p data-i18n="form_p">Welcome to the Sunlytics pilot network. Choose a strong password to secure your account.</p>
       <div class="form-group">
-        <label>New Password</label>
+        <label data-i18n="lbl_pw1">New Password</label>
         <div class="pw-wrap">
           <input type="password" id="pw1" placeholder="At least 8 characters" oninput="checkStrength(this.value)">
           <button class="pw-toggle" type="button" onclick="togglePw('pw1',this)" aria-label="Show password">
@@ -111,7 +111,7 @@ footer nav{display:none;}
         <div class="strength-label" id="strengthLabel"></div>
       </div>
       <div class="form-group">
-        <label>Confirm Password</label>
+        <label data-i18n="lbl_pw2">Confirm Password</label>
         <div class="pw-wrap">
           <input type="password" id="pw2" placeholder="Repeat your password">
           <button class="pw-toggle" type="button" onclick="togglePw('pw2',this)" aria-label="Show password">
@@ -119,17 +119,17 @@ footer nav{display:none;}
           </button>
         </div>
       </div>
-      <button class="submit-btn" id="submitBtn" onclick="setPassword()">Set Password & Continue</button>
+      <button class="submit-btn" id="submitBtn" onclick="setPassword()"><span data-i18n="submit_btn">Set Password &amp; Continue</span></button>
       <div class="err-msg" id="errMsg"></div>
     </div>
     <div class="success-wrap" id="successWrap">
       <div class="success-circle">
         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
       </div>
-      <h2>Password set!</h2>
-      <p>Your account is ready. You will now be taken to the pilot onboarding to get started.</p>
+      <h2 data-i18n="success_h2">Password set!</h2>
+      <p data-i18n="success_p">Your account is ready. You will now be taken to the pilot onboarding to get started.</p>
       <a href="pilot-onboarding.html" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#f7971e,#ff4e00);color:#fff;padding:14px 28px;border-radius:12px;font-size:15px;font-weight:700;text-decoration:none;box-shadow:0 6px 20px rgba(247,151,30,0.3);">
-        Start Onboarding
+        <span data-i18n="start_onboarding_btn">Start Onboarding</span>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
       </a>
     </div>
@@ -139,7 +139,7 @@ footer nav{display:none;}
   <div class="footer-top">
     <div class="footer-brand">
       <div style="font-size:20px;font-weight:800;background:linear-gradient(135deg,#f7971e,#ff4e00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:1px;">SUNLYTICS</div>
-      <p>Smart solar analysis for Lithuania. Fast, accurate, and affordable.</p>
+      <p data-i18n="footer_tagline">Smart solar analysis for Lithuania. Fast, accurate, and affordable.</p>
             <div style="display:flex; gap:12px; margin-top:14px;">
                 <a href="https://g.page/r/sunlytics" target="_blank" rel="noopener" aria-label="Google Business" style="width:36px; height:36px; background:#fff; border:1.5px solid #e8e8e8; border-radius:8px; display:flex; align-items:center; justify-content:center;" title="Review us on Google">
                     <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
@@ -150,7 +150,7 @@ footer nav{display:none;}
             </div>
     </div>
     <div class="footer-links">
-      <h4>Product</h4>
+      <h4 data-i18n="footer_product">Product</h4>
       <ul>
         <li><a href="index.html#how-it-works">How it Works</a></li>
         <li><a href="index.html#pricing">Pricing</a></li>
@@ -158,7 +158,7 @@ footer nav{display:none;}
       </ul>
     </div>
     <div class="footer-links">
-      <h4>Contact</h4>
+      <h4 data-i18n="footer_contact">Contact</h4>
       <ul>
         <li><a href="contact.html">Contact Us</a></li>
         <li><a href="mailto:info@sunlytics.lt">info@sunlytics.lt</a></li>
@@ -167,7 +167,7 @@ footer nav{display:none;}
     </div>
   </div>
   <div class="footer-bottom">
-    <p>&copy; 2026 Sunlytics. All rights reserved.</p>
+    <p data-i18n="footer_copy">&copy; 2026 Sunlytics. All rights reserved.</p>
     <p style="display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;margin:0;">
       <a href="privacy.html" style="color:#ff4e00;text-decoration:none;font-size:13px;">Privacy Policy</a>
       <span style="opacity:0.4;color:#666;">·</span>
@@ -197,12 +197,13 @@ function checkStrength(val) {
   if (/[A-Z]/.test(val)) score++;
   if (/[0-9]/.test(val)) score++;
   if (/[^A-Za-z0-9]/.test(val)) score++;
+  const t = (typeof i18n !== 'undefined' && i18n[currentLang]) ? i18n[currentLang] : null;
   const configs = [
     { w:'0%', bg:'#e8e8e8', txt:'' },
-    { w:'25%', bg:'#ef4444', txt:'Weak' },
-    { w:'50%', bg:'#f97316', txt:'Fair' },
-    { w:'75%', bg:'#eab308', txt:'Good' },
-    { w:'100%', bg:'#22c55e', txt:'Strong' },
+    { w:'25%', bg:'#ef4444', txt: t ? t.strength_weak : 'Weak' },
+    { w:'50%', bg:'#f97316', txt: t ? t.strength_fair : 'Fair' },
+    { w:'75%', bg:'#eab308', txt: t ? t.strength_good : 'Good' },
+    { w:'100%', bg:'#22c55e', txt: t ? t.strength_strong : 'Strong' },
   ];
   const c = configs[score];
   fill.style.width = c.w; fill.style.background = c.bg; label.textContent = c.txt;
@@ -212,11 +213,12 @@ async function setPassword() {
   const pw1 = document.getElementById('pw1').value;
   const pw2 = document.getElementById('pw2').value;
   const err = document.getElementById('errMsg');
+  const t = (typeof i18n !== 'undefined' && i18n[currentLang]) ? i18n[currentLang] : null;
   err.style.display = 'none';
-  if (pw1.length < 8) { err.textContent = 'Password must be at least 8 characters.'; err.style.display = 'block'; return; }
-  if (pw1 !== pw2) { err.textContent = 'Passwords do not match.'; err.style.display = 'block'; return; }
+  if (pw1.length < 8) { err.textContent = t ? t.err_too_short : 'Password must be at least 8 characters.'; err.style.display = 'block'; return; }
+  if (pw1 !== pw2) { err.textContent = t ? t.err_mismatch : 'Passwords do not match.'; err.style.display = 'block'; return; }
   const btn = document.getElementById('submitBtn');
-  btn.disabled = true; btn.textContent = 'Setting password...';
+  btn.disabled = true; btn.textContent = t ? t.setting_pw : 'Setting password...';
   try {
     const { error } = await sb.auth.updateUser({ password: pw1 });
     if (error) throw error;
@@ -224,9 +226,9 @@ async function setPassword() {
     document.getElementById('successWrap').style.display = 'block';
     setTimeout(() => { window.location.href = 'pilot-onboarding.html'; }, 2500);
   } catch(e) {
-    err.textContent = e.message || 'Something went wrong. Please try again.';
+    err.textContent = e.message || (t ? t.err_generic : 'Something went wrong. Please try again.');
     err.style.display = 'block';
-    btn.disabled = false; btn.textContent = 'Set Password & Continue';
+    btn.disabled = false; btn.innerHTML = '<span data-i18n="submit_btn">' + (t ? t.submit_btn : 'Set Password &amp; Continue') + '</span>';
   }
 }
 
@@ -238,11 +240,41 @@ document.addEventListener('keydown', e => { if(e.key==='Enter') setPassword(); }
             nav_how: "How it Works", nav_pricing: "Pricing", nav_about: "About",
             nav_drone: "Drone Status", nav_fly: "Fly for Us", nav_contact: "Contact",
             nav_pilot: "Pilot Login", nav_cta: "Free Analysis",
+            form_h1: "Set Your Password",
+            form_p: "Welcome to the Sunlytics pilot network. Choose a strong password to secure your account.",
+            lbl_pw1: "New Password", lbl_pw2: "Confirm Password",
+            submit_btn: "Set Password &amp; Continue",
+            success_h2: "Password set!",
+            success_p: "Your account is ready. You will now be taken to the pilot onboarding to get started.",
+            start_onboarding_btn: "Start Onboarding",
+            strength_weak: "Weak", strength_fair: "Fair", strength_good: "Good", strength_strong: "Strong",
+            err_too_short: "Password must be at least 8 characters.",
+            err_mismatch: "Passwords do not match.",
+            err_generic: "Something went wrong. Please try again.",
+            setting_pw: "Setting password...",
+            footer_tagline: "Smart solar analysis for Lithuania. Fast, accurate, and affordable.",
+            footer_product: "Product", footer_contact: "Contact",
+            footer_copy: "&copy; 2026 Sunlytics. All rights reserved.",
         },
         lt: {
             nav_how: "Kaip tai veikia", nav_pricing: "Kainos", nav_about: "Apie mus",
             nav_drone: "Drono statusas", nav_fly: "Skraidykite mums", nav_contact: "Susisiekite",
             nav_pilot: "Pilotų prisijungimas", nav_cta: "Nemokama analizė",
+            form_h1: "Nustatykite slaptažodį",
+            form_p: "Sveiki atvykę į Sunlytics pilotų tinklą. Pasirinkite stiprų slaptažodį savo paskyrai apsaugoti.",
+            lbl_pw1: "Naujas slaptažodis", lbl_pw2: "Pakartokite slaptažodį",
+            submit_btn: "Nustatyti slaptažodį ir tęsti",
+            success_h2: "Slaptažodis nustatytas!",
+            success_p: "Jūsų paskyra paruošta. Dabar būsite nukreipti į piloto įvedimą, kad galėtumėte pradėti.",
+            start_onboarding_btn: "Pradėti įvedimą",
+            strength_weak: "Silpnas", strength_fair: "Vidutinis", strength_good: "Geras", strength_strong: "Stiprus",
+            err_too_short: "Slaptažodis turi būti bent 8 simbolių.",
+            err_mismatch: "Slaptažodžiai nesutampa.",
+            err_generic: "Kažkas nutiko. Bandykite dar kartą.",
+            setting_pw: "Nustatomas slaptažodis...",
+            footer_tagline: "Išmani saulės energijos analizė Lietuvai. Greita, tiksli ir prieinama.",
+            footer_product: "Produktas", footer_contact: "Kontaktai",
+            footer_copy: "&copy; 2026 Sunlytics. Visos teisės saugomos.",
         }
     };
     let currentLang = localStorage.getItem('lang') || 'en';

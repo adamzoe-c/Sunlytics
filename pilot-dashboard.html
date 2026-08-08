@@ -480,6 +480,8 @@ const T = {
     deadline_label:'Deadline:',
     new_mission_notif:'New mission in your area!',
     open_badge:'available',
+    cookie_text: 'We use cookies to improve your experience and analyze site traffic. By continuing, you agree to our <a href="privacy.html" style="color:#f7971e; text-decoration:underline;">Privacy Policy</a>.',
+    cookie_decline: 'Decline', cookie_accept: 'Accept',
   },
   lt:{
     btn_logout:'Atsijungti', notif_title:'Pranešimai', notif_clear:'Pažymėti visus kaip skaitytus',
@@ -506,6 +508,8 @@ const T = {
     deadline_label:'Terminas:',
     new_mission_notif:'Nauja misija jūsų rajone!',
     open_badge:'prieinamos',
+    cookie_text: 'Naudojame slapukus, kad pagerintume jūsų patirtį ir analizuotume svetainės srautą. Tęsdami sutinkate su mūsų <a href="privacy.html" style="color:#f7971e; text-decoration:underline;">privatumo politika</a>.',
+    cookie_decline: 'Atmesti', cookie_accept: 'Sutinku',
   }
 };
 
@@ -523,7 +527,7 @@ function setLang(l){
   localStorage.setItem('lang', l);
   document.querySelectorAll('[data-i18n]').forEach(el=>{
     const k=el.getAttribute('data-i18n');
-    if(T[l][k]) el.textContent=T[l][k];
+    if(T[l][k]) el.innerHTML=T[l][k];
   });
   document.getElementById('langEN').classList.toggle('active',l==='en');
   document.getElementById('langLT').classList.toggle('active',l==='lt');
@@ -875,10 +879,10 @@ init();
 <!-- COOKIE CONSENT -->
 <div id="cookieBanner" style="display:none; position:fixed; bottom:0; left:0; right:0; z-index:9999; background:#1a1a1a; padding:18px 20px; box-shadow:0 -4px 20px rgba(0,0,0,0.25);">
     <div style="max-width:1100px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;">
-        <p style="margin:0; font-size:13px; line-height:1.5; color:rgba(255,255,255,0.85); flex:1; min-width:240px;">We use cookies to improve your experience and analyze site traffic. By continuing, you agree to our <a href="privacy.html" style="color:#f7971e; text-decoration:underline;">Privacy Policy</a>.</p>
+        <p data-i18n="cookie_text" style="margin:0; font-size:13px; line-height:1.5; color:rgba(255,255,255,0.85); flex:1; min-width:240px;">We use cookies to improve your experience and analyze site traffic. By continuing, you agree to our <a href="privacy.html" style="color:#f7971e; text-decoration:underline;">Privacy Policy</a>.</p>
         <div style="display:flex; gap:10px; flex-shrink:0;">
-            <button onclick="sunlyticsCookieConsent(false)" style="padding:10px 18px; border-radius:8px; border:1px solid rgba(255,255,255,0.25); background:transparent; color:#fff; font-size:13px; cursor:pointer; font-family:inherit;">Decline</button>
-            <button onclick="sunlyticsCookieConsent(true)" style="padding:10px 18px; border-radius:8px; border:none; background:linear-gradient(135deg,#f7971e,#ff4e00); color:#fff; font-weight:600; font-size:13px; cursor:pointer; font-family:inherit;">Accept</button>
+            <button onclick="sunlyticsCookieConsent(false)" style="padding:10px 18px; border-radius:8px; border:1px solid rgba(255,255,255,0.25); background:transparent; color:#fff; font-size:13px; cursor:pointer; font-family:inherit;"><span data-i18n="cookie_decline">Decline</span></button>
+            <button onclick="sunlyticsCookieConsent(true)" style="padding:10px 18px; border-radius:8px; border:none; background:linear-gradient(135deg,#f7971e,#ff4e00); color:#fff; font-weight:600; font-size:13px; cursor:pointer; font-family:inherit;"><span data-i18n="cookie_accept">Accept</span></button>
         </div>
     </div>
 </div>
