@@ -1,10 +1,9 @@
 User-agent: *
 Allow: /
-
-Disallow: /admin-dashboard.html
 Disallow: /pilot-dashboard.html
-Disallow: /pilot-login.html
+Disallow: /pilot-onboarding.html
 Disallow: /pilot-reset.html
+Disallow: /pilot-reset-confirm.html
 Disallow: /upload-mission.html
 
 Sitemap: https://sunlytics.lt/sitemap.xml
