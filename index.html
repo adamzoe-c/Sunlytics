@@ -2900,7 +2900,7 @@ function getMarkerIcon() {
     return L.divIcon({ className: '', html: MARKER_HTML, iconSize: [26, 26], iconAnchor: [13, 26] });
 }
 
-let streetLayer, satelliteLayer;
+let streetLayer, satelliteLayer, satelliteLabels;
 
 document.addEventListener('DOMContentLoaded', function() {
     if (typeof L === 'undefined') { console.warn('Leaflet not loaded.'); return; }
@@ -2918,6 +2918,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // Satellite imagery — switched to once an address/location is selected
     satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
         attribution: 'Tiles &copy; Esri &mdash; Source: Esri, Maxar, Earthstar Geographics',
+        maxZoom: 20,
+        maxNativeZoom: 19
+    });
+
+    // Reference overlay — country borders, place names, road/city labels drawn on
+    // top of the satellite imagery so it's always clear exactly where you are.
+    satelliteLabels = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Labels &copy; Esri',
         maxZoom: 20,
         maxNativeZoom: 19
     });
@@ -2951,6 +2959,7 @@ function showSatelliteView() {
     if (!heroMap || !streetLayer || !satelliteLayer) return;
     if (heroMap.hasLayer(streetLayer)) heroMap.removeLayer(streetLayer);
     if (!heroMap.hasLayer(satelliteLayer)) satelliteLayer.addTo(heroMap);
+    if (satelliteLabels && !heroMap.hasLayer(satelliteLabels)) satelliteLabels.addTo(heroMap);
     isSatelliteView = true;
     updateMapViewToggleLabel();
 }
@@ -2958,6 +2967,7 @@ function showSatelliteView() {
 function showStreetView() {
     if (!heroMap || !streetLayer || !satelliteLayer) return;
     if (heroMap.hasLayer(satelliteLayer)) heroMap.removeLayer(satelliteLayer);
+    if (satelliteLabels && heroMap.hasLayer(satelliteLabels)) heroMap.removeLayer(satelliteLabels);
     if (!heroMap.hasLayer(streetLayer)) streetLayer.addTo(heroMap);
     isSatelliteView = false;
     updateMapViewToggleLabel();
