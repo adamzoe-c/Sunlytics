@@ -2242,92 +2242,122 @@ function toggleFaq(i) {
             <div style="width:70px; height:70px; background:linear-gradient(135deg,#f7971e,#ff4e00); border-radius:50%; margin:0 auto 24px; display:flex; align-items:center; justify-content:center; animation:pulse 1.5s infinite;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
             </div>
-            <h3 style="font-size:22px; font-weight:800; color:#1a1a1a; margin-bottom:10px;">Analyzing Your Roof...</h3>
-            <p style="color:#6b7280; font-size:15px; margin-bottom:32px;">Processing satellite imagery and solar data for your location</p>
+            <h3 data-i18n="loading_title" style="font-size:22px; font-weight:800; color:#1a1a1a; margin-bottom:10px;">Analyzing Your Roof...</h3>
+            <p data-i18n="loading_desc" style="color:#6b7280; font-size:15px; margin-bottom:32px;">Processing satellite imagery and solar data for your location</p>
             <div style="background:#f5f5f5; border-radius:50px; height:6px; overflow:hidden; max-width:300px; margin:0 auto;">
                 <div style="height:100%; background:linear-gradient(135deg,#f7971e,#ff4e00); animation:loading 2.5s ease-in-out; border-radius:50px;"></div>
             </div>
-            <p style="color:#aaa; font-size:12px; margin-top:16px;">This usually takes a few seconds</p>
+            <p data-i18n="loading_note" style="color:#aaa; font-size:12px; margin-top:16px;">This usually takes a few seconds</p>
         </div>
 
         <!-- Results State -->
         <div id="resultsState" style="display:none;">
 
             <!-- Header -->
-            <div style="background:linear-gradient(135deg,#222222,#333333); border-radius:28px 28px 0 0; padding:32px 36px;">
-                <div style="display:flex; align-items:center; gap:10px; margin-bottom:6px;">
-                    <span style="color:rgba(255,255,255,0.6); font-size:13px; font-weight:600; letter-spacing:1px;">SUNLYTICS ANALYSIS</span>
+            <div style="background:linear-gradient(135deg,#1a1a1a,#333333); border-radius:28px 28px 0 0; padding:32px 36px; position:relative; overflow:hidden;">
+                <div style="position:absolute; top:-60px; right:-40px; width:180px; height:180px; border-radius:50%; background:radial-gradient(circle, rgba(247,151,30,0.35), transparent 70%); pointer-events:none;"></div>
+                <div style="position:absolute; bottom:-70px; right:60px; width:140px; height:140px; border-radius:50%; background:radial-gradient(circle, rgba(255,78,0,0.25), transparent 70%); pointer-events:none;"></div>
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px; position:relative;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f7971e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+                    <span data-i18n="modal_badge" style="color:rgba(255,255,255,0.65); font-size:12px; font-weight:700; letter-spacing:1.5px;">SUNLYTICS ANALYSIS</span>
                 </div>
-                <h2 style="color:white; font-size:22px; font-weight:800; margin-bottom:4px;">Solar Feasibility Report</h2>
-                <p id="resAddress" style="color:rgba(255,255,255,0.55); font-size:14px;"></p>
+                <h2 data-i18n="modal_title" style="color:white; font-size:23px; font-weight:800; margin-bottom:4px; position:relative;">Solar Feasibility Report</h2>
+                <p id="resAddress" style="color:rgba(255,255,255,0.55); font-size:14px; position:relative;"></p>
             </div>
 
             <div style="padding:32px 36px;">
 
-                <!-- Solar Score -->
-                <div style="background:#ffffff; border-radius:20px; padding:24px; margin-bottom:24px; border:1px solid #e8e8e8;">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-                        <div>
-                            <div style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#c45000; margin-bottom:4px;">Solar Utilization Score</div>
-                            <div style="display:flex; align-items:baseline; gap:10px;">
-                                <span id="resScore" style="font-size:48px; font-weight:800; background:linear-gradient(135deg,#f7971e,#ff4e00); -webkit-background-clip:text; -webkit-text-fill-color:transparent;"></span>
-                                <span id="resRating" style="font-size:16px; font-weight:700;"></span>
-                            </div>
-                        </div>
-                        <div style="width:48px;height:48px;display:flex;align-items:center;justify-content:center;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#f7971e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+                <!-- Solar Score — circular gauge -->
+                <div style="background:linear-gradient(135deg,#fffaf3,#fff5e8); border-radius:20px; padding:24px; margin-bottom:20px; border:1px solid #ffe4bd; display:flex; align-items:center; gap:22px;">
+                    <div style="position:relative; width:104px; height:104px; flex-shrink:0;">
+                        <svg width="104" height="104" viewBox="0 0 104 104" style="transform:rotate(-90deg);">
+                            <circle cx="52" cy="52" r="44" fill="none" stroke="#f2e2cc" stroke-width="10"/>
+                            <circle id="scoreRing" cx="52" cy="52" r="44" fill="none" stroke="url(#scoreGrad)" stroke-width="10" stroke-linecap="round" stroke-dasharray="276.5" stroke-dashoffset="276.5" style="transition:stroke-dashoffset 1.2s ease;"/>
+                            <defs>
+                                <linearGradient id="scoreGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#f7971e"/>
+                                    <stop offset="100%" stop-color="#ff4e00"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                        <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center;">
+                            <span id="resScore" style="font-size:26px; font-weight:800; color:#c45000;"></span>
                         </div>
                     </div>
-                    <div style="background:#e8e8e8; border-radius:50px; height:8px; overflow:hidden;">
-                        <div id="scoreBar" style="height:100%; background:linear-gradient(135deg,#f7971e,#ff4e00); border-radius:50px; width:0%; transition:width 1s ease;"></div>
+                    <div style="min-width:0;">
+                        <div data-i18n="score_label" style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#c45000; margin-bottom:6px;">Solar Utilization Score</div>
+                        <div id="resRating" style="font-size:19px; font-weight:800; margin-bottom:6px;"></div>
+                        <div data-i18n="score_blurb" style="font-size:12.5px; color:#8a6a4a; line-height:1.4;">Your roof is a strong candidate for solar.</div>
+                    </div>
+                </div>
+
+                <!-- Spotlight: 25-Year Profit -->
+                <div style="background:linear-gradient(135deg,#f7971e,#ff4e00); border-radius:20px; padding:22px 24px; margin-bottom:14px; display:flex; align-items:center; gap:16px; box-shadow:0 10px 28px rgba(247,151,30,0.3);">
+                    <div style="width:46px; height:46px; background:rgba(255,255,255,0.22); border-radius:14px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    </div>
+                    <div>
+                        <div data-i18n="stat_profit_label" style="font-size:11px; font-weight:700; letter-spacing:1px; color:rgba(255,255,255,0.85); margin-bottom:2px;">25-YEAR PROJECTED PROFIT</div>
+                        <div id="resProfit" style="font-size:28px; font-weight:800; color:white;"></div>
                     </div>
                 </div>
 
                 <!-- Key Numbers Grid -->
-                <div class="results-grid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:24px;">
-                    <div style="background:#f5f5f5; border-radius:16px; padding:20px 16px; text-align:center; border:1px solid #efefef;">
-                        <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#c45000; margin-bottom:8px;">Usable Area</div>
-                        <div id="resArea" style="font-size:20px; font-weight:800; color:#1a1a1a;"></div>
-                        <div style="display:flex; align-items:flex-start; gap:5px; margin-top:8px; text-align:left;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2" style="flex-shrink:0; margin-top:1px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                            <span style="font-size:10px; color:#9ca3af; line-height:1.4;">Google data shows total potential area. On-site obstructions or roof wear may vary.</span>
+                <div class="results-grid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:20px;">
+                    <div style="background:#eef4ff; border-radius:16px; padding:18px 14px; border:1px solid #dbe7ff;">
+                        <div style="width:30px;height:30px;border-radius:9px;background:#dbe7ff;display:flex;align-items:center;justify-content:center;margin-bottom:10px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b6fd6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
                         </div>
+                        <div data-i18n="stat_area" style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#3b6fd6; margin-bottom:6px;">Usable Area</div>
+                        <div id="resArea" style="font-size:17px; font-weight:800; color:#1a1a1a;"></div>
                     </div>
-                    <div style="background:#f5f5f5; border-radius:16px; padding:20px 16px; text-align:center; border:1px solid #efefef;">
-                        <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#c45000; margin-bottom:8px;">Payback Period</div>
-                        <div id="resPayback" style="font-size:20px; font-weight:800; color:#1a1a1a;"></div>
+                    <div style="background:#f4eeff; border-radius:16px; padding:18px 14px; border:1px solid #e4d8ff;">
+                        <div style="width:30px;height:30px;border-radius:9px;background:#e4d8ff;display:flex;align-items:center;justify-content:center;margin-bottom:10px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg>
+                        </div>
+                        <div data-i18n="stat_payback" style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#8b5cf6; margin-bottom:6px;">Payback Period</div>
+                        <div id="resPayback" style="font-size:17px; font-weight:800; color:#1a1a1a;"></div>
                     </div>
-                    <div style="background:#f5f5f5; border-radius:16px; padding:20px 16px; text-align:center; border:1px solid #efefef;">
-                        <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#c45000; margin-bottom:8px;">25-Year Profit</div>
-                        <div id="resProfit" style="font-size:20px; font-weight:800; color:#1a1a1a;"></div>
+                    <div style="background:#eafcf1; border-radius:16px; padding:18px 14px; border:1px solid #c9f4da;">
+                        <div style="width:30px;height:30px;border-radius:9px;background:#c9f4da;display:flex;align-items:center;justify-content:center;margin-bottom:10px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 15a2.5 2.5 0 0 0 2.5 2h.5a2 2 0 0 0 0-4h-1a2 2 0 0 1 0-4h.5a2.5 2.5 0 0 1 2.5 2M12 6v1.5M12 16.5V18"/></svg>
+                        </div>
+                        <div data-i18n="stat_savings" style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#16a34a; margin-bottom:6px;">Annual Savings</div>
+                        <div id="resSavings" style="font-size:17px; font-weight:800; color:#1a1a1a;"></div>
                     </div>
-                    <div style="background:#f5f5f5; border-radius:16px; padding:20px 16px; text-align:center; border:1px solid #efefef;">
-                        <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#c45000; margin-bottom:8px;">Annual Savings</div>
-                        <div id="resSavings" style="font-size:20px; font-weight:800; color:#1a1a1a;"></div>
+                    <div style="background:#fff4e8; border-radius:16px; padding:18px 14px; border:1px solid #ffe0b3;">
+                        <div style="width:30px;height:30px;border-radius:9px;background:#ffe0b3;display:flex;align-items:center;justify-content:center;margin-bottom:10px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#e07b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h4"/></svg>
+                        </div>
+                        <div data-i18n="stat_system" style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#e07b00; margin-bottom:6px;">System Size</div>
+                        <div id="resSystem" style="font-size:17px; font-weight:800; color:#1a1a1a;"></div>
                     </div>
-                    <div style="background:#f5f5f5; border-radius:16px; padding:20px 16px; text-align:center; border:1px solid #efefef;">
-                        <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#c45000; margin-bottom:8px;">System Size</div>
-                        <div id="resSystem" style="font-size:20px; font-weight:800; color:#1a1a1a;"></div>
+                    <div style="background:#fef0f0; border-radius:16px; padding:18px 14px; border:1px solid #ffd6d6;">
+                        <div style="width:30px;height:30px;border-radius:9px;background:#ffd6d6;display:flex;align-items:center;justify-content:center;margin-bottom:10px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#e0475c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 11 14 10 22 21 10 13 10 13 2"/></svg>
+                        </div>
+                        <div data-i18n="stat_production" style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#e0475c; margin-bottom:6px;">Annual Production</div>
+                        <div id="resProduction" style="font-size:17px; font-weight:800; color:#1a1a1a;"></div>
                     </div>
-                    <div style="background:#f5f5f5; border-radius:16px; padding:20px 16px; text-align:center; border:1px solid #efefef;">
-                        <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#c45000; margin-bottom:8px;">Annual Production</div>
-                        <div id="resProduction" style="font-size:20px; font-weight:800; color:#1a1a1a;"></div>
+                    <div style="background:#f5f5f5; border-radius:16px; padding:18px 14px; border:1px solid #efefef; display:flex; align-items:flex-start; gap:6px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2" style="flex-shrink:0; margin-top:2px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                        <span data-i18n="stat_area_note" style="font-size:10px; color:#9ca3af; line-height:1.4;">Google data shows total potential area. On-site obstructions or roof wear may vary.</span>
                     </div>
                 </div>
 
                 <!-- Disclaimer -->
                 <div style="background:#f0f4ff; border-radius:14px; padding:16px 20px; margin-bottom:24px; display:flex; gap:12px; align-items:flex-start;">
                     <span style="font-size:18px; flex-shrink:0;">&#8505;</span>
-                    <p style="font-size:13px; color:#555; line-height:1.6;">These are <strong>regional average estimates</strong> based on real Lithuanian solar irradiance data (PVGIS/EU JRC) and a calculated 240 m² roof area. Actual results depend on your specific roof size, orientation and shading. For a complete independent assessment, order your Drone Roof Survey.</p>
+                    <p data-i18n="disclaimer_html" style="font-size:13px; color:#555; line-height:1.6;">These are <strong>regional average estimates</strong> based on real Lithuanian solar irradiance data (PVGIS/EU JRC) and a calculated 240 m² roof area. Actual results depend on your specific roof size, orientation and shading. For a complete independent assessment, order your Drone Roof Survey.</p>
                 </div>
 
                 <!-- Drone Report CTA -->
                 <div style="background:linear-gradient(135deg,#ffffff,#e8e8e8); border-radius:20px; padding:28px; border:1px solid #ffc07a; text-align:center; margin-bottom:16px;">
-                    <h3 style="font-size:20px; font-weight:800; color:#1a1a1a; margin-bottom:8px;">Want a Full Drone Roof Survey?</h3>
-                    <p style="color:#6b7280; font-size:14px; margin-bottom:20px; line-height:1.6;">A certified drone pilot will survey your roof and we'll deliver a professional PDF report within 24 hours of the completed flight, for just <strong style="color:#c45000;">&#8364;149</strong></p>
+                    <h3 data-i18n="drone_cta_title" style="font-size:20px; font-weight:800; color:#1a1a1a; margin-bottom:8px;">Want a Full Drone Roof Survey?</h3>
+                    <p data-i18n="drone_cta_desc" style="color:#6b7280; font-size:14px; margin-bottom:20px; line-height:1.6;">A certified drone pilot will survey your roof and we'll deliver a professional PDF report within 24 hours of the completed flight, for just <strong style="color:#c45000;">&#8364;149</strong></p>
                     <button onclick="orderDroneReport()" style="background:linear-gradient(135deg,#f7971e,#ff4e00); color:white; border:none; padding:16px 24px; border-radius:50px; font-size:15px; font-weight:700; cursor:pointer; box-shadow:0 6px 24px rgba(247,151,30,0.38); width:100%; font-family:inherit; display:flex; align-items:center; justify-content:center; gap:10px; white-space:nowrap;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z"/><path d="M10 8l6 4-6 4V8z" fill="white"/></svg>
-                        Order Drone Roof Survey (€149)
+                        <span data-i18n="drone_cta_btn">Order Drone Roof Survey (€149)</span>
                     </button>
                 </div>
 
@@ -2338,33 +2368,33 @@ function toggleFaq(i) {
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
                         </div>
                         <div>
-                            <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#16a34a;">Certified Installation Partner</div>
+                            <div data-i18n="partner_badge" style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#16a34a;">Certified Installation Partner</div>
                             <div style="font-size:16px; font-weight:800; color:#1a1a1a;">SolarPro Lithuania</div>
                         </div>
-                        <div style="margin-left:auto; background:#dcfce7; color:#16a34a; font-size:11px; font-weight:700; padding:4px 10px; border-radius:50px; white-space:nowrap;">FREE QUOTE</div>
+                        <div data-i18n="partner_quote_tag" style="margin-left:auto; background:#dcfce7; color:#16a34a; font-size:11px; font-weight:700; padding:4px 10px; border-radius:50px; white-space:nowrap;">FREE QUOTE</div>
                     </div>
-                    <p style="color:#374151; font-size:13px; line-height:1.6; margin-bottom:16px;">Our certified installation partner will visit your property, physically confirm your results, and provide a <strong>no-obligation installation quote</strong>. Completely free.</p>
+                    <p data-i18n="partner_desc" style="color:#374151; font-size:13px; line-height:1.6; margin-bottom:16px;">Our certified installation partner will visit your property, physically confirm your results, and provide a <strong>no-obligation installation quote</strong>. Completely free.</p>
                     <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:16px;">
                         <div style="display:flex; align-items:center; gap:8px; font-size:13px; font-weight:600; color:#374151;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg>
-                            Licensed installer
+                            <span data-i18n="partner_f1">Licensed installer</span>
                         </div>
                         <div style="display:flex; align-items:center; gap:8px; font-size:13px; font-weight:600; color:#374151;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg>
-                            10-year warranty
+                            <span data-i18n="partner_f2">10-year warranty</span>
                         </div>
                         <div style="display:flex; align-items:center; gap:8px; font-size:13px; font-weight:600; color:#374151;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg>
-                            No obligation
+                            <span data-i18n="partner_f3">No obligation</span>
                         </div>
                     </div>
                     <a href="contact.html" class="quote-btn" style="width:100%; box-sizing:border-box; font-size:15px; padding:16px 20px; background:linear-gradient(135deg,#22c55e,#16a34a); box-shadow:0 6px 20px rgba(34,197,94,0.35); white-space:nowrap; justify-content:center;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                        Get Free Installation Quote
+                        <span data-i18n="partner_cta_btn">Get Free Installation Quote</span>
                     </a>
                 </div>
 
-                <button onclick="closeModal()" style="width:100%; background:#f5f5f5; border:none; padding:14px; border-radius:50px; font-size:14px; font-weight:600; cursor:pointer; color:#666; font-family:inherit;">
+                <button onclick="closeModal()" data-i18n="modal_close_btn" style="width:100%; background:#f5f5f5; border:none; padding:14px; border-radius:50px; font-size:14px; font-weight:600; cursor:pointer; color:#666; font-family:inherit;">
                     Close and Analyze Another Address
                 </button>
 
@@ -2589,21 +2619,35 @@ function toggleFaq(i) {
         const profit25 = 216000;
 
         const score = Math.min(100, Math.round((irradiance / 990) * 100));
-        const rating = score >= 95 ? 'Excellent' : score >= 90 ? 'Very Good' : 'Good';
+        const lang = (typeof currentLang !== 'undefined' && i18n[currentLang]) ? currentLang : 'en';
+        const t = i18n[lang];
+        const rating = score >= 95 ? t.rating_excellent : score >= 90 ? t.rating_verygood : t.rating_good;
         const ratingColor = score >= 95 ? '#2e7d32' : score >= 90 ? '#f7971e' : '#888';
+
+        // Remember last generated results so we can re-render in the new
+        // language immediately if the user switches while the modal is open.
+        lastResultsAddress = address;
+        lastResultsLat = lat;
+        lastResultsLng = lng;
 
         document.getElementById('resAddress').textContent = address;
         document.getElementById('resScore').textContent = score + '%';
         document.getElementById('resRating').textContent = rating;
         document.getElementById('resRating').style.color = ratingColor;
-        document.getElementById('resArea').textContent = usableArea + ' m\u00b2 (calculated)';
-        document.getElementById('resPayback').textContent = payback + ' Years';
+        document.getElementById('resArea').textContent = usableArea + ' m\u00b2 (' + t.unit_calculated + ')';
+        document.getElementById('resPayback').textContent = payback + ' ' + t.unit_years;
         document.getElementById('resProfit').textContent = '\u20ac' + profit25.toLocaleString();
-        document.getElementById('resSavings').textContent = '\u20ac' + annualSavings.toLocaleString() + '/yr';
+        document.getElementById('resSavings').textContent = '\u20ac' + annualSavings.toLocaleString() + t.unit_per_year;
         document.getElementById('resSystem').textContent = systemKw + ' kWp';
-        document.getElementById('resProduction').textContent = annualProduction.toLocaleString() + ' kWh/yr';
-        document.getElementById('scoreBar').style.width = score + '%';
+        document.getElementById('resProduction').textContent = annualProduction.toLocaleString() + ' kWh' + t.unit_per_year;
+
+        // Drive the circular gauge (circumference = 2 * pi * 44 \u2248 276.5)
+        const circumference = 276.5;
+        const offset = circumference - (circumference * score / 100);
+        document.getElementById('scoreRing').style.strokeDashoffset = offset;
     }
+
+    let lastResultsAddress = null, lastResultsLat = null, lastResultsLng = null;
 
     function closeModal() {
         document.getElementById('resultsModal').style.display = 'none';
@@ -2801,6 +2845,33 @@ function toggleFaq(i) {
             cookie_text: 'We use cookies to improve your experience and analyze site traffic. By continuing, you agree to our <a href="privacy.html" style="color:#f7971e;text-decoration:underline;">Privacy Policy</a>.',
             cookie_decline: "Decline",
             cookie_accept: "Accept",
+            // Results modal
+            loading_title: "Analyzing Your Roof...",
+            loading_desc: "Processing satellite imagery and solar data for your location",
+            loading_note: "This usually takes a few seconds",
+            modal_badge: "SUNLYTICS ANALYSIS",
+            modal_title: "Solar Feasibility Report",
+            score_label: "Solar Utilization Score",
+            score_blurb: "Your roof is a strong candidate for solar.",
+            rating_excellent: "Excellent", rating_verygood: "Very Good", rating_good: "Good",
+            unit_years: "Years", unit_calculated: "calculated", unit_per_year: "/yr",
+            stat_area: "Usable Area",
+            stat_area_note: "Google data shows total potential area. On-site obstructions or roof wear may vary.",
+            stat_payback: "Payback Period",
+            stat_profit_label: "25-YEAR PROJECTED PROFIT",
+            stat_savings: "Annual Savings",
+            stat_system: "System Size",
+            stat_production: "Annual Production",
+            disclaimer_html: "These are <strong>regional average estimates</strong> based on real Lithuanian solar irradiance data (PVGIS/EU JRC) and a calculated 240\u00a0m\u00b2 roof area. Actual results depend on your specific roof size, orientation and shading. For a complete independent assessment, order your Drone Roof Survey.",
+            drone_cta_title: "Want a Full Drone Roof Survey?",
+            drone_cta_desc: "A certified drone pilot will survey your roof and we'll deliver a professional PDF report within 24 hours of the completed flight, for just <strong style=\"color:#c45000;\">\u20ac149</strong>",
+            drone_cta_btn: "Order Drone Roof Survey (\u20ac149)",
+            partner_badge: "Certified Installation Partner",
+            partner_quote_tag: "FREE QUOTE",
+            partner_desc: "Our certified installation partner will visit your property, physically confirm your results, and provide a <strong>no-obligation installation quote</strong>. Completely free.",
+            partner_f1: "Licensed installer", partner_f2: "10-year warranty", partner_f3: "No obligation",
+            partner_cta_btn: "Get Free Installation Quote",
+            modal_close_btn: "Close and Analyze Another Address",
         },
         lt: {
             footer_tagline: "Išmani saulės energijos analizė Lietuvai. Greita, tiksli ir prieinama.",
@@ -2858,6 +2929,33 @@ function toggleFaq(i) {
             cookie_text: 'Naudojame slapukus, kad pagerintume jūsų patirtį ir analizuotume svetainės srautą. Tęsdami sutinkate su mūsų <a href="privacy.html" style="color:#f7971e;text-decoration:underline;">privatumo politika</a>.',
             cookie_decline: "Atmesti",
             cookie_accept: "Sutinku",
+            // Results modal
+            loading_title: "Analizuojame jūsų stogą...",
+            loading_desc: "Apdorojami palydoviniai vaizdai ir saulės energijos duomenys jūsų vietovei",
+            loading_note: "Tai paprastai užtrunka kelias sekundes",
+            modal_badge: "SUNLYTICS ANALIZĖ",
+            modal_title: "Saulės potencialo ataskaita",
+            score_label: "Saulės panaudojimo įvertinimas",
+            score_blurb: "Jūsų stogas puikiai tinka saulės elektrinei.",
+            rating_excellent: "Puikus", rating_verygood: "Labai geras", rating_good: "Geras",
+            unit_years: "metai", unit_calculated: "apskaičiuota", unit_per_year: "/metus",
+            stat_area: "Naudingas plotas",
+            stat_area_note: "Google duomenys rodo bendrą galimą plotą. Kliūtys vietoje ar stogo nusidėvėjimas gali skirtis.",
+            stat_payback: "Atsipirkimo laikotarpis",
+            stat_profit_label: "25 METŲ NUMATOMAS PELNAS",
+            stat_savings: "Metinis sutaupymas",
+            stat_system: "Sistemos galia",
+            stat_production: "Metinė gamyba",
+            disclaimer_html: "Tai <strong>regioniniai vidutiniai įverčiai</strong>, pagrįsti realiais Lietuvos saulės spinduliuotės duomenimis (PVGIS/EU JRC) ir apskaičiuotu 240\u00a0m\u00b2 stogo plotu. Tikrieji rezultatai priklauso nuo jūsų konkretaus stogo dydžio, orientacijos ir užstojimo. Norėdami gauti visą nepriklausomą įvertinimą, užsisakykite drono stogo apžvalgą.",
+            drone_cta_title: "Norite pilnos drono stogo apžvalgos?",
+            drone_cta_desc: "Sertifikuotas drono pilotas apžiūrės jūsų stogą, o profesionalią PDF ataskaitą pristatysime per 24 valandas nuo užbaigto skrydžio, tik už <strong style=\"color:#c45000;\">\u20ac149</strong>",
+            drone_cta_btn: "Užsisakyti drono stogo apžvalgą (\u20ac149)",
+            partner_badge: "Sertifikuotas montavimo partneris",
+            partner_quote_tag: "NEMOKAMAS PASIŪLYMAS",
+            partner_desc: "Mūsų sertifikuotas montavimo partneris apsilankys jūsų objekte, fiziškai patvirtins rezultatus ir pateiks <strong>pasiūlymą be įsipareigojimų</strong>. Visiškai nemokamai.",
+            partner_f1: "Licencijuotas montuotojas", partner_f2: "10 metų garantija", partner_f3: "Jokių įsipareigojimų",
+            partner_cta_btn: "Gauti nemokamą įrengimo pasiūlymą",
+            modal_close_btn: "Uždaryti ir analizuoti kitą adresą",
         }
     };
     let currentLang = localStorage.getItem('lang') || 'en';
@@ -2882,6 +2980,12 @@ function toggleFaq(i) {
         nlBtn.setAttribute('aria-pressed', lang === 'lt');
         // Rebuild FAQ in selected language
         if (typeof buildFaq === 'function') buildFaq();
+        // If a results report is currently on screen, re-render its dynamic
+        // numbers (rating word, units) in the newly selected language too.
+        const resultsState = document.getElementById('resultsState');
+        if (resultsState && resultsState.style.display !== 'none' && typeof lastResultsAddress !== 'undefined' && lastResultsAddress) {
+            generateResults(lastResultsAddress, lastResultsLat, lastResultsLng);
+        }
     }
 
     function initLang() { setLang(currentLang); buildFaq(); }
